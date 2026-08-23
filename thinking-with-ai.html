@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Using AI as a Critic — Technical English Writing Toolkit</title>
+<style>
+  :root{--ink:#16202E;--ink-soft:#5A6673;--paper:#F1F3F5;--card:#FFFFFF;--line:#D9DEE4;
+    --accent:#2E6E6B;--accent-soft:#E4EFEE;--es:#B07A1E;--es-soft:#FBF3E2;
+    --good:#2E6E4A;--good-soft:#E6F2EA;--bad:#A63D5B;--bad-soft:#F7E7EC;
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .topbar{border-bottom:1px solid var(--line);padding:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .topbar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  header.hero{padding:38px 0 22px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 13px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.02;letter-spacing:-.025em;margin:0 0 13px}
+  .standfirst{font-size:1.05rem;color:var(--ink-soft);margin:0 0 14px;max-width:50ch}
+  .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .tabs{position:sticky;top:0;z-index:10;background:rgba(241,243,245,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tablist{display:flex;gap:4px;overflow-x:auto;padding:9px 0;scrollbar-width:none}
+  .tablist::-webkit-scrollbar{display:none}
+  .tab{font-family:var(--mono);font-size:12.5px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:7px;padding:8px 14px;color:var(--ink-soft)}
+  .tab:hover{background:var(--card)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .panel{display:none;padding:26px 0 10px;animation:fade .2s ease}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 12px;letter-spacing:-.015em}
+  h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  .box{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 17px;margin:16px 0;font-size:.95rem}
+  .box.es{background:var(--es-soft);border-left-color:var(--es)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.93rem}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  td.x{color:var(--bad)}td.v{color:var(--good)}td.vb{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+  .why{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:19px 21px;margin:0 0 18px}
+  .why h2{font-size:1.08rem;margin:0 0 8px}
+  .why p{font-size:.93rem;color:var(--ink-soft);margin:0 0 12px}
+  .pair{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .side{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.55}
+  .side span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+  .bad-side{background:var(--bad-soft);border-left:3px solid var(--bad)}.bad-side span{color:var(--bad)}
+  .ok-side{background:var(--good-soft);border-left:3px solid var(--good)}.ok-side span{color:var(--good)}
+  .side small{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .progress{margin:0 0 14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:21px;margin:13px 0}
+  .kind{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 11px;margin-bottom:13px}
+  .kind.es{color:var(--es);background:var(--es-soft)}
+  .task{font-size:.94rem;color:var(--ink-soft);margin:0 0 12px}
+  .stim{background:var(--paper);border-radius:9px;padding:14px 16px;margin-bottom:13px;font-size:1rem;line-height:1.75}
+  .stim p{margin:0}
+  .sec{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:5px;padding:3px 8px;margin-bottom:9px}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:var(--good-soft);border-color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+  .fb{margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);display:none}
+  .fb.on{display:block}.fb b{color:var(--ink)}
+  .btn{font-family:var(--mono);font-size:12.5px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .nav{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .finish{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 11px 11px 0;padding:21px;margin:13px 0}
+  .finish h3{margin-top:0}
+  ul{padding-left:20px}li{margin-bottom:7px}
+  footer{margin-top:52px;border-top:1px solid var(--line);padding:22px 0 44px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  @media (max-width:640px){header.hero{padding:26px 0 18px}.card,.why{padding:16px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{.tabs{display:none}.panel{display:block!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><a href="../index.html">← All tools</a> · AI ethics in writing</div></div>
+<header class="hero wrap">
+  <p class="eyebrow">AI ethics in writing</p>
+  <h1>Using AI<br>as a Critic</h1>
+  <p class="standfirst">Stop asking “can you write this?” and start asking “what is wrong with this?” Twenty exercises.</p>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</p>
+</header>
+<nav class="tabs"><div class="wrap tablist" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-p="p1">🎯 Practice</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p2">📖 Reference</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p3">📚 Source</button>
+</div></nav>
+<main class="wrap">
+<section class="panel on" id="p1" role="tabpanel">
+  <div class="why">
+    <h2>Why this matters</h2>
+    <p>Ask a tool to write your paragraph and you have outsourced the thinking. Ask it to attack your paragraph and you have a reader available at midnight who never gets bored. The second is more useful, almost always permitted, and much harder to do well.</p>
+    <div class="pair">
+      <div class="side bad-side"><span>Outsourcing</span>"Write my discussion section."<small>You get sentences you cannot defend and learn nothing.</small></div>
+      <div class="side ok-side"><span>Sharpening</span>"What is my discussion section missing? Do not rewrite it."<small>You get objections you can check, and the writing stays yours.</small></div>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><i id="bar"></i></div>
+    <div class="pmeta"><span id="pos">1 of 20</span><span id="sc">Score: 0 / 0</span></div></div>
+  <div id="stage"></div>
+  <div class="nav"><button class="btn ghost" id="prev">← Back</button><button class="btn ghost" id="restart">Start again</button></div>
+</section>
+<section class="panel" id="p2" role="tabpanel">
+  <h2>Four moves</h2>
+  <table>
+    <tr><th>Move</th><th>Prompt</th></tr>
+    <tr><td class="vb">Adversarial reading</td><td>Read this as a sceptical examiner. List the three weakest claims and say why. Do not rewrite.</td></tr>
+    <tr><td class="vb">Steelmanning</td><td>Make the strongest case for the approach I rejected. Assume the person making it is competent.</td></tr>
+    <tr><td class="vb">Explain it back</td><td>Summarise my argument in three sentences. Do not improve it — I want to see whether it came across.</td></tr>
+    <tr><td class="vb">Interrogation</td><td>Ask me five questions a marker would ask about this method. One at a time.</td></tr>
+  </table>
+  <div class="box"><strong>Explain-it-back is the quiet standout.</strong> Unclear writing is far more common than wrong writing and much harder to see in your own work. If the restatement is wrong, your writing is unclear — and you found out without a reader having to be polite.</div>
+
+  <h3>The pattern</h3>
+  <table>
+    <tr><th>Instead of</th><th>Ask</th></tr>
+    <tr><td class="x">Write my discussion section.</td><td class="v">What is my discussion section missing?</td></tr>
+    <tr><td class="x">Improve this paragraph.</td><td class="v">Which sentence is weakest, and why?</td></tr>
+    <tr><td class="x">Is this good?</td><td class="v">Give me the three strongest objections to this.</td></tr>
+    <tr><td class="x">Summarise this paper.</td><td class="v">Here is my summary — what did I miss?</td></tr>
+  </table>
+  <p>Every right-hand version requires you to have done the work first. That is not a coincidence.</p>
+
+  <h3>Two failure modes to watch</h3>
+  <p><strong>They are agreeable.</strong> Ask “is this good?” and you will usually be told it is, with three compliments. That is a property of the tool, not evidence about your work. Treat unqualified praise as a non-answer.</p>
+  <p><strong>Fabricated citations cannot be spotted by eye.</strong> Some have visible tells — a journal that does not match the field, an implausible page count. Most do not. A reference that looks perfect is not verified; it is unfalsified. The only method is to search for it and open it.</p>
+  <div class="box"><strong>Form your own view first.</strong> If you always ask what is wrong before deciding what you think, you are outsourcing judgement rather than text — harder to notice, and worse for you.</div>
+</section>
+<section class="panel" id="p3" role="tabpanel">
+  <h2>Sources</h2>
+  <ul><li>Based on Cheng, A., Calhoun, A., &amp; Reedy, G. (2025). Artificial intelligence-assisted academic writing: recommendations for ethical use. <em>Advances in Simulation, 10</em>(1), 22. <a href="https://doi.org/10.1186/s41077-025-00350-6">https://doi.org/10.1186/s41077-025-00350-6</a> — open access. Its account of hallucinated references underpins the verification items here.</li></ul>
+  <div class="box"><strong>About the examples.</strong> Every reference, author and journal used in these exercises was invented for practice. Do not cite them and do not test the links.</div>
+  <p>Related: <a href="prompt-builder.html">Asking Better Questions</a>, <a href="human-or-ai-writing.html">Spotting Empty Prose</a>, <a href="../academic-writing/evaluating-sources.html">Is This Source Worth Citing?</a></p>
+</section>
+</main>
+<footer class="wrap">Using AI as a Critic · Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</footer>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});});});
+  var Q=[
+ {
+  "k": "which",
+  "task": "Which prompt keeps the thinking yours?",
+  "o": [
+   "Write my discussion section based on these results.",
+   "What is my discussion section missing? Do not rewrite it.",
+   "Improve my discussion section."
+  ],
+  "a": 1,
+  "w": "Diagnostic prompts return objections you can check. Productive prompts return sentences you did not write and may not be able to defend."
+ },
+ {
+  "k": "which",
+  "task": "You ask “Is this a good paragraph?” and get three compliments. What does that tell you?",
+  "o": [
+   "The paragraph is good",
+   "Very little — these tools are agreeable by default",
+   "The tool did not understand the question"
+  ],
+  "a": 1,
+  "w": "Agreeableness is a property of the tool. If you want criticism you must demand it explicitly, and treat unqualified praise as a non-answer."
+ },
+ {
+  "k": "choose",
+  "task": "Your reference looks perfectly formatted, with a plausible journal and DOI. What have you established?",
+  "o": [
+   "That it is probably real",
+   "Nothing about whether it exists",
+   "That the formatting is APA 7"
+  ],
+  "a": 1,
+  "w": "Only the formatting. A reference that survives your eye has not been checked — it has escaped notice. Search the exact title and open the DOI."
+ },
+ {
+  "k": "which",
+  "task": "Which reference has a visible problem you could catch without searching?",
+  "o": [
+   "Nieminen, A. (2019). Thermal behaviour of urban surfaces. Journal of Structural Geology, 47(3), 512–528.",
+   "Park, J., & Silva, R. (2022). Network segmentation in small manufacturing. Computers & Security, 118, 102734.",
+   "Hyvärinen, T. (2021). Industrial control system security (2nd ed.). Springer."
+  ],
+  "a": 0,
+  "w": "Field mismatch — urban surface temperature is not structural geology. The other two have nothing visibly wrong, which proves nothing about whether they exist."
+ },
+ {
+  "k": "choose",
+  "task": "You want to know whether your writing is clear. What do you ask?",
+  "o": [
+   "Is my writing clear?",
+   "Summarise my argument in three sentences. Do not improve it.",
+   "Rewrite this more clearly."
+  ],
+  "a": 1,
+  "w": "Explain-it-back. If the summary is wrong, your writing is unclear — and you learned that without anyone having to be polite about it."
+ },
+ {
+  "k": "which",
+  "task": "Your discussion feels one-sided. Which move helps?",
+  "o": [
+   "Adversarial reading",
+   "Steelmanning the approach you rejected",
+   "Explain it back"
+  ],
+  "a": 1,
+  "w": "Ask for the best case for the option you dismissed. You have spent months persuading yourself, so the counter-argument is the thing you can no longer see."
+ },
+ {
+  "k": "choose",
+  "task": "Which prompt is most likely to be permitted under any policy?",
+  "o": [
+   "Rewrite this paragraph in academic English.",
+   "For each sentence, tell me whether it reports a result or interprets one.",
+   "Draft the conclusion for me."
+  ],
+  "a": 1,
+  "w": "Diagnosis produces nothing you could submit. That is exactly why it sits in the green band almost everywhere."
+ },
+ {
+  "k": "which",
+  "task": "A tool explains a statistical test confidently and the explanation is wrong. What would have helped you catch it?",
+  "o": [
+   "Asking it to be more confident",
+   "Asking it to explain its reasoning and flag uncertainty",
+   "Asking a shorter question"
+  ],
+  "a": 1,
+  "w": "A bare answer cannot be checked; a reasoned one can. “Explain your reasoning, and say clearly if you are uncertain” is worth adding to almost any prompt."
+ },
+ {
+  "k": "choose",
+  "task": "You want to prepare for your project defence. Which prompt?",
+  "o": [
+   "Tell me what examiners usually ask.",
+   "Ask me five questions a marker would ask about this method, one at a time, and wait for my answers.",
+   "Write me answers to likely questions."
+  ],
+  "a": 1,
+  "w": "One at a time, with you answering, turns it into rehearsal. A list of generic questions is reading; written answers are somebody else’s."
+ },
+ {
+  "k": "which",
+  "task": "When should you form your own view of your draft?",
+  "o": [
+   "After the tool has commented",
+   "Before you ask anything",
+   "It does not matter"
+  ],
+  "a": 1,
+  "w": "Write your own opinion down first, then compare. Asking first outsources judgement rather than text — harder to notice and worse for you."
+ },
+ {
+  "k": "choose",
+  "task": "The tool objects to something in your paragraph that you know is fine. What do you do?",
+  "o": [
+   "Change it anyway to be safe",
+   "Note that it was wrong and move on",
+   "Ask it three more times"
+  ],
+  "a": 1,
+  "w": "Wrong criticism is harmless — which is precisely why critique is safer than production. You can see whether an objection applies; you cannot see an invented fact."
+ },
+ {
+  "k": "which",
+  "task": "Which of these can a tool genuinely not do for you?",
+  "o": [
+   "Point out weak claims",
+   "Tell you whether your data support your conclusion",
+   "Suggest counter-arguments"
+  ],
+  "a": 1,
+  "w": "It has not seen your data, your instrument, or your lab. It can flag that a claim looks strong; only you can know whether the evidence carries it."
+ },
+ {
+  "k": "choose",
+  "task": "You paste a paragraph and ask for the three strongest objections. What should you do with them?",
+  "o": [
+   "Address all three in the text",
+   "Decide which apply, and say so if one does not",
+   "Ignore any you disagree with"
+  ],
+  "a": 1,
+  "w": "Some objections will be wrong for your context. Deciding which apply — and being able to say why an objection does not hold — is the skill a defence tests."
+ },
+ {
+  "k": "which",
+  "task": "A generated reference has an implausible detail: a 38-page article in an engineering journal. What does that mean?",
+  "o": [
+   "The reference is fabricated",
+   "It is worth checking, but proves nothing on its own",
+   "Page counts are never meaningful"
+  ],
+  "a": 1,
+  "w": "Unusual details are prompts to check, not verdicts. Real papers are occasionally long, and rejecting a source on page count alone would be its own error."
+ },
+ {
+  "k": "choose",
+  "task": "Which is the better way to use a tool with a paper you must read?",
+  "o": [
+   "Ask for a summary, then read the summary",
+   "Read it, write your own summary, then ask what you missed",
+   "Ask for a summary and skip the paper"
+  ],
+  "a": 1,
+  "w": "You did the reading, so you can judge the answer. And you may discover the tool “summarised” a paper it never actually had access to."
+ },
+ {
+  "k": "which",
+  "task": "What is the strongest argument for critique over production?",
+  "o": [
+   "It is faster",
+   "Wrong criticism is harmless; an invented fact in your submission is not",
+   "It is more polite"
+  ],
+  "a": 1,
+  "w": "The asymmetry is the whole case. A bad objection costs you thirty seconds. A fabricated claim in a submitted report carries your name."
+ },
+ {
+  "k": "choose",
+  "task": "You want the tool to stop being agreeable. What do you add to the prompt?",
+  "o": [
+   "Please be honest.",
+   "Read this as a sceptical examiner and list the three weakest claims.",
+   "Do not be nice to me."
+  ],
+  "a": 1,
+  "w": "Give it a role and a number. Vague requests for honesty produce vaguely hedged praise; “three weakest claims” forces it to rank."
+ },
+ {
+  "k": "which",
+  "task": "How many of a generated reference list should you verify?",
+  "o": [
+   "A representative sample",
+   "All of them",
+   "Only the ones you quote directly"
+  ],
+  "a": 1,
+  "w": "All. Fabrication is not evenly distributed, and a single non-existent source in your list is what a marker in the field notices first."
+ },
+ {
+  "k": "choose",
+  "task": "Which prompt would help most with a paragraph a marker called “unclear”?",
+  "o": [
+   "Make this clearer.",
+   "What do you think my main claim is, based only on this paragraph?",
+   "Rewrite this in simpler English."
+  ],
+  "a": 1,
+  "w": "If its answer is not your claim, you have located the problem precisely. The other two hand the fixing to the tool and teach you nothing about why it was unclear."
+ },
+ {
+  "k": "which",
+  "task": "What survives every change in the technology and the policies?",
+  "o": [
+   "Knowing which tool is best",
+   "Being able to explain every sentence you submit",
+   "Keeping up with the guidance"
+  ],
+  "a": 1,
+  "w": "That test was right before these tools existed and will still be right when they have changed again. Everything else in this section is a way of applying it."
+ }
+];
+  var LBL={choose:'Choose the form',which:'Which is better?',fix:'Fix it',es:'For Spanish speakers'};
+  var stage=document.getElementById('stage'),bar=document.getElementById('bar');
+  var pos=document.getElementById('pos'),scEl=document.getElementById('sc');
+  var i=0,score=0,seen={};
+  function meta(){var n=Object.keys(seen).length;
+    bar.style.width=(n/Q.length*100)+'%';
+    pos.textContent=(i+1)+' of '+Q.length;
+    scEl.textContent='Score: '+score+' / '+n;}
+  function nextBtn(card){var b=document.createElement('button');b.className='btn';b.style.marginTop='15px';
+    if(i<Q.length-1){b.textContent='Next \u2192';
+      b.addEventListener('click',function(){i++;draw();window.scrollTo({top:0,behavior:'smooth'});});}
+    else{b.textContent='See result \u2192';b.addEventListener('click',finish);}
+    card.appendChild(b);}
+  function draw(){
+    var q=Q[i];stage.innerHTML='';
+    var card=document.createElement('div');card.className='card';
+    var kind=document.createElement('span');kind.className='kind'+(q.k==='es'?' es':'');
+    kind.textContent=LBL[q.k]||'Choose';card.appendChild(kind);
+    if(q.sec){var s2=document.createElement('span');s2.className='sec';s2.textContent=q.sec;
+      card.appendChild(document.createElement('br'));card.appendChild(s2);}
+    var task=document.createElement('p');task.className='task';task.textContent=q.task;card.appendChild(task);
+    if(q.s){var st=document.createElement('div');st.className='stim';
+      var p=document.createElement('p');p.textContent=q.s;st.appendChild(p);card.appendChild(st);}
+    var o=document.createElement('div');o.className='opts';
+    var fb=document.createElement('p');fb.className='fb';
+    q.o.forEach(function(l,j){
+      var b=document.createElement('button');b.className='opt';b.textContent=l;
+      b.addEventListener('click',function(){
+        if(seen[i])return;
+        var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+        all[q.a].classList.add('right');
+        if(j!==q.a)b.classList.add('wrong');else score++;
+        seen[i]=true;
+        fb.innerHTML='<b>'+(j===q.a?'Correct. ':'Not quite. ')+'</b>'+q.w;
+        fb.classList.add('on');meta();nextBtn(card);});
+      o.appendChild(b);});
+    card.appendChild(o);card.appendChild(fb);
+    stage.appendChild(card);
+    document.getElementById('prev').disabled=(i===0);meta();}
+  function finish(){
+    stage.innerHTML='';
+    var f=document.createElement('div');f.className='finish';var pc=score/Q.length;
+    var msg=pc>=0.85?'Strong. This will not be what a marker circles.'
+      :pc>=0.55?'Good. The explanations on the ones you missed are the useful part.'
+      :'Worth a second run. Read the Reference tab first.';
+    f.innerHTML='<h3>You scored '+score+' / '+Q.length+'</h3><p>'+msg+'</p><p style="margin-bottom:0">One substitution to keep: <strong>ask what is wrong with it, not to write it.</strong></p>';
+    var b=document.createElement('button');b.className='btn';b.style.marginTop='13px';b.textContent='Try again';
+    b.addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+    f.appendChild(b);stage.appendChild(f);bar.style.width='100%';}
+  document.getElementById('prev').addEventListener('click',function(){if(i>0){i--;draw();window.scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('restart').addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+  draw();})();
+</script>
+</body>
+</html>
