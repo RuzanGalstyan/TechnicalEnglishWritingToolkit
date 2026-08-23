@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slides That Work — Technical English Writing Toolkit</title>
+<style>
+  :root{--ink:#16202E;--ink-soft:#5A6673;--paper:#F1F3F5;--card:#FFFFFF;--line:#D9DEE4;
+    --accent:#6B4E9E;--accent-soft:#EDE8F5;--es:#B07A1E;--es-soft:#FBF3E2;
+    --good:#2E6E4A;--good-soft:#E6F2EA;--bad:#A63D5B;--bad-soft:#F7E7EC;
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .topbar{border-bottom:1px solid var(--line);padding:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .topbar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  header.hero{padding:38px 0 22px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 13px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.02;letter-spacing:-.025em;margin:0 0 13px}
+  .standfirst{font-size:1.05rem;color:var(--ink-soft);margin:0 0 14px;max-width:50ch}
+  .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .tabs{position:sticky;top:0;z-index:10;background:rgba(241,243,245,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tablist{display:flex;gap:4px;overflow-x:auto;padding:9px 0;scrollbar-width:none}
+  .tablist::-webkit-scrollbar{display:none}
+  .tab{font-family:var(--mono);font-size:12.5px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:7px;padding:8px 14px;color:var(--ink-soft)}
+  .tab:hover{background:var(--card)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .panel{display:none;padding:26px 0 10px;animation:fade .2s ease}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 12px;letter-spacing:-.015em}
+  h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  .box{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 17px;margin:16px 0;font-size:.95rem}
+  .box.es{background:var(--es-soft);border-left-color:var(--es)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.93rem}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  td.x{color:var(--bad)}td.v{color:var(--good)}td.vb{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+  .why{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:19px 21px;margin:0 0 18px}
+  .why h2{font-size:1.08rem;margin:0 0 8px}
+  .why p{font-size:.93rem;color:var(--ink-soft);margin:0 0 12px}
+  .pair{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .side{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.55}
+  .side span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+  .bad-side{background:var(--bad-soft);border-left:3px solid var(--bad)}.bad-side span{color:var(--bad)}
+  .ok-side{background:var(--good-soft);border-left:3px solid var(--good)}.ok-side span{color:var(--good)}
+  .side small{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .progress{margin:0 0 14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:21px;margin:13px 0}
+  .kind{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 11px;margin-bottom:13px}
+  .kind.es{color:var(--es);background:var(--es-soft)}
+  .task{font-size:.94rem;color:var(--ink-soft);margin:0 0 12px}
+  .stim{background:var(--paper);border-radius:9px;padding:14px 16px;margin-bottom:13px;font-size:1rem;line-height:1.75}
+  .stim p{margin:0}
+  .sec{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:5px;padding:3px 8px;margin-bottom:9px}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:var(--good-soft);border-color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+  .fb{margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);display:none}
+  .fb.on{display:block}.fb b{color:var(--ink)}
+  .btn{font-family:var(--mono);font-size:12.5px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .nav{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .finish{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 11px 11px 0;padding:21px;margin:13px 0}
+  .finish h3{margin-top:0}
+  ul{padding-left:20px}li{margin-bottom:7px}
+  footer{margin-top:52px;border-top:1px solid var(--line);padding:22px 0 44px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  @media (max-width:640px){header.hero{padding:26px 0 18px}.card,.why{padding:16px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{.tabs{display:none}.panel{display:block!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><a href="../index.html">← All tools</a> · Presentations</div></div>
+<header class="hero wrap">
+  <p class="eyebrow">Presentations</p>
+  <h1>Slides<br>That Work</h1>
+  <p class="standfirst">Your slides are not your notes. Twenty exercises on titles, figures, text and what to cut.</p>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</p>
+</header>
+<nav class="tabs"><div class="wrap tablist" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-p="p1">🎯 Practice</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p2">📖 Reference</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p3">📚 Source</button>
+</div></nav>
+<main class="wrap">
+<section class="panel on" id="p1" role="tabpanel">
+  <div class="why">
+    <h2>Why this matters</h2>
+    <p>Your slides are not your notes. If everything you plan to say is on the screen, the audience reads faster than you speak — and then stops listening to you entirely.</p>
+    <div class="pair">
+      <div class="side bad-side"><span>A script</span>"Results: The output of the system decreased by 12% over the twelve-week test period, which we believe is due to progressive fouling of the heat exchanger surface…"<small>Nobody listens to you while they read this. And the title says nothing.</small></div>
+      <div class="side ok-side"><span>A slide</span>"<strong>Output fell 12% over twelve weeks</strong>" + the graph<small>The title is the finding. The graph is the evidence. You supply the reasoning out loud.</small></div>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><i id="bar"></i></div>
+    <div class="pmeta"><span id="pos">1 of 20</span><span id="sc">Score: 0 / 0</span></div></div>
+  <div id="stage"></div>
+  <div class="nav"><button class="btn ghost" id="prev">← Back</button><button class="btn ghost" id="restart">Start again</button></div>
+</section>
+<section class="panel" id="p2" role="tabpanel">
+  <h2>Six rules</h2>
+  <table>
+    <tr><th>Rule</th><th>Why</th></tr>
+    <tr><td class="vb">One idea per slide</td><td>If you need "and" in the title, it is two slides.</td></tr>
+    <tr><td class="vb">Title states the finding</td><td>"Output fell 12%" beats "Results". A reader who sees only your titles should get your argument.</td></tr>
+    <tr><td class="vb">Text is a cue, not a script</td><td>Roughly six words per line. You say the sentences.</td></tr>
+    <tr><td class="vb">24 pt minimum</td><td>If it does not read from the back of the room, it is not on the slide.</td></tr>
+    <tr><td class="vb">Label every axis</td><td>Quantity and unit. A graph nobody can decode is decoration.</td></tr>
+    <tr><td class="vb">Never read the slide aloud</td><td>The audience is already ahead of you.</td></tr>
+  </table>
+  <h3>Figures on slides are not figures in reports</h3>
+  <p>A report figure can be dense — the reader controls the pace. A slide figure gets about fifteen seconds. Strip anything that is not part of the point: extra series, gridlines, second axes, decimal places nobody needs.</p>
+  <div class="box"><strong>Say the axes before the pattern.</strong> "The horizontal axis is time over twelve weeks; the vertical is output in kilowatt hours. You can see the fall from week three." Reverse that order and the audience is still decoding while you are explaining.</div>
+  <h3>Colour</h3>
+  <ul>
+    <li>Do not rely on colour alone to separate lines — about one in twelve men has some colour vision deficiency. Use different line styles or direct labels as well.</li>
+    <li>Dark text on a light background survives bad projectors better than the reverse.</li>
+    <li>Two or three colours is usually enough for a technical talk.</li>
+  </ul>
+  <h3>What to cut</h3>
+  <p>Animations that make the audience wait, transitions between slides, clip art, your university logo on every slide, and slide numbers so small nobody can quote them in questions. A number in the corner at readable size is genuinely useful in Q&amp;A.</p>
+  <h3 style="color:var(--es)">For Spanish speakers</h3>
+  <table>
+    <tr><th>From Spanish</th><th>English</th></tr>
+    <tr><td class="x">In this slide we can see the results.</td><td class="v">This slide shows the results.</td></tr>
+    <tr><td class="x">As we can observe in the graphic…</td><td class="v">As you can see in the graph…</td></tr>
+    <tr><td class="x">I will show you a scheme of the system.</td><td class="v">I will show you a diagram of the system.</td></tr>
+    <tr><td class="x">In the next slide I explain the method.</td><td class="v">On the next slide I will explain the method.</td></tr>
+  </table>
+  <div class="box es"><strong>Three false friends on one slide.</strong> <em>Gráfico</em> is a <b>graph</b> or <b>chart</b>, not a "graphic". <em>Esquema</em> is a <b>diagram</b>, not a "scheme". And you speak <b>on</b> a slide, not <em>in</em> it.</div>
+</section>
+<section class="panel" id="p3" role="tabpanel">
+  <h2>Sources</h2>
+  <p>The slide guidance here comes from general presentation practice rather than one text. Last's chapter on developing presentation skills includes a section on visual aids and is the natural place to read further:</p>
+  <ul>
+    <li>Last, S., &amp; Smith, M. (2019). <a href="https://pressbooks.bccampus.ca/technicalwriting/chapter/developingpresentationskills/">8.2 Developing Presentation Skills</a>, in <em>Technical Writing Essentials</em>. University of Victoria. CC BY 4.0.</li>
+  </ul>
+  <div class="box"><strong>On accessibility.</strong> The colour-vision point matters in a lecture theatre and in a printed handout. If your figure depends on telling red from green, some of your audience cannot follow it — and in a professional setting that is a design fault, not bad luck.</div>
+  <div class="box"><strong>About the examples.</strong> The results, systems and figures were invented for practice.</div>
+  <p>Related: <a href="presenting-technical-work.html">Giving a Technical Presentation</a> and <a href="presenting-as-a-team.html">Presenting as a Team</a>. For figures in written reports, see <a href="../academic-writing/describing-data-and-trends.html">Writing About Your Results</a>.</p>
+</section>
+</main>
+<footer class="wrap">Slides That Work · Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</footer>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});});});
+  var Q=[
+ {
+  "k": "choose",
+  "task": "Choose the better slide title.",
+  "o": [
+   "Results",
+   "Output fell 12% over twelve weeks",
+   "Analysis of the experimental data obtained"
+  ],
+  "a": 1,
+  "w": "A title that states the finding means someone who sees only your titles still follows your argument. “Results” is a label, not information."
+ },
+ {
+  "k": "which",
+  "task": "Your slide has a four-line paragraph on it. What is the problem?",
+  "o": [
+   "The font is probably too small",
+   "The audience will read it faster than you can say it, and stop listening",
+   "Paragraphs are fine if the content is good"
+  ],
+  "a": 1,
+  "w": "This is the core problem with text-heavy slides. You are competing with your own screen, and the screen wins."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "In this slide we can see the temperature curve.",
+   "This slide shows the temperature curve.",
+   "In this slide is shown the temperature curve."
+  ],
+  "a": 1,
+  "w": "Give the slide the subject position: <b>this slide shows</b>. Also note you speak <b>on</b> a slide, not <em>in</em> it."
+ },
+ {
+  "k": "choose",
+  "task": "You are about to explain a graph. What do you say first?",
+  "o": [
+   "“As you can see, there is a sharp fall here.”",
+   "“The horizontal axis is time in weeks; the vertical is output in kWh.”",
+   "“This is our most important result.”"
+  ],
+  "a": 1,
+  "w": "Axes and units first. An audience still decoding the axes cannot process the pattern you are pointing at."
+ },
+ {
+  "k": "which",
+  "task": "What is the minimum readable font size for a lecture theatre?",
+  "o": [
+   "12 pt",
+   "18 pt",
+   "24 pt"
+  ],
+  "a": 2,
+  "w": "24 pt is the usual floor. The practical test: stand back from your own laptop screen by two metres. If you cannot read it, neither can row twelve."
+ },
+ {
+  "k": "es",
+  "task": "Which word is correct in English?",
+  "o": [
+   "As we can observe in the graphic…",
+   "As you can see in the graph…",
+   "As we observe in the grafic…"
+  ],
+  "a": 1,
+  "w": "<em>Gráfico</em> is a <b>graph</b> or <b>chart</b>. In English, a “graphic” is a picture or illustration — a different thing."
+ },
+ {
+  "k": "fix",
+  "task": "Your figure has five data series, gridlines, a second axis and four decimal places. It is going on a slide. What do you do?",
+  "s": "The same figure works well in the written report.",
+  "o": [
+   "Strip it to the one or two series that carry your point.",
+   "Keep it — the detail shows rigour.",
+   "Make the font smaller so it all fits."
+  ],
+  "a": 0,
+  "w": "A report figure can be dense because the reader controls the pace. A slide figure gets about fifteen seconds. Different medium, different design."
+ },
+ {
+  "k": "which",
+  "task": "You distinguish two lines on a graph using red and green only. What is the problem?",
+  "o": [
+   "Red and green clash visually",
+   "Around one in twelve men cannot reliably tell them apart",
+   "Projectors cannot display green"
+  ],
+  "a": 1,
+  "w": "Colour vision deficiency is common. Add different line styles or label the lines directly — it costs nothing and makes the figure work for everyone."
+ },
+ {
+  "k": "choose",
+  "task": "How much text should a bullet point have?",
+  "o": [
+   "A full sentence so nothing is forgotten",
+   "Roughly six words — a cue, not a script",
+   "Two or three lines for completeness"
+  ],
+  "a": 1,
+  "w": "The slide holds the cue; you supply the sentence. If you fear forgetting, put full notes in the speaker-notes pane, not on the screen."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "I will show you a scheme of the control system.",
+   "I will show you a diagram of the control system.",
+   "I will show you a schema of the control system."
+  ],
+  "a": 1,
+  "w": "<em>Esquema</em> is a <b>diagram</b>. English <em>scheme</em> means a plan or, in British usage, sometimes a dishonest one."
+ },
+ {
+  "k": "which",
+  "task": "Which slide title tells the reader most?",
+  "o": [
+   "Method",
+   "We tested three coatings under salt spray for 500 hours",
+   "Experimental procedure and materials used in the study"
+  ],
+  "a": 1,
+  "w": "It states what was actually done, with the numbers that matter. The other two are labels that could sit on anyone’s slides."
+ },
+ {
+  "k": "fix",
+  "task": "Choose what to cut from a technical slide deck.",
+  "s": "Your deck has slide transitions, bullet animations, clip art and your university logo on every slide.",
+  "o": [
+   "All of them — none carries information.",
+   "Keep the logo; cut the rest.",
+   "Keep the animations; they hold attention."
+  ],
+  "a": 0,
+  "w": "Animations make the audience wait for information you already have. The logo belongs on the title slide only. None of this is evidence."
+ },
+ {
+  "k": "choose",
+  "task": "An examiner wants to refer back to a slide during questions. What helps?",
+  "o": [
+   "Slide numbers at a readable size",
+   "A detailed table of contents slide",
+   "Naming each slide aloud as you go"
+  ],
+  "a": 0,
+  "w": "A readable number in the corner lets someone say “on slide seven…”. It is a small thing that makes Q&A noticeably smoother."
+ },
+ {
+  "k": "which",
+  "task": "How many ideas should one slide carry?",
+  "o": [
+   "One",
+   "Two or three, to save time",
+   "As many as fit legibly"
+  ],
+  "a": 0,
+  "w": "One. A practical test: if the title needs “and”, you have two slides. Slides are free; audience attention is not."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "In the next slide I explain the results.",
+   "On the next slide I will explain the results.",
+   "In next slide I am explaining the results."
+  ],
+  "a": 1,
+  "w": "<b>On</b> the next slide, and use <em>will</em> for what is coming. Spanish uses <em>en</em> and often the present, which produces both errors at once."
+ },
+ {
+  "k": "choose",
+  "task": "Should you read your slide aloud?",
+  "o": [
+   "Yes, so nothing is missed",
+   "No — say what the slide means instead",
+   "Only the titles"
+  ],
+  "a": 1,
+  "w": "The audience finishes reading before you finish speaking. Your value is the reasoning behind the slide, which is not written on it."
+ },
+ {
+  "k": "which",
+  "task": "Your graph shows kilowatt hours. Where must the unit appear?",
+  "o": [
+   "In your speech only",
+   "On the axis label",
+   "In the report, not on the slide"
+  ],
+  "a": 1,
+  "w": "On the axis, readable from the back. A number without a unit is not a measurement, and an examiner will ask."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the better handling of a complex system diagram.",
+  "s": "The full P&ID has forty labelled components and will be on one slide.",
+  "o": [
+   "Show a simplified version, then the full diagram only if asked.",
+   "Show it full size and apologise that it is small.",
+   "Split it across four slides in sequence."
+  ],
+  "a": 0,
+  "w": "Simplify for the talk and keep the full version as a backup slide after your conclusion. Examiners are impressed by a backup slide appearing on demand."
+ },
+ {
+  "k": "choose",
+  "task": "Dark text on light, or light text on dark?",
+  "o": [
+   "Dark on light — it survives poor projectors and printing",
+   "Light on dark — it looks more modern",
+   "It makes no difference"
+  ],
+  "a": 0,
+  "w": "Dark on light is more robust in a bright room, on a weak projector, and on paper. Reserve light-on-dark for a room you have already tested."
+ },
+ {
+  "k": "which",
+  "task": "What is the best use of your final slide?",
+  "o": [
+   "“Thank you” in large letters",
+   "Your key finding and your contact details",
+   "A list of all your references"
+  ],
+  "a": 1,
+  "w": "The last slide stays on screen throughout Q&A, so it should carry your main message rather than a courtesy. Say thank you aloud instead."
+ }
+];
+  var LBL={choose:'Choose the form',which:'Which is better?',fix:'Fix it',es:'For Spanish speakers'};
+  var stage=document.getElementById('stage'),bar=document.getElementById('bar');
+  var pos=document.getElementById('pos'),scEl=document.getElementById('sc');
+  var i=0,score=0,seen={};
+  function meta(){var n=Object.keys(seen).length;
+    bar.style.width=(n/Q.length*100)+'%';
+    pos.textContent=(i+1)+' of '+Q.length;
+    scEl.textContent='Score: '+score+' / '+n;}
+  function nextBtn(card){var b=document.createElement('button');b.className='btn';b.style.marginTop='15px';
+    if(i<Q.length-1){b.textContent='Next \u2192';
+      b.addEventListener('click',function(){i++;draw();window.scrollTo({top:0,behavior:'smooth'});});}
+    else{b.textContent='See result \u2192';b.addEventListener('click',finish);}
+    card.appendChild(b);}
+  function draw(){
+    var q=Q[i];stage.innerHTML='';
+    var card=document.createElement('div');card.className='card';
+    var kind=document.createElement('span');kind.className='kind'+(q.k==='es'?' es':'');
+    kind.textContent=LBL[q.k]||'Choose';card.appendChild(kind);
+    if(q.sec){var s2=document.createElement('span');s2.className='sec';s2.textContent=q.sec;
+      card.appendChild(document.createElement('br'));card.appendChild(s2);}
+    var task=document.createElement('p');task.className='task';task.textContent=q.task;card.appendChild(task);
+    if(q.s){var st=document.createElement('div');st.className='stim';
+      var p=document.createElement('p');p.textContent=q.s;st.appendChild(p);card.appendChild(st);}
+    var o=document.createElement('div');o.className='opts';
+    var fb=document.createElement('p');fb.className='fb';
+    q.o.forEach(function(l,j){
+      var b=document.createElement('button');b.className='opt';b.textContent=l;
+      b.addEventListener('click',function(){
+        if(seen[i])return;
+        var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+        all[q.a].classList.add('right');
+        if(j!==q.a)b.classList.add('wrong');else score++;
+        seen[i]=true;
+        fb.innerHTML='<b>'+(j===q.a?'Correct. ':'Not quite. ')+'</b>'+q.w;
+        fb.classList.add('on');meta();nextBtn(card);});
+      o.appendChild(b);});
+    card.appendChild(o);card.appendChild(fb);
+    stage.appendChild(card);
+    document.getElementById('prev').disabled=(i===0);meta();}
+  function finish(){
+    stage.innerHTML='';
+    var f=document.createElement('div');f.className='finish';var pc=score/Q.length;
+    var msg=pc>=0.85?'Strong. This will not be what a marker circles.'
+      :pc>=0.55?'Good. The explanations on the ones you missed are the useful part.'
+      :'Worth a second run. Read the Reference tab first.';
+    f.innerHTML='<h3>You scored '+score+' / '+Q.length+'</h3><p>'+msg+'</p><p style="margin-bottom:0">One rule to keep: <strong>the slide carries the evidence; you carry the reasoning.</strong></p>';
+    var b=document.createElement('button');b.className='btn';b.style.marginTop='13px';b.textContent='Try again';
+    b.addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+    f.appendChild(b);stage.appendChild(f);bar.style.width='100%';}
+  document.getElementById('prev').addEventListener('click',function(){if(i>0){i--;draw();window.scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('restart').addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+  draw();})();
+</script>
+</body>
+</html>

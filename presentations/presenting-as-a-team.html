@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presenting as a Team — Technical English Writing Toolkit</title>
+<style>
+  :root{--ink:#16202E;--ink-soft:#5A6673;--paper:#F1F3F5;--card:#FFFFFF;--line:#D9DEE4;
+    --accent:#6B4E9E;--accent-soft:#EDE8F5;--es:#B07A1E;--es-soft:#FBF3E2;
+    --good:#2E6E4A;--good-soft:#E6F2EA;--bad:#A63D5B;--bad-soft:#F7E7EC;
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .topbar{border-bottom:1px solid var(--line);padding:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .topbar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  header.hero{padding:38px 0 22px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 13px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.02;letter-spacing:-.025em;margin:0 0 13px}
+  .standfirst{font-size:1.05rem;color:var(--ink-soft);margin:0 0 14px;max-width:50ch}
+  .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .tabs{position:sticky;top:0;z-index:10;background:rgba(241,243,245,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tablist{display:flex;gap:4px;overflow-x:auto;padding:9px 0;scrollbar-width:none}
+  .tablist::-webkit-scrollbar{display:none}
+  .tab{font-family:var(--mono);font-size:12.5px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:7px;padding:8px 14px;color:var(--ink-soft)}
+  .tab:hover{background:var(--card)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .panel{display:none;padding:26px 0 10px;animation:fade .2s ease}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 12px;letter-spacing:-.015em}
+  h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  .box{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 17px;margin:16px 0;font-size:.95rem}
+  .box.es{background:var(--es-soft);border-left-color:var(--es)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.93rem}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  td.x{color:var(--bad)}td.v{color:var(--good)}td.vb{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+  .why{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:19px 21px;margin:0 0 18px}
+  .why h2{font-size:1.08rem;margin:0 0 8px}
+  .why p{font-size:.93rem;color:var(--ink-soft);margin:0 0 12px}
+  .pair{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .side{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.55}
+  .side span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+  .bad-side{background:var(--bad-soft);border-left:3px solid var(--bad)}.bad-side span{color:var(--bad)}
+  .ok-side{background:var(--good-soft);border-left:3px solid var(--good)}.ok-side span{color:var(--good)}
+  .side small{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .progress{margin:0 0 14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:21px;margin:13px 0}
+  .kind{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 11px;margin-bottom:13px}
+  .kind.es{color:var(--es);background:var(--es-soft)}
+  .task{font-size:.94rem;color:var(--ink-soft);margin:0 0 12px}
+  .stim{background:var(--paper);border-radius:9px;padding:14px 16px;margin-bottom:13px;font-size:1rem;line-height:1.75}
+  .stim p{margin:0}
+  .sec{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:5px;padding:3px 8px;margin-bottom:9px}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:var(--good-soft);border-color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+  .fb{margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);display:none}
+  .fb.on{display:block}.fb b{color:var(--ink)}
+  .btn{font-family:var(--mono);font-size:12.5px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .nav{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .finish{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 11px 11px 0;padding:21px;margin:13px 0}
+  .finish h3{margin-top:0}
+  ul{padding-left:20px}li{margin-bottom:7px}
+  footer{margin-top:52px;border-top:1px solid var(--line);padding:22px 0 44px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  @media (max-width:640px){header.hero{padding:26px 0 18px}.card,.why{padding:16px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{.tabs{display:none}.panel{display:block!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><a href="../index.html">← All tools</a> · Presentations</div></div>
+<header class="hero wrap">
+  <p class="eyebrow">Presentations</p>
+  <h1>Presenting<br>as a Team</h1>
+  <p class="standfirst">Your project defence is a team presentation. Twenty exercises on handovers, question routing, and looking like one team.</p>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</p>
+</header>
+<nav class="tabs"><div class="wrap tablist" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-p="p1">🎯 Practice</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p2">📖 Reference</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p3">📚 Source</button>
+</div></nav>
+<main class="wrap">
+<section class="panel on" id="p1" role="tabpanel">
+  <div class="why">
+    <h2>Why this matters</h2>
+    <p>Your project defence is a team presentation. Examiners notice a team that behaves like one team, and they notice a team that behaves like four separate talks stapled together.</p>
+    <div class="pair">
+      <div class="side bad-side"><span>Four talks</span>"…and that is my part. Ana?"<small>No handover, no link. The audience has to work out that a new section has started.</small></div>
+      <div class="side ok-side"><span>One team</span>"That covers the method. Ana will now take you through what we found."<small>Closes your section, names the next speaker, and says what is coming.</small></div>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><i id="bar"></i></div>
+    <div class="pmeta"><span id="pos">1 of 20</span><span id="sc">Score: 0 / 0</span></div></div>
+  <div id="stage"></div>
+  <div class="nav"><button class="btn ghost" id="prev">← Back</button><button class="btn ghost" id="restart">Start again</button></div>
+</section>
+<section class="panel" id="p2" role="tabpanel">
+  <h2>Handing over</h2>
+  <p>A handover does three things: it closes your part, names the next speaker, and says what they will cover.</p>
+  <table>
+    <tr><th>Weak</th><th>Better</th></tr>
+    <tr><td class="x">Ana?</td><td class="v">That covers the method. Ana will now take you through the results.</td></tr>
+    <tr><td class="x">Now my colleague speaks.</td><td class="v">I will hand over to Ana, who will explain the test data.</td></tr>
+    <tr><td class="x">Next slide please.</td><td class="v">Having described the setup, we can turn to what it produced. Ana.</td></tr>
+  </table>
+  <h3>Before the day</h3>
+  <ul>
+    <li><strong>Agree the order and the boundaries.</strong> Who covers what, and where each part stops.</li>
+    <li><strong>Agree the timings and rehearse against a clock.</strong> Teams overrun far more often than individuals.</li>
+    <li><strong>Use one slide template.</strong> Four visual styles tell the examiner you never met.</li>
+    <li><strong>Decide who fields which questions</strong> — and name one person to route them.</li>
+    <li><strong>Agree what you disagree about.</strong> Contradicting each other in Q&amp;A is the single most damaging thing a team can do.</li>
+  </ul>
+  <h3>While your team-mates speak</h3>
+  <p>You are still on stage. Look at the speaker or the screen, not at your phone or your notes. An audience reads a bored team as a team that does not believe its own work.</p>
+  <h3>Questions</h3>
+  <table>
+    <tr><th>Situation</th><th>Say</th></tr>
+    <tr><td>Routing a question</td><td>That is really Ana's area — Ana, would you take that?</td></tr>
+    <tr><td>Adding to a colleague</td><td>To add briefly to what Ana said, …</td></tr>
+    <tr><td>You disagree with a colleague</td><td>We looked at that both ways. Ana's reading is X; I would put more weight on Y.</td></tr>
+    <tr><td>Nobody knows</td><td>We do not have data on that, but we would expect …</td></tr>
+  </table>
+  <h3 style="color:var(--es)">For Spanish speakers</h3>
+  <table>
+    <tr><th>From Spanish</th><th>English</th></tr>
+    <tr><td class="x">I pass the word to Ana. <em>(Paso la palabra…)</em></td><td class="v">I will hand over to Ana.</td></tr>
+    <tr><td class="x">Ana will explain us the results.</td><td class="v">Ana will explain the results to us.</td></tr>
+    <tr><td class="x">In first place, we will present…</td><td class="v">First, we will present…</td></tr>
+    <tr><td class="x">My partner Ana will continue. <em>(compañera)</em></td><td class="v">My colleague Ana will continue.</td></tr>
+  </table>
+  <div class="box es"><strong>Careful with <em>partner</em>.</strong> In English it usually suggests a romantic or business partner. For a classmate or team-mate, say <strong>colleague</strong>, <strong>team-mate</strong> or <strong>the rest of my group</strong>.</div>
+</section>
+<section class="panel" id="p3" role="tabpanel">
+  <h2>Sources</h2>
+  <p>Last's chapter on team presentations is a curated set of external resources rather than a text to adapt, so the guidance here is drawn from general presentation practice. Her chapter is the best starting point for further reading:</p>
+  <ul>
+    <li>Last, S., &amp; Neveu, C. (2019). <a href="https://pressbooks.bccampus.ca/technicalwriting/chapter/teampresentation/">8.3 Presenting as a Team</a>, in <em>Technical Writing Essentials</em>. University of Victoria. CC BY 4.0. Links to practical guides from Deborah Grayson Riegel, Virtual Speech, Nick Morgan, and a Rice University video on coordinating a team presentation.</li>
+  </ul>
+  <div class="box"><strong>What is adapted and what is not.</strong> The handover structure, the pre-presentation checklist and all exercises here were written for this tool. Last's chapter supplied the topic and the further reading, not the content.</div>
+  <div class="box"><strong>About the examples.</strong> The projects, names and figures were invented for practice.</div>
+  <p>Related: <a href="presenting-technical-work.html">Giving a Technical Presentation</a> for signposting and saying numbers aloud, and <a href="slides-that-work.html">Slides That Work</a>.</p>
+</section>
+</main>
+<footer class="wrap">Presenting as a Team · Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</footer>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});});});
+  var Q=[
+ {
+  "k": "choose",
+  "task": "You have finished your section. Choose the best handover.",
+  "o": [
+   "Ana?",
+   "That covers the method. Ana will now take you through the results.",
+   "Now my colleague speaks about results."
+  ],
+  "a": 1,
+  "w": "Closes your part, names the speaker, says what is coming. The audience never has to guess that a new section has begun."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is natural English?",
+  "o": [
+   "I pass the word to Ana.",
+   "I will hand over to Ana.",
+   "I give the word to Ana."
+  ],
+  "a": 1,
+  "w": "<em>Paso la palabra</em> translated literally is not English. <b>Hand over to</b> is the standard phrase."
+ },
+ {
+  "k": "which",
+  "task": "Your team-mate is speaking. What should you be doing?",
+  "o": [
+   "Reviewing your notes for your next part",
+   "Looking at the speaker or the screen",
+   "Checking the time on your phone"
+  ],
+  "a": 1,
+  "w": "You are still on stage and the audience can see you. A team that looks bored by its own work invites the examiner to be bored too."
+ },
+ {
+  "k": "choose",
+  "task": "An examiner asks a question about the test data, which Ana handled. You are the one holding the microphone.",
+  "o": [
+   "Answer as best you can from memory.",
+   "That is really Ana's area — Ana, would you take that?",
+   "Say you do not know."
+  ],
+  "a": 1,
+  "w": "Routing to the person who did the work is a strength, not a weakness. Answering vaguely on a colleague's behalf risks contradicting them."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "Ana will explain us the results.",
+   "Ana will explain the results to us.",
+   "Ana will us explain the results."
+  ],
+  "a": 1,
+  "w": "<em>Explicar</em> takes an indirect object in Spanish; English <b>explain</b> needs <em>to</em>: explain something <b>to</b> someone."
+ },
+ {
+  "k": "fix",
+  "task": "Your slides use four different templates. Why does it matter?",
+  "s": "Each team member designed their own slides in their own style.",
+  "o": [
+   "It signals to the examiner that the team never worked together.",
+   "It shows individual creativity, which is positive.",
+   "It does not matter as long as the content is right."
+  ],
+  "a": 0,
+  "w": "Visual inconsistency is the fastest way to look like four people who met that morning. One template, agreed early, costs nothing."
+ },
+ {
+  "k": "which",
+  "task": "During Q&A your team-mate gives an answer you think is wrong. What is the best response?",
+  "o": [
+   "Say nothing and correct it afterwards.",
+   "Say “That is wrong, actually the answer is…”",
+   "Say “We looked at that both ways — Ana’s reading is X, I would weight Y more.”"
+  ],
+  "a": 2,
+  "w": "Framing it as two considered readings preserves the team and shows the examiner you discussed it. A flat contradiction damages both of you; silence lets an error stand."
+ },
+ {
+  "k": "choose",
+  "task": "Choose the best opening for a team presentation.",
+  "o": [
+   "Hello, I am Miguel and this is my project.",
+   "Good morning. We are Miguel, Ana and Jordi, and we will present our work on ventilation control in three parts.",
+   "Good morning, we will start now."
+  ],
+  "a": 1,
+  "w": "Names the team, names the topic, and gives the structure. The audience now knows how many speakers to expect and roughly when each will come."
+ },
+ {
+  "k": "es",
+  "task": "Which word should you use for a classmate on your project team?",
+  "o": [
+   "My partner Ana will continue.",
+   "My colleague Ana will continue.",
+   "My companion Ana will continue."
+  ],
+  "a": 1,
+  "w": "<em>Compañera</em> is <b>colleague</b> or <b>team-mate</b>. In English, <em>partner</em> usually suggests a romantic or business partner, and <em>companion</em> sounds like a travelling friend."
+ },
+ {
+  "k": "which",
+  "task": "Which is the most common failure in team presentations?",
+  "o": [
+   "Speaking too quietly",
+   "Running over time",
+   "Using too few slides"
+  ],
+  "a": 1,
+  "w": "Teams overrun far more often than individuals, because each speaker protects their own section. Rehearse against a clock, and agree what to cut if you are behind."
+ },
+ {
+  "k": "choose",
+  "task": "Choose the best handover when the next part follows logically from yours.",
+  "o": [
+   "Having described the setup, we can turn to what it produced. Ana.",
+   "Next slide please.",
+   "And now, Ana, the results."
+  ],
+  "a": 0,
+  "w": "The best handovers carry the argument forward as well as changing the speaker. The audience hears one continuous line of reasoning, not a change of shift."
+ },
+ {
+  "k": "which",
+  "task": "When should your team decide who answers which questions?",
+  "o": [
+   "During the Q&A, as questions come",
+   "Before the presentation",
+   "The team leader decides on the spot"
+  ],
+  "a": 1,
+  "w": "Deciding in advance prevents the awkward pause where everyone looks at everyone else. Name one person to route anything unexpected."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the better way to add to a colleague's answer.",
+  "s": "Actually, what Ana meant to say was…",
+  "o": [
+   "To add briefly to what Ana said, …",
+   "Actually Ana is not correct there.",
+   "Ana forgot to mention that…"
+  ],
+  "a": 0,
+  "w": "<em>What Ana meant to say</em> and <em>Ana forgot</em> both undermine her in front of the examiner. Add without correcting unless the point is genuinely wrong."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "In first place, we will present the method.",
+   "First, we will present the method.",
+   "In the first place we present the method."
+  ],
+  "a": 1,
+  "w": "<em>En primer lugar</em> is normally just <b>first</b> in a spoken presentation. <em>In the first place</em> exists in English but signals an argument, not a sequence."
+ },
+ {
+  "k": "which",
+  "task": "Your team has three speakers and twelve minutes. What should you rehearse?",
+  "o": [
+   "Each person practises their own part alone",
+   "The whole presentation together, timed, including handovers",
+   "Only the difficult technical section"
+  ],
+  "a": 1,
+  "w": "Handovers and total timing are exactly what individual practice cannot test, and they are what goes wrong on the day."
+ },
+ {
+  "k": "choose",
+  "task": "Nobody on the team knows the answer to a question. Choose the best response.",
+  "o": [
+   "Give a plausible-sounding guess.",
+   "We do not have data on that, but we would expect the effect to be small because…",
+   "Say the question is out of scope and move on."
+  ],
+  "a": 1,
+  "w": "Honesty plus reasoning shows judgement. Guessing in front of someone who knows the field is the worst option, and a flat refusal to engage looks defensive."
+ },
+ {
+  "k": "which",
+  "task": "Who should introduce the team and the structure?",
+  "o": [
+   "Each speaker introduces themselves when their turn comes",
+   "The first speaker introduces everyone and the whole structure",
+   "The supervisor"
+  ],
+  "a": 1,
+  "w": "One introduction at the start gives the audience the map. Repeated self-introductions break the flow and eat time you will need later."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the better closing for a team presentation.",
+  "s": "That is all from me. Thank you. Does anyone have questions? Ana, do you want to say something?",
+  "o": [
+   "That concludes our presentation. Thank you for your attention — we would be happy to take your questions.",
+   "We have finished, thank you, goodbye.",
+   "That is everything, any questions for anyone?"
+  ],
+  "a": 0,
+  "w": "One speaker closes for the whole team, using <em>we</em>. Ending with an uncertain aside to a colleague undoes the impression of coordination you spent twelve minutes building."
+ },
+ {
+  "k": "choose",
+  "task": "How long should a handover take?",
+  "o": [
+   "One or two sentences",
+   "A full slide summarising the previous section",
+   "As long as needed to recap everything"
+  ],
+  "a": 0,
+  "w": "One or two sentences, spoken slightly more slowly than the rest. Long recaps waste time and tell the audience you do not trust them to have listened."
+ },
+ {
+  "k": "which",
+  "task": "What single decision most improves a team presentation?",
+  "o": [
+   "Choosing better slide animations",
+   "Agreeing the boundary between each speaker's section",
+   "Having the strongest speaker go last"
+  ],
+  "a": 1,
+  "w": "Overlapping sections are what make a team look uncoordinated: two people cover the same ground, and something else gets missed entirely."
+ }
+];
+  var LBL={choose:'Choose the form',which:'Which is better?',fix:'Fix it',es:'For Spanish speakers'};
+  var stage=document.getElementById('stage'),bar=document.getElementById('bar');
+  var pos=document.getElementById('pos'),scEl=document.getElementById('sc');
+  var i=0,score=0,seen={};
+  function meta(){var n=Object.keys(seen).length;
+    bar.style.width=(n/Q.length*100)+'%';
+    pos.textContent=(i+1)+' of '+Q.length;
+    scEl.textContent='Score: '+score+' / '+n;}
+  function nextBtn(card){var b=document.createElement('button');b.className='btn';b.style.marginTop='15px';
+    if(i<Q.length-1){b.textContent='Next \u2192';
+      b.addEventListener('click',function(){i++;draw();window.scrollTo({top:0,behavior:'smooth'});});}
+    else{b.textContent='See result \u2192';b.addEventListener('click',finish);}
+    card.appendChild(b);}
+  function draw(){
+    var q=Q[i];stage.innerHTML='';
+    var card=document.createElement('div');card.className='card';
+    var kind=document.createElement('span');kind.className='kind'+(q.k==='es'?' es':'');
+    kind.textContent=LBL[q.k]||'Choose';card.appendChild(kind);
+    if(q.sec){var s2=document.createElement('span');s2.className='sec';s2.textContent=q.sec;
+      card.appendChild(document.createElement('br'));card.appendChild(s2);}
+    var task=document.createElement('p');task.className='task';task.textContent=q.task;card.appendChild(task);
+    if(q.s){var st=document.createElement('div');st.className='stim';
+      var p=document.createElement('p');p.textContent=q.s;st.appendChild(p);card.appendChild(st);}
+    var o=document.createElement('div');o.className='opts';
+    var fb=document.createElement('p');fb.className='fb';
+    q.o.forEach(function(l,j){
+      var b=document.createElement('button');b.className='opt';b.textContent=l;
+      b.addEventListener('click',function(){
+        if(seen[i])return;
+        var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+        all[q.a].classList.add('right');
+        if(j!==q.a)b.classList.add('wrong');else score++;
+        seen[i]=true;
+        fb.innerHTML='<b>'+(j===q.a?'Correct. ':'Not quite. ')+'</b>'+q.w;
+        fb.classList.add('on');meta();nextBtn(card);});
+      o.appendChild(b);});
+    card.appendChild(o);card.appendChild(fb);
+    stage.appendChild(card);
+    document.getElementById('prev').disabled=(i===0);meta();}
+  function finish(){
+    stage.innerHTML='';
+    var f=document.createElement('div');f.className='finish';var pc=score/Q.length;
+    var msg=pc>=0.85?'Strong. This will not be what a marker circles.'
+      :pc>=0.55?'Good. The explanations on the ones you missed are the useful part.'
+      :'Worth a second run. Read the Reference tab first.';
+    f.innerHTML='<h3>You scored '+score+' / '+Q.length+'</h3><p>'+msg+'</p><p style="margin-bottom:0">One rule to keep: <strong>close your part, name the next speaker, say what is coming.</strong></p>';
+    var b=document.createElement('button');b.className='btn';b.style.marginTop='13px';b.textContent='Try again';
+    b.addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+    f.appendChild(b);stage.appendChild(f);bar.style.width='100%';}
+  document.getElementById('prev').addEventListener('click',function(){if(i>0){i--;draw();window.scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('restart').addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+  draw();})();
+</script>
+</body>
+</html>

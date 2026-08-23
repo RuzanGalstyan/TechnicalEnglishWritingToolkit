@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giving a Technical Presentation — Technical English Writing Toolkit</title>
+<style>
+  :root{--ink:#16202E;--ink-soft:#5A6673;--paper:#F1F3F5;--card:#FFFFFF;--line:#D9DEE4;
+    --accent:#6B4E9E;--accent-soft:#EDE8F5;--es:#B07A1E;--es-soft:#FBF3E2;
+    --good:#2E6E4A;--good-soft:#E6F2EA;--bad:#A63D5B;--bad-soft:#F7E7EC;
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .topbar{border-bottom:1px solid var(--line);padding:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .topbar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  header.hero{padding:38px 0 22px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 13px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.02;letter-spacing:-.025em;margin:0 0 13px}
+  .standfirst{font-size:1.05rem;color:var(--ink-soft);margin:0 0 14px;max-width:50ch}
+  .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .tabs{position:sticky;top:0;z-index:10;background:rgba(241,243,245,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tablist{display:flex;gap:4px;overflow-x:auto;padding:9px 0;scrollbar-width:none}
+  .tablist::-webkit-scrollbar{display:none}
+  .tab{font-family:var(--mono);font-size:12.5px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:7px;padding:8px 14px;color:var(--ink-soft)}
+  .tab:hover{background:var(--card)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .panel{display:none;padding:26px 0 10px;animation:fade .2s ease}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 12px;letter-spacing:-.015em}
+  h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  .box{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 17px;margin:16px 0;font-size:.95rem}
+  .box.es{background:var(--es-soft);border-left-color:var(--es)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.93rem}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  td.x{color:var(--bad)}td.v{color:var(--good)}td.vb{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+  .why{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:19px 21px;margin:0 0 18px}
+  .why h2{font-size:1.08rem;margin:0 0 8px}
+  .why p{font-size:.93rem;color:var(--ink-soft);margin:0 0 12px}
+  .pair{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .side{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.55}
+  .side span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+  .bad-side{background:var(--bad-soft);border-left:3px solid var(--bad)}.bad-side span{color:var(--bad)}
+  .ok-side{background:var(--good-soft);border-left:3px solid var(--good)}.ok-side span{color:var(--good)}
+  .side small{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .progress{margin:0 0 14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:21px;margin:13px 0}
+  .kind{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 11px;margin-bottom:13px}
+  .kind.es{color:var(--es);background:var(--es-soft)}
+  .task{font-size:.94rem;color:var(--ink-soft);margin:0 0 12px}
+  .stim{background:var(--paper);border-radius:9px;padding:14px 16px;margin-bottom:13px;font-size:1rem;line-height:1.75}
+  .stim p{margin:0}
+  .sec{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:5px;padding:3px 8px;margin-bottom:9px}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:var(--good-soft);border-color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+  .fb{margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);display:none}
+  .fb.on{display:block}.fb b{color:var(--ink)}
+  .btn{font-family:var(--mono);font-size:12.5px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .nav{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .finish{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 11px 11px 0;padding:21px;margin:13px 0}
+  .finish h3{margin-top:0}
+  ul{padding-left:20px}li{margin-bottom:7px}
+  footer{margin-top:52px;border-top:1px solid var(--line);padding:22px 0 44px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  @media (max-width:640px){header.hero{padding:26px 0 18px}.card,.why{padding:16px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{.tabs{display:none}.panel{display:block!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><a href="../index.html">← All tools</a> · Presentations</div></div>
+<header class="hero wrap">
+  <p class="eyebrow">Presentations</p>
+  <h1>Giving a Technical<br>Presentation</h1>
+  <p class="standfirst">Signposting, handling questions, and how to say numbers, units and equations out loud. Twenty exercises.</p>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</p>
+</header>
+<nav class="tabs"><div class="wrap tablist" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-p="p1">🎯 Practice</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p2">📖 Reference</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p3">📚 Source</button>
+</div></nav>
+<main class="wrap">
+<section class="panel on" id="p1" role="tabpanel">
+  <div class="why">
+    <h2>Why this matters</h2>
+    <p>A reader who loses the thread scrolls back. A listener who loses it is lost for the rest of your talk. Everything that makes technical speaking different follows from that one fact — including the part nobody teaches: how to say your own numbers out loud.</p>
+    <div class="pair">
+      <div class="side bad-side"><span>Never said aloud before</span>"two comma five times ten minus three meter"<small>You have read 2.5 × 10⁻³ m for years without ever pronouncing it. A defence is a poor place to find out.</small></div>
+      <div class="side ok-side"><span>Said correctly</span>"two point five times ten to the minus three metres"<small>Decimal point, standard power form, plural unit.</small></div>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><i id="bar"></i></div>
+    <div class="pmeta"><span id="pos">1 of 20</span><span id="sc">Score: 0 / 0</span></div></div>
+  <div id="stage"></div>
+  <div class="nav"><button class="btn ghost" id="prev">← Back</button><button class="btn ghost" id="restart">Start again</button></div>
+</section>
+<section class="panel" id="p2" role="tabpanel">
+  <h2>Signposting</h2>
+  <p>These phrases tell the listener where they are. Learn twenty and you will use them for the rest of your career.</p>
+  <table>
+    <tr><th>Moment</th><th>Say</th></tr>
+    <tr><td class="vb">Aim</td><td>The aim of this project was to determine whether…</td></tr>
+    <tr><td class="vb">Structure</td><td>I've divided the talk into three parts. First… then… and finally…</td></tr>
+    <tr><td class="vb">Transition</td><td>That covers the background. Let's turn to the method.</td></tr>
+    <tr><td class="vb">A figure</td><td>This graph shows… · The key point here is…</td></tr>
+    <tr><td class="vb">Emphasis</td><td>The most important result is that…</td></tr>
+    <tr><td class="vb">Closing</td><td>That concludes my presentation. I'd be happy to answer any questions.</td></tr>
+  </table>
+  <div class="box"><strong>Decode the figure before you interpret it.</strong> Say what the axes are and what the units are, <em>then</em> point at the pattern. A listener still decoding the axes cannot follow your explanation.</div>
+
+  <h2>Saying it aloud</h2>
+  <table>
+    <tr><th>Written</th><th>Say</th><th>Not</th></tr>
+    <tr><td class="vb">3.5</td><td class="v">three point five</td><td class="x">three comma five</td></tr>
+    <tr><td class="vb">0.25</td><td class="v">zero point two five</td><td class="x">zero point twenty-five</td></tr>
+    <tr><td class="vb">1,200</td><td class="v">one thousand two hundred</td><td class="x">one point two hundred</td></tr>
+    <tr><td class="vb">2.4 × 10⁶</td><td class="v">two point four times ten to the six</td><td class="x">two point four ten power six</td></tr>
+    <tr><td class="vb">10⁻³</td><td class="v">ten to the minus three</td><td class="x">ten minus three</td></tr>
+    <tr><td class="vb">x²</td><td class="v">x squared</td><td class="x">x two</td></tr>
+    <tr><td class="vb">√x</td><td class="v">the square root of x</td><td class="x">root x of</td></tr>
+    <tr><td class="vb">Δ<i>T</i></td><td class="v">delta T</td><td class="x">triangle T</td></tr>
+    <tr><td class="vb">≈</td><td class="v">is approximately equal to</td><td class="x">is more or less</td></tr>
+    <tr><td class="vb">m/s</td><td class="v">metres per second</td><td class="x">metres seconds</td></tr>
+    <tr><td class="vb">m³</td><td class="v">cubic metres</td><td class="x">metres three</td></tr>
+    <tr><td class="vb">Ø 40 mm</td><td class="v">diameter forty millimetres</td><td class="x">circle forty</td></tr>
+    <tr><td class="vb">CO₂</td><td class="v">C-O-two</td><td class="x">C-O-second</td></tr>
+    <tr><td class="vb">−5 °C</td><td class="v">minus five degrees Celsius</td><td class="x">less five degrees</td></tr>
+  </table>
+  <div class="box"><strong>Decimal points are a real hazard.</strong> Much of continental Europe writes 3,5 where English writes 3.5, and English uses the comma for thousands. Say “three comma five” to an international audience and some will hear thirty-five.</div>
+
+  <h2>Questions</h2>
+  <table>
+    <tr><th>Situation</th><th>Say</th></tr>
+    <tr><td>You didn't hear</td><td>I'm sorry, could you repeat the question?</td></tr>
+    <tr><td>Checking you understood</td><td>If I understand correctly, you're asking whether…?</td></tr>
+    <tr><td>You need a moment</td><td>That's a good question. Let me think for a second.</td></tr>
+    <tr><td>You don't know</td><td>I don't have data on that, but I would expect…</td></tr>
+  </table>
+  <p><strong>Saying you don't know is not a failure.</strong> Inventing an answer in front of an examiner who knows the field is much worse, and they can always tell.</p>
+
+  <h3 style="color:var(--es)">For Spanish speakers</h3>
+  <table>
+    <tr><th>From Spanish</th><th>English</th></tr>
+    <tr><td class="x">Three comma five metres</td><td class="v">Three point five metres</td></tr>
+    <tr><td class="x">In this slide we can see…</td><td class="v">This slide shows…</td></tr>
+    <tr><td class="x">I am going to explain you the method.</td><td class="v">I am going to explain the method to you.</td></tr>
+    <tr><td class="x">Finally, to finish, I finish here.</td><td class="v">That concludes my presentation.</td></tr>
+    <tr><td class="x">Any doubt?</td><td class="v">Any questions?</td></tr>
+  </table>
+  <div class="box es"><strong>Fluency is not the criterion.</strong> Technical audiences are used to accented and non-native English — most of the world's engineering is conducted in it. Being clear, structured and audible matters far more, and slowing down is the single most effective improvement available to almost every student presenter.</div>
+</section>
+<section class="panel" id="p3" role="tabpanel">
+  <h2>Sources</h2>
+  <ul>
+    <li>Last, S., &amp; Smith, M. (2019). <a href="https://pressbooks.bccampus.ca/technicalwriting/chapter/developingpresentationskills/">8.2 Developing Presentation Skills</a>, in <em>Technical Writing Essentials</em>. University of Victoria. CC BY 4.0.</li>
+    <li>Smith, M., &amp; Last, S. (2019). <a href="https://pressbooks.bccampus.ca/technicalwriting/chapter/buildingconfidence/">8.1 Building Confidence as a Presenter</a>, same volume.</li>
+  </ul>
+  <div class="box"><strong>What is adapted and what is not.</strong> Last's chapters supplied the topic and the further reading. The signposting phrases, the pronunciation tables and every exercise here were written for this tool.</div>
+  <div class="box"><strong>On the pronunciation tables.</strong> These follow standard British and international scientific usage. American practice differs on a few points (for example <em>zee</em> for <em>z</em>), and some fields have their own conventions.</div>
+  <div class="box"><strong>About the examples.</strong> The projects, values and equipment here were invented for practice.</div>
+  <p>Related: <a href="slides-that-work.html">Slides That Work</a>, <a href="presenting-as-a-team.html">Presenting as a Team</a>, <a href="../academic-writing/describing-data-and-trends.html">Writing About Your Results</a>.</p>
+</section>
+</main>
+<footer class="wrap">Giving a Technical Presentation · Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</footer>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});});});
+  var Q=[
+ {
+  "k": "choose",
+  "task": "How do you say “0.75” in a presentation?",
+  "o": [
+   "zero comma seventy-five",
+   "zero point seven five",
+   "zero point seventy-five"
+  ],
+  "a": 1,
+  "w": "English uses a point, and digits after it are said individually. “Seventy-five” after the point can be misheard as a different value entirely."
+ },
+ {
+  "k": "choose",
+  "task": "How do you say “2.5 × 10⁻³ m”?",
+  "o": [
+   "two point five times ten to the minus three metres",
+   "two point five by ten minus three meter",
+   "two comma five ten power minus three metres"
+  ],
+  "a": 0,
+  "w": "“Times ten to the minus three” is the standard spoken form. Note the plural <em>metres</em> — units take a plural when the quantity is not one."
+ },
+ {
+  "k": "choose",
+  "task": "You are moving from your method to your results. Which is best?",
+  "o": [
+   "Next slide.",
+   "That covers the method. Let's turn to the results.",
+   "And now the results are here."
+  ],
+  "a": 1,
+  "w": "A transition closes one section and opens the next. “Next slide” describes your own actions and gives a drifting listener nothing to re-attach to."
+ },
+ {
+  "k": "choose",
+  "task": "An examiner asks something you genuinely cannot answer. Best response?",
+  "o": [
+   "Give your best guess confidently",
+   "Say you don't have data on that, and say what you would expect",
+   "Say the question is outside the scope and move on"
+  ],
+  "a": 1,
+  "w": "Honesty plus reasoning shows judgement. Guessing confidently is the worst option in front of someone who knows the field, and a flat refusal looks defensive."
+ },
+ {
+  "k": "choose",
+  "task": "How should you introduce a graph?",
+  "o": [
+   "State what the axes show, then the pattern",
+   "Point out the interesting part first",
+   "Read the slide title aloud"
+  ],
+  "a": 0,
+  "w": "A listener cannot interpret a curve before knowing what is plotted. Axes and units first, then the pattern, then the meaning."
+ },
+ {
+  "k": "which",
+  "task": "Which correctly says “Ø 25 mm”?",
+  "o": [
+   "circle twenty-five millimetre",
+   "diameter twenty-five millimetres",
+   "o twenty-five mm"
+  ],
+  "a": 1,
+  "w": "Ø is read as <b>diameter</b>. The unit takes the plural after any quantity other than one."
+ },
+ {
+  "k": "which",
+  "task": "What is the most common weakness in student technical presentations?",
+  "o": [
+   "Reading the slides aloud",
+   "Speaking too quietly",
+   "Using too few slides"
+  ],
+  "a": 0,
+  "w": "The audience reads faster than you speak, so reading aloud is slower and adds nothing. The slide carries the data; your voice carries the reasoning."
+ },
+ {
+  "k": "choose",
+  "task": "How do you say “1,200 kWh”?",
+  "o": [
+   "one point two hundred kilowatt hours",
+   "one thousand two hundred kilowatt hours",
+   "twelve hundred kilowatt hour"
+  ],
+  "a": 1,
+  "w": "The comma is a thousands separator in English, not a decimal point. “Twelve hundred” is also acceptable, but the unit must still be plural."
+ },
+ {
+  "k": "es",
+  "task": "Which is correct in a presentation?",
+  "o": [
+   "In this slide we can see the temperature curve.",
+   "This slide shows the temperature curve.",
+   "In this slide is shown the temperature curve."
+  ],
+  "a": 1,
+  "w": "Give the slide the subject position. Also note you speak <b>on</b> a slide, not <em>in</em> it."
+ },
+ {
+  "k": "choose",
+  "task": "How do you say “ΔT”?",
+  "o": [
+   "triangle T",
+   "delta T",
+   "change T"
+  ],
+  "a": 1,
+  "w": "<b>Delta T</b>. You can add the meaning the first time — “delta T, the change in temperature” — then use the symbol name alone."
+ },
+ {
+  "k": "which",
+  "task": "You have twelve minutes and your material needs eighteen. What do you do?",
+  "o": [
+   "Speak faster",
+   "Cut a section and say what you cut",
+   "Skip the conclusion"
+  ],
+  "a": 1,
+  "w": "Speaking faster loses everyone, especially in a second language. Cutting a section and naming it — “I won't cover the calibration today, but I'm happy to take questions on it” — reads as control."
+ },
+ {
+  "k": "es",
+  "task": "Which is correct English?",
+  "o": [
+   "I am going to explain you the calibration method.",
+   "I am going to explain the calibration method to you.",
+   "I am going to explain to you the method."
+  ],
+  "a": 1,
+  "w": "<em>Explicar</em> takes an indirect object in Spanish; English <b>explain</b> needs <em>to</em>. Option 3 is grammatical but awkward — usually you can drop <em>to you</em> entirely."
+ },
+ {
+  "k": "choose",
+  "task": "How do you say “m/s”?",
+  "o": [
+   "metres seconds",
+   "metres per second",
+   "metres divided seconds"
+  ],
+  "a": 1,
+  "w": "The slash is <b>per</b>. Same for kg/m³ — kilograms per cubic metre."
+ },
+ {
+  "k": "which",
+  "task": "What should you say in the first thirty seconds?",
+  "o": [
+   "Your name, programme, and the aim in one sentence",
+   "A joke to relax the audience",
+   "A summary of the literature"
+  ],
+  "a": 0,
+  "w": "Examiners are checking they have the right candidate and the right project. If you cannot produce the aim as one clean sentence, they usually conclude the project lacks focus."
+ },
+ {
+  "k": "es",
+  "task": "Which is correct at the end of a presentation?",
+  "o": [
+   "Any doubt?",
+   "Any questions?",
+   "Some doubts?"
+  ],
+  "a": 1,
+  "w": "<em>Duda</em> is a <b>question</b>. English <em>doubt</em> means you suspect something is untrue — so “any doubts?” invites the audience to distrust you."
+ },
+ {
+  "k": "choose",
+  "task": "How do you say “√x”?",
+  "o": [
+   "root x",
+   "the square root of x",
+   "x root"
+  ],
+  "a": 1,
+  "w": "<b>The square root of x</b>. For a cube root: <em>the cube root of x</em>."
+ },
+ {
+  "k": "which",
+  "task": "You realise mid-talk that you made an error on a previous slide. What do you do?",
+  "o": [
+   "Say nothing and hope nobody noticed",
+   "Correct it briefly and move on",
+   "Go back and re-explain the whole slide"
+  ],
+  "a": 1,
+  "w": "“I should correct something — that figure was 4.2, not 42” takes five seconds and reads as competence. An uncorrected error that an examiner spotted reads as much worse."
+ },
+ {
+  "k": "choose",
+  "task": "How do you say “CO₂” aloud?",
+  "o": [
+   "C-O-two",
+   "C-O-second",
+   "carbon two"
+  ],
+  "a": 0,
+  "w": "Letters then the number: <b>C-O-two</b>. The subscript is read as a plain number."
+ },
+ {
+  "k": "which",
+  "task": "Your English is accented and you are worried about it. What matters more to a technical audience?",
+  "o": [
+   "Sounding native",
+   "Being clear, structured and audible",
+   "Using advanced vocabulary"
+  ],
+  "a": 1,
+  "w": "Most of the world's engineering is conducted in non-native English. Slowing down is the single most effective improvement available to almost every student presenter."
+ },
+ {
+  "k": "choose",
+  "task": "You want to point the audience at the important part of a figure. What do you say?",
+  "o": [
+   "As you can see here…",
+   "The key point on this slide is the 18% reduction.",
+   "Look at this bit."
+  ],
+  "a": 1,
+  "w": "Never assume the audience will find the important feature themselves. Name it, then explain it — “the key point here is…” is the most useful phrase in the whole tool."
+ }
+];
+  var LBL={choose:'Choose the form',which:'Which is better?',fix:'Fix it',es:'For Spanish speakers'};
+  var stage=document.getElementById('stage'),bar=document.getElementById('bar');
+  var pos=document.getElementById('pos'),scEl=document.getElementById('sc');
+  var i=0,score=0,seen={};
+  function meta(){var n=Object.keys(seen).length;
+    bar.style.width=(n/Q.length*100)+'%';
+    pos.textContent=(i+1)+' of '+Q.length;
+    scEl.textContent='Score: '+score+' / '+n;}
+  function nextBtn(card){var b=document.createElement('button');b.className='btn';b.style.marginTop='15px';
+    if(i<Q.length-1){b.textContent='Next \u2192';
+      b.addEventListener('click',function(){i++;draw();window.scrollTo({top:0,behavior:'smooth'});});}
+    else{b.textContent='See result \u2192';b.addEventListener('click',finish);}
+    card.appendChild(b);}
+  function draw(){
+    var q=Q[i];stage.innerHTML='';
+    var card=document.createElement('div');card.className='card';
+    var kind=document.createElement('span');kind.className='kind'+(q.k==='es'?' es':'');
+    kind.textContent=LBL[q.k]||'Choose';card.appendChild(kind);
+    if(q.sec){var s2=document.createElement('span');s2.className='sec';s2.textContent=q.sec;
+      card.appendChild(document.createElement('br'));card.appendChild(s2);}
+    var task=document.createElement('p');task.className='task';task.textContent=q.task;card.appendChild(task);
+    if(q.s){var st=document.createElement('div');st.className='stim';
+      var p=document.createElement('p');p.textContent=q.s;st.appendChild(p);card.appendChild(st);}
+    var o=document.createElement('div');o.className='opts';
+    var fb=document.createElement('p');fb.className='fb';
+    q.o.forEach(function(l,j){
+      var b=document.createElement('button');b.className='opt';b.textContent=l;
+      b.addEventListener('click',function(){
+        if(seen[i])return;
+        var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+        all[q.a].classList.add('right');
+        if(j!==q.a)b.classList.add('wrong');else score++;
+        seen[i]=true;
+        fb.innerHTML='<b>'+(j===q.a?'Correct. ':'Not quite. ')+'</b>'+q.w;
+        fb.classList.add('on');meta();nextBtn(card);});
+      o.appendChild(b);});
+    card.appendChild(o);card.appendChild(fb);
+    stage.appendChild(card);
+    document.getElementById('prev').disabled=(i===0);meta();}
+  function finish(){
+    stage.innerHTML='';
+    var f=document.createElement('div');f.className='finish';var pc=score/Q.length;
+    var msg=pc>=0.85?'Strong. This will not be what a marker circles.'
+      :pc>=0.55?'Good. The explanations on the ones you missed are the useful part.'
+      :'Worth a second run. Read the Reference tab first.';
+    f.innerHTML='<h3>You scored '+score+' / '+Q.length+'</h3><p>'+msg+'</p><p style="margin-bottom:0">One rule to keep: <strong>say the axes before the pattern, and say the numbers the English way.</strong></p>';
+    var b=document.createElement('button');b.className='btn';b.style.marginTop='13px';b.textContent='Try again';
+    b.addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+    f.appendChild(b);stage.appendChild(f);bar.style.width='100%';}
+  document.getElementById('prev').addEventListener('click',function(){if(i>0){i--;draw();window.scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('restart').addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+  draw();})();
+</script>
+</body>
+</html>
