@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Reports — Technical English Writing Toolkit</title>
+<style>
+  :root{--ink:#16202E;--ink-soft:#5A6673;--paper:#F1F3F5;--card:#FFFFFF;--line:#D9DEE4;
+    --accent:#B07A1E;--accent-soft:#FBF3E2;--es:#B07A1E;--es-soft:#FBF3E2;
+    --good:#2E6E4A;--good-soft:#E6F2EA;--bad:#A63D5B;--bad-soft:#F7E7EC;
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .topbar{border-bottom:1px solid var(--line);padding:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .topbar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  header.hero{padding:38px 0 22px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 13px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.02;letter-spacing:-.025em;margin:0 0 13px}
+  .standfirst{font-size:1.05rem;color:var(--ink-soft);margin:0 0 14px;max-width:50ch}
+  .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .tabs{position:sticky;top:0;z-index:10;background:rgba(241,243,245,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tablist{display:flex;gap:4px;overflow-x:auto;padding:9px 0;scrollbar-width:none}
+  .tablist::-webkit-scrollbar{display:none}
+  .tab{font-family:var(--mono);font-size:12.5px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:7px;padding:8px 14px;color:var(--ink-soft)}
+  .tab:hover{background:var(--card)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .panel{display:none;padding:26px 0 10px;animation:fade .2s ease}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 12px;letter-spacing:-.015em}
+  h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  .box{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 17px;margin:16px 0;font-size:.95rem}
+  .box.es{background:var(--es-soft);border-left-color:var(--es)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.93rem}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  td.x{color:var(--bad)}td.v{color:var(--good)}td.vb{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+  .why{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:19px 21px;margin:0 0 18px}
+  .why h2{font-size:1.08rem;margin:0 0 8px}
+  .why p{font-size:.93rem;color:var(--ink-soft);margin:0 0 12px}
+  .pair{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .side{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.55}
+  .side span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+  .bad-side{background:var(--bad-soft);border-left:3px solid var(--bad)}.bad-side span{color:var(--bad)}
+  .ok-side{background:var(--good-soft);border-left:3px solid var(--good)}.ok-side span{color:var(--good)}
+  .side small{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .progress{margin:0 0 14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:21px;margin:13px 0}
+  .kind{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 11px;margin-bottom:13px}
+  .kind.es{color:var(--es);background:var(--es-soft)}
+  .task{font-size:.94rem;color:var(--ink-soft);margin:0 0 12px}
+  .stim{background:var(--paper);border-radius:9px;padding:14px 16px;margin-bottom:13px;font-size:1rem;line-height:1.75}
+  .stim p{margin:0}
+  .sec{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:5px;padding:3px 8px;margin-bottom:9px}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:var(--good-soft);border-color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+  .fb{margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);display:none}
+  .fb.on{display:block}.fb b{color:var(--ink)}
+  .btn{font-family:var(--mono);font-size:12.5px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .nav{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .finish{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 11px 11px 0;padding:21px;margin:13px 0}
+  .finish h3{margin-top:0}
+  ul{padding-left:20px}li{margin-bottom:7px}
+  footer{margin-top:52px;border-top:1px solid var(--line);padding:22px 0 44px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  @media (max-width:640px){header.hero{padding:26px 0 18px}.card,.why{padding:16px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{.tabs{display:none}.panel{display:block!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><a href="../index.html">← All tools</a> · Technical writing</div></div>
+<header class="hero wrap">
+  <p class="eyebrow">Technical writing</p>
+  <h1>Lab<br>Reports</h1>
+  <p class="standfirst">A lab report exists so someone who was not there can judge your work and repeat it. Twenty exercises on sections, numbers and uncertainty.</p>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</p>
+</header>
+<nav class="tabs"><div class="wrap tablist" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-p="p1">🎯 Practice</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p2">📖 Reference</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p3">📚 Source</button>
+</div></nav>
+<main class="wrap">
+<section class="panel on" id="p1" role="tabpanel">
+  <div class="why">
+    <h2>Why this matters</h2>
+    <p>A lab report exists so that someone who was not there can judge your work and, if they want to, repeat it. Every convention follows from that one purpose.</p>
+    <div class="pair">
+      <div class="side bad-side"><span>Cannot be repeated</span>"We heated the sample for a while until it changed colour, then measured it."<small>How long? What temperature? Measured with what? Nobody can reproduce this, so nobody can check it.</small></div>
+      <div class="side ok-side"><span>Can be repeated</span>"The sample was heated to 180 °C for 12 minutes, then mass was measured on a balance readable to 0.001 g."<small>Times, temperatures, instrument precision. A stranger could run this tomorrow.</small></div>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><i id="bar"></i></div>
+    <div class="pmeta"><span id="pos">1 of 20</span><span id="sc">Score: 0 / 0</span></div></div>
+  <div id="stage"></div>
+  <div class="nav"><button class="btn ghost" id="prev">← Back</button><button class="btn ghost" id="restart">Start again</button></div>
+</section>
+<section class="panel" id="p2" role="tabpanel">
+  <h2>The sections</h2>
+  <table>
+    <tr><th>Section</th><th>Question it answers</th><th>Tense</th></tr>
+    <tr><td class="vb">Title</td><td>What was investigated?</td><td>—</td></tr>
+    <tr><td class="vb">Abstract</td><td>Aim, method, main result, conclusion — in 150–200 words</td><td>Mixed</td></tr>
+    <tr><td class="vb">Introduction</td><td>Why does this matter, and what is the aim?</td><td>Present simple</td></tr>
+    <tr><td class="vb">Theory</td><td>What equations or principles does the reader need?</td><td>Present simple</td></tr>
+    <tr><td class="vb">Method</td><td>What exactly did you do?</td><td>Past simple passive</td></tr>
+    <tr><td class="vb">Results</td><td>What happened? (No interpretation)</td><td>Past simple</td></tr>
+    <tr><td class="vb">Discussion</td><td>What does it mean, and what went wrong?</td><td>Present simple, hedged</td></tr>
+    <tr><td class="vb">Conclusion</td><td>Does it answer the aim?</td><td>Present simple</td></tr>
+  </table>
+  <div class="box"><strong>The line students cross most often.</strong> Interpretation in Results. "The temperature rose to 78 °C, which shows the insulation failed" is two sentences pretending to be one — the first is a result, the second is a discussion.</div>
+
+  <h3>Numbers and units</h3>
+  <ul>
+    <li>Write a zero before a decimal point: <strong>0.7</strong>, not .7.</li>
+    <li>English uses a decimal <strong>point</strong> and a comma for thousands: 1,250.7 — the reverse of Spanish.</li>
+    <li>Do not report more significant figures than your instrument justifies. A balance readable to 0.001 g does not give you 4.10237 g.</li>
+    <li>Give the actual quantity used, not a range: "12.4 mL", not "10–15 mL".</li>
+    <li>Space between number and unit: 180 °C, 25 mm. Exception: 25%.</li>
+    <li>Spell out a number that starts a sentence, or rewrite the sentence.</li>
+  </ul>
+
+  <h3>Uncertainty is not failure</h3>
+  <p>Every measurement has an uncertainty, and reporting it is what makes you credible. So is explaining a result that came out wrong. A discussion that says "the discrepancy is most likely attributable to heat loss through the uninsulated joint" earns more than one claiming everything went perfectly.</p>
+
+  <h3>Figures and tables</h3>
+  <p>Do not present the same data as both a table and a graph — choose whichever shows the point better. Number every figure, caption it, and refer to it in the text.</p>
+
+  <h3 style="color:var(--es)">For Spanish speakers</h3>
+  <table>
+    <tr><th>From Spanish</th><th>English</th></tr>
+    <tr><td class="x">The mass was 0,75 g.</td><td class="v">The mass was 0.75 g.</td></tr>
+    <tr><td class="x">We obtained a 12% of error.</td><td class="v">The error was 12%. / An error of 12% was obtained.</td></tr>
+    <tr><td class="x">The results were the expected ones.</td><td class="v">The results were as expected.</td></tr>
+    <tr><td class="x">We realised the experiment in the laboratory.</td><td class="v">We carried out the experiment in the laboratory.</td></tr>
+    <tr><td class="x">Significative difference</td><td class="v">Significant difference</td></tr>
+  </table>
+  <div class="box es"><strong><em>Realizar</em> is not <em>realise</em>.</strong> <em>Realizar un experimento</em> is to <b>carry out</b> or <b>perform</b> an experiment. English <em>realise</em> means to become aware of something.</div>
+</section>
+<section class="panel" id="p3" role="tabpanel">
+  <h2>Sources</h2>
+  <p>The conventions here are standard across science and engineering laboratories rather than particular to one text. Useful further reading:</p>
+  <ul>
+    <li>Last, S. (2019). <a href="https://pressbooks.bccampus.ca/technicalwriting/chapter/labreports/">7.6 Lab Reports</a>, in <em>Technical Writing Essentials</em>. University of Victoria. CC BY 4.0.</li>
+    <li><a href="https://www.reed.edu/writing/paper_help/labreport.html">Laboratory Report Instructions</a>, Reed College Online Writing Lab — particularly good on the Discussion section and on critiquing your own experimental design.</li>
+    <li><a href="https://library.soton.ac.uk/writinglabreports">Writing Lab Reports</a>, University of Southampton Library — covers the lab notebook and the writing process as well as the sections.</li>
+  </ul>
+  <div class="box"><strong>Check your module handbook first.</strong> Laboratory conventions vary between departments — on personal pronouns, on abstract length, on whether a separate Theory section is expected. Where your handbook and this page disagree, follow the handbook.</div>
+  <div class="box"><strong>About the examples.</strong> The experiments, values and equipment here were invented for practice.</div>
+  <p>Related: <a href="../academic-writing/verb-tenses-by-section.html">Verb Tenses by Section</a>, <a href="../academic-writing/active-or-passive.html">Active or Passive?</a>, <a href="../academic-writing/describing-data-and-trends.html">Writing About Your Results</a>.</p>
+</section>
+</main>
+<footer class="wrap">Lab Reports · Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</footer>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});});});
+  var Q=[
+ {
+  "k": "which",
+  "task": "Which sentence belongs in the Method, not the Results?",
+  "o": [
+   "The mass decreased by 4.2%.",
+   "The sample was heated to 180 °C for 12 minutes.",
+   "The mass loss suggests incomplete drying."
+  ],
+  "a": 1,
+  "w": "A procedural step in the past passive. The first is a result; the third interprets one and belongs in the Discussion."
+ },
+ {
+  "k": "fix",
+  "task": "This Results sentence crosses a line. Choose the better version.",
+  "s": "The temperature rose to 78 °C, which shows that the insulation had failed.",
+  "o": [
+   "The temperature rose to 78 °C.",
+   "The temperature rose to 78 °C, proving insulation failure.",
+   "The insulation failed, so the temperature rose."
+  ],
+  "a": 0,
+  "w": "Report in Results, argue in Discussion. Move the interpretation and hedge it there: “This may indicate that the insulation had failed.”"
+ },
+ {
+  "k": "es",
+  "task": "Your balance reads to 0.001 g. Which is correct?",
+  "o": [
+   "The mass was 0,75 g.",
+   "The mass was 0.75 g.",
+   "The mass was .75 g."
+  ],
+  "a": 1,
+  "w": "English uses a decimal <b>point</b>, and a number below one always takes a leading zero. Spanish uses a comma, which is the source of the first error."
+ },
+ {
+  "k": "which",
+  "task": "Your balance is readable to 0.001 g. Which value should you report?",
+  "o": [
+   "4.10237 g",
+   "4.102 g",
+   "About 4 g"
+  ],
+  "a": 1,
+  "w": "Never report more precision than your instrument gives. Extra digits are not extra rigour — they are a claim your equipment cannot support."
+ },
+ {
+  "k": "choose",
+  "task": "Choose the correct Method sentence.",
+  "o": [
+   "We added 12.4 mL of the reagent.",
+   "12.4 mL of the reagent was added.",
+   "Add 12.4 mL of the reagent."
+  ],
+  "a": 1,
+  "w": "Past passive is the convention in most laboratory reporting. The imperative belongs in instructions; check your handbook on whether <em>we</em> is permitted — some departments now allow it."
+ },
+ {
+  "k": "which",
+  "task": "Your method says “10–15 mL of solvent was added”. What is wrong?",
+  "o": [
+   "The range is too wide",
+   "You must report the amount you actually used",
+   "Nothing is wrong"
+  ],
+  "a": 1,
+  "w": "A range describes what you might have done. A reader repeating your work needs the actual quantity, because the result may depend on it."
+ },
+ {
+  "k": "choose",
+  "task": "A result came out 12% away from the expected value. What should the Discussion do?",
+  "o": [
+   "Leave it out and report the closer measurements",
+   "Explain the discrepancy and suggest a likely cause",
+   "State that the experiment failed"
+  ],
+  "a": 1,
+  "w": "Explaining a discrepancy is where most of the marks in a lab report sit. Hiding it is the one thing that reliably costs you them."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "We realised the experiment in the laboratory.",
+   "We carried out the experiment in the laboratory.",
+   "We realized the experiment on the laboratory."
+  ],
+  "a": 1,
+  "w": "<em>Realizar</em> means to <b>carry out</b> or <b>perform</b>. English <em>realise</em> means to become aware of something — a false friend that appears in almost every Spanish-speaker lab report."
+ },
+ {
+  "k": "which",
+  "task": "You have six data points showing a clear trend. Table, graph, or both?",
+  "o": [
+   "Both, for completeness",
+   "A graph",
+   "A table"
+  ],
+  "a": 1,
+  "w": "A graph shows a trend better, and presenting the same data twice wastes space and invites the reader to compare two versions of one thing. Choose one."
+ },
+ {
+  "k": "choose",
+  "task": "Choose the correct spacing and format.",
+  "o": [
+   "The sample was heated to 180°C.",
+   "The sample was heated to 180 °C.",
+   "The sample was heated to 180 celsius."
+  ],
+  "a": 1,
+  "w": "A space between the number and the unit — 180 °C, 25 mm, 4.2 kg. The exception is the percent sign: 25%, with no space."
+ },
+ {
+  "k": "which",
+  "task": "Which sentence belongs in the Introduction?",
+  "o": [
+   "Thermal conductivity determines how quickly heat passes through a material.",
+   "The conductivity was measured at 0.42 W/mK.",
+   "The lower value may result from trapped air."
+  ],
+  "a": 0,
+  "w": "Present simple stating established knowledge the reader needs. The second is a result and the third is a discussion."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the better sentence for reporting uncertainty.",
+  "s": "The result was 4.10 g and it was quite accurate.",
+  "o": [
+   "The mass was 4.102 ± 0.001 g.",
+   "The result was 4.10 g, more or less.",
+   "The result was very precise at 4.10 g."
+  ],
+  "a": 0,
+  "w": "State the uncertainty as a figure. “Quite accurate” and “very precise” are opinions; ± 0.001 g is a measurement."
+ },
+ {
+  "k": "es",
+  "task": "Which phrase is correct English?",
+  "o": [
+   "There was a significative difference between the samples.",
+   "There was a significant difference between the samples.",
+   "There was a significated difference between the samples."
+  ],
+  "a": 1,
+  "w": "<em>Significativo</em> is <b>significant</b>. “Significative” is not an English word, though it looks plausible enough to survive into final drafts."
+ },
+ {
+  "k": "choose",
+  "task": "Choose the best Conclusion sentence.",
+  "o": [
+   "In conclusion, the experiment was very interesting.",
+   "The measured conductivity of 0.42 W/mK is consistent with published values for dry timber.",
+   "We learned a lot about thermal conductivity."
+  ],
+  "a": 1,
+  "w": "A conclusion answers the aim with a number and a comparison. What you found interesting or learned is not what is being assessed."
+ },
+ {
+  "k": "which",
+  "task": "Which sentence starts incorrectly?",
+  "o": [
+   "12 samples were prepared.",
+   "Twelve samples were prepared.",
+   "A total of 12 samples were prepared."
+  ],
+  "a": 0,
+  "w": "Do not begin a sentence with a numeral. Spell it out, or rewrite so the number falls later — as option 3 does."
+ },
+ {
+  "k": "choose",
+  "task": "Your figure has no caption. Why does it matter?",
+  "o": [
+   "It looks unprofessional",
+   "A reader who jumps to the figure cannot tell what it shows",
+   "Captions are optional in lab reports"
+  ],
+  "a": 1,
+  "w": "Readers do jump to figures. A numbered, captioned figure that the text refers to is readable on its own; one without is decoration."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "We obtained a 12% of error.",
+   "The error was 12%.",
+   "We obtained an error of the 12%."
+  ],
+  "a": 1,
+  "w": "Spanish <em>un 12% de error</em> puts in articles English does not use. Say <b>the error was 12%</b> or <b>an error of 12% was obtained</b>."
+ },
+ {
+  "k": "which",
+  "task": "What is the abstract for?",
+  "o": [
+   "Introducing the topic",
+   "Letting a reader decide whether to read the report",
+   "Listing the equipment"
+  ],
+  "a": 1,
+  "w": "It is a miniature of the whole report — aim, method, main result, conclusion — so a reader can judge relevance in twenty seconds. Write it last."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the better way to report an anomaly.",
+  "s": "One reading was strange so we ignored it.",
+  "o": [
+   "One reading (3.8 g) fell outside the range of the others and was excluded; a loose connection was suspected.",
+   "One reading was wrong so it was removed.",
+   "All readings were consistent."
+  ],
+  "a": 0,
+  "w": "State the value, state that you excluded it, and say why. Silently dropping data is a serious problem; declaring it is normal practice."
+ },
+ {
+  "k": "choose",
+  "task": "Your handbook says nothing about personal pronouns. What is safest?",
+  "o": [
+   "Use “we” throughout",
+   "Use the past passive and ask your lecturer",
+   "Use “the author”"
+  ],
+  "a": 1,
+  "w": "The passive remains the safe default in laboratory reporting, though many departments now accept <em>we</em>. Asking takes a minute and settles it for the whole module."
+ }
+];
+  var LBL={choose:'Choose the form',which:'Which is better?',fix:'Fix it',es:'For Spanish speakers'};
+  var stage=document.getElementById('stage'),bar=document.getElementById('bar');
+  var pos=document.getElementById('pos'),scEl=document.getElementById('sc');
+  var i=0,score=0,seen={};
+  function meta(){var n=Object.keys(seen).length;
+    bar.style.width=(n/Q.length*100)+'%';
+    pos.textContent=(i+1)+' of '+Q.length;
+    scEl.textContent='Score: '+score+' / '+n;}
+  function nextBtn(card){var b=document.createElement('button');b.className='btn';b.style.marginTop='15px';
+    if(i<Q.length-1){b.textContent='Next \u2192';
+      b.addEventListener('click',function(){i++;draw();window.scrollTo({top:0,behavior:'smooth'});});}
+    else{b.textContent='See result \u2192';b.addEventListener('click',finish);}
+    card.appendChild(b);}
+  function draw(){
+    var q=Q[i];stage.innerHTML='';
+    var card=document.createElement('div');card.className='card';
+    var kind=document.createElement('span');kind.className='kind'+(q.k==='es'?' es':'');
+    kind.textContent=LBL[q.k]||'Choose';card.appendChild(kind);
+    if(q.sec){var s2=document.createElement('span');s2.className='sec';s2.textContent=q.sec;
+      card.appendChild(document.createElement('br'));card.appendChild(s2);}
+    var task=document.createElement('p');task.className='task';task.textContent=q.task;card.appendChild(task);
+    if(q.s){var st=document.createElement('div');st.className='stim';
+      var p=document.createElement('p');p.textContent=q.s;st.appendChild(p);card.appendChild(st);}
+    var o=document.createElement('div');o.className='opts';
+    var fb=document.createElement('p');fb.className='fb';
+    q.o.forEach(function(l,j){
+      var b=document.createElement('button');b.className='opt';b.textContent=l;
+      b.addEventListener('click',function(){
+        if(seen[i])return;
+        var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+        all[q.a].classList.add('right');
+        if(j!==q.a)b.classList.add('wrong');else score++;
+        seen[i]=true;
+        fb.innerHTML='<b>'+(j===q.a?'Correct. ':'Not quite. ')+'</b>'+q.w;
+        fb.classList.add('on');meta();nextBtn(card);});
+      o.appendChild(b);});
+    card.appendChild(o);card.appendChild(fb);
+    stage.appendChild(card);
+    document.getElementById('prev').disabled=(i===0);meta();}
+  function finish(){
+    stage.innerHTML='';
+    var f=document.createElement('div');f.className='finish';var pc=score/Q.length;
+    var msg=pc>=0.85?'Strong. This will not be what a marker circles.'
+      :pc>=0.55?'Good. The explanations on the ones you missed are the useful part.'
+      :'Worth a second run. Read the Reference tab first.';
+    f.innerHTML='<h3>You scored '+score+' / '+Q.length+'</h3><p>'+msg+'</p><p style="margin-bottom:0">One rule to keep: <strong>report in Results, argue in Discussion, and give numbers your equipment can justify.</strong></p>';
+    var b=document.createElement('button');b.className='btn';b.style.marginTop='13px';b.textContent='Try again';
+    b.addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+    f.appendChild(b);stage.appendChild(f);bar.style.width='100%';}
+  document.getElementById('prev').addEventListener('click',function(){if(i>0){i--;draw();window.scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('restart').addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+  draw();})();
+</script>
+</body>
+</html>

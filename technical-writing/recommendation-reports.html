@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recommendation and Feasibility Reports — Technical English Writing Toolkit</title>
+<style>
+  :root{--ink:#16202E;--ink-soft:#5A6673;--paper:#F1F3F5;--card:#FFFFFF;--line:#D9DEE4;
+    --accent:#B07A1E;--accent-soft:#FBF3E2;--es:#B07A1E;--es-soft:#FBF3E2;
+    --good:#2E6E4A;--good-soft:#E6F2EA;--bad:#A63D5B;--bad-soft:#F7E7EC;
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .topbar{border-bottom:1px solid var(--line);padding:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .topbar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  header.hero{padding:38px 0 22px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 13px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.02;letter-spacing:-.025em;margin:0 0 13px}
+  .standfirst{font-size:1.05rem;color:var(--ink-soft);margin:0 0 14px;max-width:50ch}
+  .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .tabs{position:sticky;top:0;z-index:10;background:rgba(241,243,245,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tablist{display:flex;gap:4px;overflow-x:auto;padding:9px 0;scrollbar-width:none}
+  .tablist::-webkit-scrollbar{display:none}
+  .tab{font-family:var(--mono);font-size:12.5px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:7px;padding:8px 14px;color:var(--ink-soft)}
+  .tab:hover{background:var(--card)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .panel{display:none;padding:26px 0 10px;animation:fade .2s ease}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 12px;letter-spacing:-.015em}
+  h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  .box{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 17px;margin:16px 0;font-size:.95rem}
+  .box.es{background:var(--es-soft);border-left-color:var(--es)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.93rem}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  td.x{color:var(--bad)}td.v{color:var(--good)}td.vb{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+  .why{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:19px 21px;margin:0 0 18px}
+  .why h2{font-size:1.08rem;margin:0 0 8px}
+  .why p{font-size:.93rem;color:var(--ink-soft);margin:0 0 12px}
+  .pair{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .side{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.55}
+  .side span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+  .bad-side{background:var(--bad-soft);border-left:3px solid var(--bad)}.bad-side span{color:var(--bad)}
+  .ok-side{background:var(--good-soft);border-left:3px solid var(--good)}.ok-side span{color:var(--good)}
+  .side small{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .progress{margin:0 0 14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:21px;margin:13px 0}
+  .kind{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 11px;margin-bottom:13px}
+  .kind.es{color:var(--es);background:var(--es-soft)}
+  .task{font-size:.94rem;color:var(--ink-soft);margin:0 0 12px}
+  .stim{background:var(--paper);border-radius:9px;padding:14px 16px;margin-bottom:13px;font-size:1rem;line-height:1.75}
+  .stim p{margin:0}
+  .sec{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:5px;padding:3px 8px;margin-bottom:9px}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:var(--good-soft);border-color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+  .fb{margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);display:none}
+  .fb.on{display:block}.fb b{color:var(--ink)}
+  .btn{font-family:var(--mono);font-size:12.5px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .nav{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .finish{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 11px 11px 0;padding:21px;margin:13px 0}
+  .finish h3{margin-top:0}
+  ul{padding-left:20px}li{margin-bottom:7px}
+  footer{margin-top:52px;border-top:1px solid var(--line);padding:22px 0 44px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  @media (max-width:640px){header.hero{padding:26px 0 18px}.card,.why{padding:16px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{.tabs{display:none}.panel{display:block!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><a href="../index.html">← All tools</a> · Technical writing</div></div>
+<header class="hero wrap">
+  <p class="eyebrow">Technical writing</p>
+  <h1>Recommendation<br>&amp; Feasibility</h1>
+  <p class="standfirst">Compare options against criteria and recommend one. The shape your TFG probably takes. Twenty exercises.</p>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</p>
+</header>
+<nav class="tabs"><div class="wrap tablist" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-p="p1">🎯 Practice</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p2">📖 Reference</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p3">📚 Source</button>
+</div></nav>
+<main class="wrap">
+<section class="panel on" id="p1" role="tabpanel">
+  <div class="why">
+    <h2>Why this matters</h2>
+    <p>This is the shape your TFG probably takes: you compare options against criteria and recommend one. The whole document exists to support a decision somebody else has to make.</p>
+    <div class="pair">
+      <div class="side bad-side"><span>No decision</span>"Both options have advantages and disadvantages. Option A is cheaper but Option B is more efficient."<small>True, and useless. The reader still has to decide, which is what they asked you to do.</small></div>
+      <div class="side ok-side"><span>A decision</span>"Option B is recommended. Its higher capital cost is recovered within 4.2 years, and it meets the 2030 efficiency target that Option A does not."<small>A choice, the criterion that decided it, and the trade-off acknowledged.</small></div>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><i id="bar"></i></div>
+    <div class="pmeta"><span id="pos">1 of 20</span><span id="sc">Score: 0 / 0</span></div></div>
+  <div id="stage"></div>
+  <div class="nav"><button class="btn ghost" id="prev">← Back</button><button class="btn ghost" id="restart">Start again</button></div>
+</section>
+<section class="panel" id="p2" role="tabpanel">
+  <h2>Three related report types</h2>
+  <table>
+    <tr><th>Type</th><th>Question it answers</th></tr>
+    <tr><td class="vb">Feasibility</td><td>Can this be done, and should it be?</td></tr>
+    <tr><td class="vb">Recommendation</td><td>Which of these options should we choose?</td></tr>
+    <tr><td class="vb">Evaluation</td><td>How well is the existing thing performing?</td></tr>
+  </table>
+  <div class="box">They share one structure, because all three compare something against criteria and reach a judgement. A TFG is usually a feasibility or recommendation report wearing an academic coat.</div>
+
+  <h3>Typical contents</h3>
+  <table>
+    <tr><th>Section</th><th>Job</th></tr>
+    <tr><td class="vb">Executive summary</td><td>The recommendation, up front. Written last, read first</td></tr>
+    <tr><td class="vb">Introduction</td><td>The problem and who needs it solved</td></tr>
+    <tr><td class="vb">Background</td><td>What the reader needs to follow the comparison</td></tr>
+    <tr><td class="vb">Criteria</td><td>What "better" means here — stated <em>before</em> the options</td></tr>
+    <tr><td class="vb">Options</td><td>Each described on the same terms</td></tr>
+    <tr><td class="vb">Comparison</td><td>Options against criteria, usually a table</td></tr>
+    <tr><td class="vb">Conclusions</td><td>What the comparison shows</td></tr>
+    <tr><td class="vb">Recommendation</td><td>What to do, and by when</td></tr>
+  </table>
+
+  <h3>Criteria come first</h3>
+  <p>State your criteria before you describe the options, and say where they came from — a standard, a client requirement, a budget limit. Criteria invented after you looked at the options are how a report ends up justifying a decision that was already made.</p>
+
+  <h3>Weighted objectives</h3>
+  <p>When criteria matter unequally, weight them. Give each a weight, score each option, multiply, total. The value is not the arithmetic — it is that the reader can see your judgement and disagree with a specific number.</p>
+  <div class="box"><strong>State the weights honestly.</strong> If cost matters three times as much as aesthetics to your client, say so. A weighting chosen to produce the answer you wanted is visible to anyone who changes one number.</div>
+
+  <h3>Conclusions and recommendations are different</h3>
+  <table>
+    <tr><th>Conclusion</th><th>Recommendation</th></tr>
+    <tr><td class="v">Option B meets all four criteria; Option A fails on efficiency.</td><td class="v">Adopt Option B, with installation before the 2027 heating season.</td></tr>
+  </table>
+  <p>A conclusion says what your analysis shows. A recommendation says what someone should <em>do</em>. Students routinely stop at the conclusion, and the report never answers the question it was written for.</p>
+
+  <h3>Language of recommending</h3>
+  <table>
+    <tr><th>Strength</th><th>Phrasing</th></tr>
+    <tr><td>Strong</td><td>It is recommended that Option B be adopted.</td></tr>
+    <tr><td>Standard</td><td>Option B should be adopted.</td></tr>
+    <tr><td>Tentative</td><td>Option B could be considered, subject to confirmation of the maintenance cost.</td></tr>
+  </table>
+
+  <h3 style="color:var(--es)">For Spanish speakers</h3>
+  <table>
+    <tr><th>From Spanish</th><th>English</th></tr>
+    <tr><td class="x">In base to these criteria…</td><td class="v">On the basis of these criteria… / Based on these criteria…</td></tr>
+    <tr><td class="x">Option B is the more convenient.</td><td class="v">Option B is the more suitable.</td></tr>
+    <tr><td class="x">We recommend to adopt Option B.</td><td class="v">We recommend adopting Option B. / We recommend that Option B be adopted.</td></tr>
+    <tr><td class="x">Option A presents a major cost.</td><td class="v">Option A has a higher cost.</td></tr>
+    <tr><td class="x">Both options are valid, but…</td><td class="v">Both options are technically viable, but…</td></tr>
+  </table>
+  <div class="box es"><strong><em>Conveniente</em> is not <em>convenient</em>.</strong> It means <b>suitable</b>, <b>advisable</b> or <b>appropriate</b>. English <em>convenient</em> means easy or handy — not a criterion an engineer should be recommending on.</div>
+</section>
+<section class="panel" id="p3" role="tabpanel">
+  <h2>Sources</h2>
+  <ul>
+    <li>Last, S. (2019). <a href="https://pressbooks.bccampus.ca/technicalwriting/chapter/longreports/">7.5 Long Reports — Recommendation Reports and Feasibility Studies</a>, in <em>Technical Writing Essentials</em>. University of Victoria. CC BY 4.0. Covers the three report types, typical contents, weighted objectives charts and a revision checklist.</li>
+    <li>Last, S. (2019). <a href="https://pressbooks.bccampus.ca/technicalwriting/chapter/definingscope/">5.3 Defining the Scope of your Project</a>.</li>
+  </ul>
+  <div class="box"><strong>What is adapted and what is not.</strong> The feasibility / recommendation / evaluation distinction, the typical contents and the weighted objectives approach come from Last's chapter. The criteria-first argument, the conclusion-versus-recommendation contrast, the language tables and every exercise were written for this tool.</div>
+  <div class="box"><strong>Check your TFG regulations.</strong> Your school sets the required structure and length. Where they differ from this page, follow the regulations.</div>
+  <div class="box"><strong>About the examples.</strong> The options, costs and targets here were invented for practice.</div>
+  <p>Related: <a href="proposals.html">Proposals</a>, <a href="../academic-writing/technical-report-structure.html">What Goes in Each Section</a>, <a href="../academic-writing/modals-in-technical-writing.html">Modals</a>, <a href="../academic-writing/analysing-hedging-language.html">How Certain Should You Sound?</a></p>
+</section>
+</main>
+<footer class="wrap">Recommendation and Feasibility Reports · Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</footer>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});});});
+  var Q=[
+ {
+  "k": "choose",
+  "task": "Your client asked which of two heat pumps to buy. Choose the better ending.",
+  "o": [
+   "Both options have advantages and disadvantages.",
+   "Option B is recommended: its higher capital cost is recovered within 4.2 years and it meets the 2030 efficiency target.",
+   "The choice depends on the client's priorities."
+  ],
+  "a": 1,
+  "w": "They asked you to decide. A balanced summary that stops short of a recommendation returns the problem to the person who gave it to you."
+ },
+ {
+  "k": "which",
+  "task": "When should you state your criteria?",
+  "o": [
+   "Before you describe the options",
+   "After describing the options, in the comparison",
+   "In the conclusion"
+  ],
+  "a": 0,
+  "w": "Criteria stated afterwards look chosen to fit the answer. Stated first — and sourced to a standard, budget or client requirement — they make the comparison credible."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "Option B is the more convenient solution.",
+   "Option B is the more suitable solution.",
+   "Option B is the most convenient solution."
+  ],
+  "a": 1,
+  "w": "<em>Conveniente</em> means <b>suitable</b> or <b>advisable</b>. English <em>convenient</em> means handy — not something an engineer should be recommending on."
+ },
+ {
+  "k": "which",
+  "task": "Which is a conclusion rather than a recommendation?",
+  "o": [
+   "Adopt Option B before the 2027 heating season.",
+   "Option B meets all four criteria; Option A fails on efficiency.",
+   "The department should replace the units."
+  ],
+  "a": 1,
+  "w": "A conclusion states what the analysis shows. A recommendation states what someone should do. Reports that stop at conclusions never answer the question they were written for."
+ },
+ {
+  "k": "choose",
+  "task": "Cost matters three times as much to your client as noise. What do you do?",
+  "o": [
+   "Weight the criteria and state the weights",
+   "Discuss cost at greater length",
+   "Rank the options by cost alone"
+  ],
+  "a": 0,
+  "w": "A weighted objectives chart makes your judgement visible and arguable. The reader can change one weight and see what happens — which is the point."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "In base to these criteria, Option B is preferred.",
+   "On the basis of these criteria, Option B is preferred.",
+   "In base of these criteria, Option B is preferred."
+  ],
+  "a": 1,
+  "w": "<em>En base a</em> becomes <b>on the basis of</b> or <b>based on</b>. “In base to” is a direct translation that does not exist in English."
+ },
+ {
+  "k": "which",
+  "task": "What is the executive summary for?",
+  "o": [
+   "Introducing the topic",
+   "Giving the recommendation to someone who will read nothing else",
+   "Summarising the method"
+  ],
+  "a": 1,
+  "w": "Decision-makers often read only this. Put the recommendation in it — and write it last, once you know what your recommendation is."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the better criteria statement.",
+  "s": "We considered cost, efficiency and other relevant factors.",
+  "o": [
+   "Options were assessed against four criteria: capital cost, seasonal efficiency (SCOP ≥ 4.0 per the 2030 target), noise at 1 m, and maintenance interval.",
+   "We looked at all the important aspects of each option.",
+   "Cost and efficiency were the main things we thought about."
+  ],
+  "a": 0,
+  "w": "Named, measurable, and one of them sourced to a target. “Other relevant factors” is where a reader stops trusting the comparison."
+ },
+ {
+  "k": "choose",
+  "task": "You are asked whether a project can be done at all. Which report type?",
+  "o": [
+   "Feasibility report",
+   "Recommendation report",
+   "Evaluation report"
+  ],
+  "a": 0,
+  "w": "Feasibility answers <em>can this be done, and should it be?</em> Recommendation compares options; evaluation judges something already running."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "We recommend to adopt Option B.",
+   "We recommend adopting Option B.",
+   "We recommend to adopting Option B."
+  ],
+  "a": 1,
+  "w": "<b>Recommend</b> takes an <em>-ing</em> form or a <em>that</em> clause: <em>we recommend that Option B be adopted</em>. Never <em>recommend to do</em>."
+ },
+ {
+  "k": "which",
+  "task": "Your two options are described using different criteria. What is wrong?",
+  "o": [
+   "Nothing, if each description is accurate",
+   "They cannot be compared",
+   "The report is too long"
+  ],
+  "a": 1,
+  "w": "Every option must be described on the same terms, in the same order. Otherwise the comparison table has gaps and the reader cannot weigh them against each other."
+ },
+ {
+  "k": "choose",
+  "task": "Choose the appropriate strength for a recommendation you are confident about.",
+  "o": [
+   "Option B could possibly be considered.",
+   "Option B should be adopted.",
+   "Option B must be adopted immediately."
+  ],
+  "a": 1,
+  "w": "<b>Should</b> is the standard strength for a report recommendation. <em>Must</em> instructs a reader who may outrank you; over-hedging wastes the analysis you just did."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the better handling of a trade-off.",
+  "s": "Option B is better in every way.",
+  "o": [
+   "Option B is recommended despite its 18% higher capital cost, which is recovered within 4.2 years.",
+   "Option B is superior and has no disadvantages.",
+   "Option B is better overall, although Option A is cheaper."
+  ],
+  "a": 0,
+  "w": "Naming the disadvantage and showing why it does not decide the case is what makes a recommendation persuasive. A perfect option makes a reader suspicious."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "Option A presents a major cost than Option B.",
+   "Option A has a higher cost than Option B.",
+   "Option A presents a higher cost that Option B."
+  ],
+  "a": 1,
+  "w": "Two errors in one: <em>presentar</em> here is simply <b>have</b>, and comparatives take <b>than</b>, not <em>that</em> (from <em>que</em>, which serves both)."
+ },
+ {
+  "k": "which",
+  "task": "Where does the recommendation belong?",
+  "o": [
+   "Only at the end, after the evidence",
+   "In the executive summary and again at the end",
+   "Only in the executive summary"
+  ],
+  "a": 1,
+  "w": "Both. The summary serves the reader who decides without reading further; the final section serves the reader who followed your argument."
+ },
+ {
+  "k": "choose",
+  "task": "You cannot recommend either option because a key cost is unknown. What do you write?",
+  "o": [
+   "Recommend the cheaper option anyway.",
+   "Recommend Option B subject to confirmation of the maintenance contract cost, and say what figure would change the answer.",
+   "State that no recommendation is possible."
+  ],
+  "a": 1,
+  "w": "A conditional recommendation is still a recommendation. Naming the figure that would flip it shows exactly where the uncertainty sits."
+ },
+ {
+  "k": "which",
+  "task": "What makes a weighted objectives chart useful?",
+  "o": [
+   "It removes subjectivity from the decision",
+   "It makes your judgement visible and arguable",
+   "It is required by most standards"
+  ],
+  "a": 1,
+  "w": "It does not remove judgement — the weights <em>are</em> judgement. Its value is that a reader can see them and disagree with a specific number rather than a general feeling."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "Both options are valid, but Option B is preferable.",
+   "Both options are technically viable, but Option B is preferable.",
+   "Both options are valids, but Option B is preferable."
+  ],
+  "a": 1,
+  "w": "<em>Válido</em> often translates better as <b>viable</b>, <b>feasible</b> or <b>acceptable</b>. English <em>valid</em> is used mainly of arguments, tickets and documents. Adjectives never take a plural -s."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the better title for a recommendation report.",
+  "s": "Report on heating systems",
+  "o": [
+   "Comparison of two air-source heat pump options for Building B: recommendation",
+   "Heating systems: a study",
+   "An analysis of possible heating solutions"
+  ],
+  "a": 0,
+  "w": "Names the options, the site and the fact that it recommends. The reader can tell in five seconds whether this document is for them."
+ },
+ {
+  "k": "which",
+  "task": "Your TFG compares three designs against criteria and picks one. What is it, structurally?",
+  "o": [
+   "A literature review",
+   "A recommendation report",
+   "A progress report"
+  ],
+  "a": 1,
+  "w": "Recognising this helps: your TFG needs stated criteria, comparable descriptions, a comparison, and a recommendation — not just a description of three designs followed by a preference."
+ }
+];
+  var LBL={choose:'Choose the form',which:'Which is better?',fix:'Fix it',es:'For Spanish speakers'};
+  var stage=document.getElementById('stage'),bar=document.getElementById('bar');
+  var pos=document.getElementById('pos'),scEl=document.getElementById('sc');
+  var i=0,score=0,seen={};
+  function meta(){var n=Object.keys(seen).length;
+    bar.style.width=(n/Q.length*100)+'%';
+    pos.textContent=(i+1)+' of '+Q.length;
+    scEl.textContent='Score: '+score+' / '+n;}
+  function nextBtn(card){var b=document.createElement('button');b.className='btn';b.style.marginTop='15px';
+    if(i<Q.length-1){b.textContent='Next \u2192';
+      b.addEventListener('click',function(){i++;draw();window.scrollTo({top:0,behavior:'smooth'});});}
+    else{b.textContent='See result \u2192';b.addEventListener('click',finish);}
+    card.appendChild(b);}
+  function draw(){
+    var q=Q[i];stage.innerHTML='';
+    var card=document.createElement('div');card.className='card';
+    var kind=document.createElement('span');kind.className='kind'+(q.k==='es'?' es':'');
+    kind.textContent=LBL[q.k]||'Choose';card.appendChild(kind);
+    if(q.sec){var s2=document.createElement('span');s2.className='sec';s2.textContent=q.sec;
+      card.appendChild(document.createElement('br'));card.appendChild(s2);}
+    var task=document.createElement('p');task.className='task';task.textContent=q.task;card.appendChild(task);
+    if(q.s){var st=document.createElement('div');st.className='stim';
+      var p=document.createElement('p');p.textContent=q.s;st.appendChild(p);card.appendChild(st);}
+    var o=document.createElement('div');o.className='opts';
+    var fb=document.createElement('p');fb.className='fb';
+    q.o.forEach(function(l,j){
+      var b=document.createElement('button');b.className='opt';b.textContent=l;
+      b.addEventListener('click',function(){
+        if(seen[i])return;
+        var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+        all[q.a].classList.add('right');
+        if(j!==q.a)b.classList.add('wrong');else score++;
+        seen[i]=true;
+        fb.innerHTML='<b>'+(j===q.a?'Correct. ':'Not quite. ')+'</b>'+q.w;
+        fb.classList.add('on');meta();nextBtn(card);});
+      o.appendChild(b);});
+    card.appendChild(o);card.appendChild(fb);
+    stage.appendChild(card);
+    document.getElementById('prev').disabled=(i===0);meta();}
+  function finish(){
+    stage.innerHTML='';
+    var f=document.createElement('div');f.className='finish';var pc=score/Q.length;
+    var msg=pc>=0.85?'Strong. This will not be what a marker circles.'
+      :pc>=0.55?'Good. The explanations on the ones you missed are the useful part.'
+      :'Worth a second run. Read the Reference tab first.';
+    f.innerHTML='<h3>You scored '+score+' / '+Q.length+'</h3><p>'+msg+'</p><p style="margin-bottom:0">One rule to keep: <strong>state the criteria before the options, and end with a decision, not a summary.</strong></p>';
+    var b=document.createElement('button');b.className='btn';b.style.marginTop='13px';b.textContent='Try again';
+    b.addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+    f.appendChild(b);stage.appendChild(f);bar.style.width='100%';}
+  document.getElementById('prev').addEventListener('click',function(){if(i>0){i--;draw();window.scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('restart').addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+  draw();})();
+</script>
+</body>
+</html>

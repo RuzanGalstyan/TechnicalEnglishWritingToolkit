@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Describing a Mechanism — Technical English Writing Toolkit</title>
+<style>
+  :root{
+    --ink:#16202E; --ink-soft:#5A6673;
+    --paper:#F1F3F5; --card:#FFFFFF; --line:#D9DEE4;
+    --accent:#B07A1E; --accent-soft:#FBF3E2;
+    --good:#2E6E4A; --good-soft:#E6F2EA;
+    --bad:#A63D5B; --bad-soft:#F7E7EC;
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .topbar{border-bottom:1px solid var(--line);padding:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .topbar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  header.hero{padding:46px 0 30px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1;letter-spacing:-.025em;margin:0 0 16px}
+  .standfirst{font-size:1.1rem;color:var(--ink-soft);margin:0 0 18px;max-width:52ch}
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+  .pill{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:999px;padding:5px 12px}
+  .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .tabs{position:sticky;top:0;z-index:10;background:rgba(241,243,245,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tablist{display:flex;gap:4px;overflow-x:auto;padding:9px 0;scrollbar-width:none}
+  .tablist::-webkit-scrollbar{display:none}
+  .tab{font-family:var(--mono);font-size:12.5px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:7px;padding:8px 14px;color:var(--ink-soft)}
+  .tab:hover{background:var(--card)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .panel{display:none;padding:36px 0 10px;animation:fade .22s ease}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2{font-family:var(--display);font-weight:700;font-size:1.55rem;letter-spacing:-.015em;margin:0 0 14px}
+  h3{font-family:var(--display);font-weight:700;font-size:1.1rem;margin:28px 0 8px}
+  p{margin:0 0 16px}
+  .note{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:15px 18px;margin:22px 0;font-size:.96rem}
+  .part{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 9px 9px 0;padding:18px 20px;margin:12px 0}
+  .part-key{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 5px}
+  .part h4{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:0 0 8px}
+  .part p{margin:0 0 10px;font-size:.95rem;color:var(--ink-soft)}
+  .ex{font-family:var(--mono);font-size:12.5px;background:var(--paper);border-radius:6px;padding:11px 13px;display:block;margin-bottom:7px;line-height:1.6}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.94rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  td.x{color:var(--bad)} td.v{color:var(--good)}
+  .bank{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+  .bank span{font-family:var(--mono);font-size:12px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:6px 10px;color:var(--ink-soft)}
+  .doc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px;margin:18px 0;line-height:1.95}
+  .doc p{margin:0 0 14px}
+  .doc p:last-child{margin:0}
+  mark{background:var(--accent-soft);border-bottom:2px solid var(--accent);border-radius:3px 3px 0 0;padding:1px 3px;cursor:pointer;color:inherit}
+  mark:hover,mark.sel{background:var(--accent);color:#fff}
+  .readout{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 9px 9px 0;padding:16px 18px;min-height:96px;position:sticky;bottom:14px}
+  .readout .lab{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px}
+  .readout p{margin:0;font-size:.95rem}
+  .field{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:10px 0}
+  .field label{display:block;font-family:var(--display);font-weight:700;font-size:1rem;margin-bottom:3px}
+  .field .hint{font-size:.88rem;color:var(--ink-soft);margin:0 0 10px}
+  textarea{width:100%;font-family:var(--body);font-size:.95rem;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:10px 12px;outline:0;resize:vertical;min-height:58px;line-height:1.55}
+  textarea:focus{border-color:var(--accent)}
+  .out{position:sticky;bottom:0;background:var(--ink);color:#fff;border-radius:11px;padding:18px 20px;margin-top:22px}
+  .out h4{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;margin:0 0 10px;color:rgba(255,255,255,.65)}
+  .out pre{font-family:var(--mono);font-size:12px;line-height:1.7;white-space:pre-wrap;word-break:break-word;margin:0 0 14px;max-height:220px;overflow:auto;color:#fff}
+  .out button{font-family:var(--mono);font-size:12px;cursor:pointer;background:#fff;color:var(--ink);border:0;border-radius:6px;padding:8px 14px;margin-right:8px}
+  .out button.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)}
+  .qcard{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px;margin:16px 0}
+  .qnum{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 8px}
+  .qtext{font-size:1.02rem;margin:0 0 14px}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink);transition:border-color .14s,background .14s}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:var(--good-soft);border-color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+  .why{margin:12px 0 0;font-size:.93rem;color:var(--ink-soft);display:none}
+  .why.on{display:block}
+  .why b{color:var(--ink)}
+  .scorebar{position:sticky;bottom:0;background:var(--ink);color:#fff;border-radius:9px;padding:13px 18px;font-family:var(--mono);font-size:13px;display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+  .scorebar button{font-family:var(--mono);font-size:12px;cursor:pointer;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:6px;padding:6px 12px}
+  ul{padding-left:20px} li{margin-bottom:8px}
+  footer{margin-top:60px;border-top:1px solid var(--line);padding:24px 0 44px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);line-height:1.7}
+  @media (max-width:640px){ header.hero{padding:32px 0 22px} .doc{padding:18px} .readout,.out{position:static} }
+  @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+  @media print{ .tabs,.out,.scorebar{display:none} .panel{display:block!important} .readout{position:static} }
+
+  /* ---- practice engine ---- */
+  .why{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:19px 21px;margin:0 0 18px}
+  .why h2{font-size:1.08rem;margin:0 0 8px}
+  .why p{font-size:.93rem;color:var(--ink-soft);margin:0 0 12px}
+  .pair{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .side{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.55}
+  .side span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+  .side small{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .bad-side{background:#F7E7EC;border-left:3px solid #A63D5B}.bad-side span{color:#A63D5B}
+  .ok-side{background:#E6F2EA;border-left:3px solid #2E6E4A}.ok-side span{color:#2E6E4A}
+  .progress{margin:0 0 14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:21px;margin:13px 0}
+  .kind{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 11px;margin-bottom:13px}
+  .kind.es{color:#B07A1E;background:#FBF3E2}
+  .qtask{font-size:.94rem;color:var(--ink-soft);margin:0 0 12px}
+  .stim{background:var(--paper);border-radius:9px;padding:14px 16px;margin-bottom:13px;font-size:1rem;line-height:1.75}
+  .stim p{margin:0}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:#E6F2EA;border-color:#2E6E4A;font-weight:600}
+  .opt.wrong{background:#F7E7EC;border-color:#A63D5B}
+  .fb{margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);display:none}
+  .fb.on{display:block}.fb b{color:var(--ink)}
+  .btn{font-family:var(--mono);font-size:12.5px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .nav{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .finish{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 11px 11px 0;padding:21px;margin:13px 0}
+  .finish h3{margin-top:0}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap"><a href="../index.html">← All tools</a> · Technical writing</div></div>
+
+<header class="hero wrap">
+  <p class="eyebrow">Technical writing</p>
+  <h1>Describing a Mechanism</h1>
+  <p class="standfirst">Product specifications, design documentation, the parts section of a manual. A technical description makes a reader picture something they have never seen — using measurable detail rather than impressions.</p>
+  <div class="pills"><span class="pill">Technical writing</span><span class="pill">Adapted from Suzan Last</span></div>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</p>
+</header>
+
+<nav class="tabs">
+  <div class="wrap tablist" role="tablist">
+    <button class="tab" role="tab" aria-selected="true"  data-p="p0">🎯 Practice</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p1">🧭 The idea</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p2">🧩 Seven parts</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p3">🔤 Language</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p4">🔍 Annotated</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p5">🛠 Build one</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p6">🎯 Practice</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p7">📚 Source</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section class="panel on" id="p0" role="tabpanel">
+  <div class="why">
+    <h2>Why this matters</h2>
+    <p>A technical description makes a reader picture something they have never seen. It relies on measurable detail — dimensions, materials, tolerances — not impressions. Product descriptions are often legally required, and one that misleads can waste weeks or cause an accident.</p>
+    <div class="pair">
+      <div class="side bad-side"><span>Cannot be pictured</span>"The caliper is a fairly large component made of strong material that gets quite hot."<small>Nothing here can be verified, and nothing helps a reader picture it.</small></div>
+      <div class="side ok-side"><span>Can be pictured</span>"The caliper is 90 mm long, machined from 6061 aluminium, and reaches 250 °C under sustained braking."<small>Three measurable facts. The reader now has the object in mind.</small></div>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><i id="mbar"></i></div>
+    <div class="pmeta"><span id="mpos">1 of 20</span><span id="msc">Score: 0 / 0</span></div></div>
+  <div id="mstage"></div>
+  <div class="nav"><button class="btn ghost" id="mprev">← Back</button><button class="btn ghost" id="mrestart">Start again</button></div>
+</section>
+
+<section class="panel" id="p1" role="tabpanel">
+  <h2>Show and tell</h2>
+  <p>A technical description combines words and visuals so a reader can picture something, understand what it does, and grasp how it works. Unlike creative description, it relies mainly on concrete, measurable detail — dimensions, materials, tolerances — rather than impressions.</p>
+  <p>The stakes are higher than students usually assume. Product descriptions are often legally required for safety and compliance, and a description that misleads can waste weeks or cause an accident. Precision is not a stylistic preference here.</p>
+
+  <h3>Three kinds</h3>
+  <table>
+    <tr><th>Type</th><th>What it does</th></tr>
+    <tr><td><strong>Mechanism description</strong></td><td>Covers the physical aspects of a tool, machine or device with moving parts that performs a specific function. This tool focuses here.</td></tr>
+    <tr><td><strong>Process description</strong></td><td>Covers a sequence of events leading to an outcome — either non-instructional (how an engine works) or instructional (steps to follow).</td></tr>
+    <tr><td><strong>Definition</strong></td><td>Clarifies what a term means in a particular context. Can be a clarifying phrase or several pages.</td></tr>
+  </table>
+  <p>For the second kind, see <a href="describing-a-process.html">Explaining How Something Works</a>, which covers the grammar of process description in detail.</p>
+
+  <div class="note">
+    <strong>Decide audience and purpose before you write a word.</strong> Are you describing solar panels to consumers choosing between them, or supplying schematics to the technician installing them? Same object, almost no shared content. Every later decision — how much detail, which terms need defining, what to leave out — follows from this one.
+  </div>
+
+  <h3>What the reader must end up with</h3>
+  <ul>
+    <li>Its general appearance and physical properties</li>
+    <li>Its overall function or purpose</li>
+    <li>Its component parts</li>
+    <li>How those parts interact to make a working whole</li>
+  </ul>
+  <p>The last point is the one weak descriptions miss. A list of components is a parts inventory, not a description — what makes it a description is explaining how they act on each other.</p>
+</section>
+
+<section class="panel" id="p2" role="tabpanel">
+  <h2>Seven parts</h2>
+  <p>Not every description needs all seven. Judge against your audience: strike a balance between stating the obvious and assuming knowledge your reader may not have.</p>
+
+  <div class="part"><p class="part-key">Part 1</p><h4>Definition</h4>
+    <p>What is it, and what is it mainly for? One sentence, before anything else.</p>
+    <span class="ex">A hydraulic disc brake is a braking system that converts hand force into friction at the wheel.</span></div>
+
+  <div class="part"><p class="part-key">Part 2</p><h4>Overview</h4>
+    <p>The big picture — overall size, shape, general appearance. Give the reader something to hold in mind before you break it apart.</p>
+    <span class="ex">The caliper is roughly 90 mm long and bolts to the frame near the hub.</span></div>
+
+  <div class="part"><p class="part-key">Part 3</p><h4>Components</h4>
+    <p>The main parts, in labelled sections. Order matters more than students expect — see the organising principles below.</p></div>
+
+  <div class="part"><p class="part-key">Part 4</p><h4>Explanation</h4>
+    <p>How the parts work together, and what principles govern that. This is the part that turns a list into a description.</p></div>
+
+  <div class="part"><p class="part-key">Part 5</p><h4>Visuals</h4>
+    <p>Graphics that show the device whole, plus expanded views, cut-aways or labelled diagrams for detail. Every figure numbered, captioned and referred to in the text.</p></div>
+
+  <div class="part"><p class="part-key">Part 6</p><h4>Conclusion</h4>
+    <p>Whatever the purpose requires — availability, cost, manufacturing, history, or warnings. Safety warnings are rarely optional.</p></div>
+
+  <div class="part"><p class="part-key">Part 7</p><h4>References</h4>
+    <p>Sources used, or further sources worth consulting.</p></div>
+
+  <h3>Choosing an organising principle</h3>
+  <p>Pick one and hold to it. Switching halfway is the commonest structural fault in student descriptions.</p>
+  <div class="bank">
+    <span>steps in the process it performs</span><span>top to bottom</span><span>left to right</span>
+    <span>outside to inside</span><span>most to least important</span><span>central component to peripherals</span>
+    <span>by material property</span>
+  </div>
+
+  <h3>Details you can measure</h3>
+  <p>Prefer descriptors that can be verified rather than judged.</p>
+  <div class="bank">
+    <span>shape</span><span>size</span><span>dimensions</span><span>colour</span><span>materials</span>
+    <span>component parts</span><span>properties</span><span>finish</span><span>texture</span>
+    <span>patterns</span><span>principles at work</span><span>interactions</span>
+  </div>
+</section>
+
+<section class="panel" id="p3" role="tabpanel">
+  <h2>Language</h2>
+
+  <div class="part"><p class="part-key">01</p><h4>Be specific, not general</h4>
+    <p>Vague modifiers do no work. If you can measure it, measure it.</p>
+    <table style="margin-top:4px">
+      <tr><th>Instead of</th><th>Write</th></tr>
+      <tr><td class="x">a fairly large rotor</td><td class="v">a 180 mm steel rotor</td></tr>
+      <tr><td class="x">made of strong material</td><td class="v">machined from 6061 aluminium</td></tr>
+      <tr><td class="x">gets quite hot</td><td class="v">reaches up to 250 °C under sustained braking</td></tr>
+    </table></div>
+
+  <div class="part"><p class="part-key">02</p><h4>Present tense, active verbs</h4>
+    <p>Describe how the device appears and what it does, as a standing fact. Note the contrast with a method section, which takes the past passive.</p>
+    <span class="ex">The piston <strong>presses</strong> the pad against the rotor.</span>
+    <span class="ex">✗ The pad was pressed against the rotor by the piston.</span></div>
+
+  <div class="part"><p class="part-key">03</p><h4>Objective language — no ad-speak</h4>
+    <p>Subjective praise destroys credibility in a technical document. Describe the property; let the reader draw the conclusion.</p>
+    <table style="margin-top:4px">
+      <tr><th>Instead of</th><th>Write</th></tr>
+      <tr><td class="x">outstanding stopping power</td><td class="v">reduces stopping distance by 30% in wet conditions</td></tr>
+      <tr><td class="x">an incredibly reliable design</td><td class="v">rated for 20,000 hours of operation</td></tr>
+    </table></div>
+
+  <div class="part"><p class="part-key">04</p><h4>Correct terminology, defined where needed</h4>
+    <p>Use the right technical term — and define it if your audience may not know it. Which terms need defining is an audience decision, not a vocabulary one.</p>
+    <span class="ex">The rotor is mounted on a <strong>six-bolt hub</strong>, a fixing standard in which six screws secure the disc to the wheel.</span></div>
+
+  <div class="part"><p class="part-key">05</p><h4>Analogy for unfamiliar things</h4>
+    <p>Describe the unfamiliar in terms of the familiar. Used well, one analogy can save a paragraph.</p>
+    <span class="ex">The rocker-bogie suspension works like a see-saw, allowing all six wheels to stay in contact with uneven ground.</span></div>
+
+  <div class="note">
+    <strong>A note for Spanish speakers.</strong> Spanish tolerates much longer sentences than technical English does. If a sentence runs past about 25 words, look for the second idea inside it and give it its own sentence. Also watch <em>actually</em> (which means <em>currently</em> in Spanish but <em>in fact</em> in English), and <em>the</em> before uncountable and plural generic nouns — <em>steel resists corrosion</em>, not <em>the steel resists corrosion</em>.
+  </div>
+
+  <h3 style="color:#B07A1E">For Spanish speakers</h3>
+  <table>
+    <tr><th>From Spanish</th><th>English</th></tr>
+    <tr><td class="x">The device is composed by three parts.</td><td class="v">The device is composed of three parts.</td></tr>
+    <tr><td class="x">It has a diameter of 40 milimeters.</td><td class="v">It has a diameter of 40 millimetres.</td></tr>
+    <tr><td class="x">The piece is made of aluminium.</td><td class="v">The component / part is made of aluminium.</td></tr>
+    <tr><td class="x">The scheme shows the assembly.</td><td class="v">The diagram shows the assembly.</td></tr>
+    <tr><td class="x">This mechanism permits to regulate the flow.</td><td class="v">This mechanism regulates the flow.</td></tr>
+  </table>
+  <div class="box"><strong>Two false friends worth memorising.</strong> <em>Pieza</em> is a <b>component</b> or <b>part</b> — an English “piece” suggests a fragment. And <em>esquema</em> is a <b>diagram</b>, not a “scheme”.</div>
+</section>
+
+<section class="panel" id="p4" role="tabpanel">
+  <h2>An annotated description</h2>
+  <p>A short mechanism description written for a general audience — a cycling customer, not a mechanic. <strong>Click any highlighted part</strong> to see which of the seven parts it performs.</p>
+
+  <div class="doc">
+    <p><mark data-k="d1">A hydraulic disc brake is a braking system that converts a rider's hand force into friction at the wheel, slowing a bicycle in a controlled manner.</mark> <mark data-k="d2">The assembly is compact: a caliper roughly 90 mm long bolts to the frame near the wheel hub, straddling a steel rotor between 160 and 203 mm in diameter.</mark></p>
+
+    <p><mark data-k="d3">It has four main components: a lever and master cylinder at the handlebar, a sealed hose containing hydraulic fluid, the caliper body housing two opposed pistons, and a pair of replaceable brake pads.</mark></p>
+
+    <p><mark data-k="d4">When the lever is squeezed, the master cylinder displaces fluid along the hose.</mark> <mark data-k="d5">Because the fluid is effectively incompressible, this pressure drives the caliper pistons inwards, pressing the pads against both faces of the rotor.</mark> <mark data-k="d6">The resulting friction converts the wheel's kinetic energy into heat, which the rotor dissipates into the surrounding air.</mark></p>
+
+    <p><mark data-k="d7">Figure 1 shows a cut-away view of the caliper with the pistons and pads labelled.</mark> <mark data-k="d8">Pads are consumable and should be inspected every few months; pads contaminated with oil lose braking force and cannot be cleaned reliably.</mark></p>
+  </div>
+
+  <div class="readout" id="readout">
+    <span class="lab">Start here</span>
+    <p>Click a highlighted sentence above and the explanation appears here.</p>
+  </div>
+
+  <div class="note" style="margin-top:26px">
+    <strong>Notice the organising principle:</strong> the components are listed in the order the force travels — lever, hose, caliper, pads — and the explanation then follows the same path. The reader never has to jump backwards.
+  </div>
+</section>
+
+<section class="panel" id="p5" role="tabpanel">
+  <h2>Build one</h2>
+  <p>Fill in what you can. A scaffold assembles at the bottom of the screen, which you can copy into your document and write up. Leave anything blank that your audience does not need.</p>
+
+  <div class="field"><label for="f0">Audience and purpose</label>
+    <p class="hint">Who reads this, and why? Everything else depends on your answer.</p>
+    <textarea id="f0" placeholder="e.g. First-year students choosing a bike for commuting. They need enough to compare options, not to repair one."></textarea></div>
+
+  <div class="field"><label for="f1">Definition and function</label>
+    <p class="hint">What is it? What is it for? One sentence.</p>
+    <textarea id="f1"></textarea></div>
+
+  <div class="field"><label for="f2">Overview</label>
+    <p class="hint">Overall size, shape, appearance. Give measurable figures where you can.</p>
+    <textarea id="f2"></textarea></div>
+
+  <div class="field"><label for="f3">Components</label>
+    <p class="hint">The main parts. State your organising principle first — top to bottom, outside in, order of operation.</p>
+    <textarea id="f3"></textarea></div>
+
+  <div class="field"><label for="f4">Explanation</label>
+    <p class="hint">How the parts act on each other, and what principle governs it. The part that makes it a description.</p>
+    <textarea id="f4"></textarea></div>
+
+  <div class="field"><label for="f5">Visuals</label>
+    <p class="hint">Which figures, and what each shows. Diagram, photograph, cut-away, exploded view.</p>
+    <textarea id="f5"></textarea></div>
+
+  <div class="field"><label for="f6">Conclusion</label>
+    <p class="hint">Warnings, cost, availability, maintenance, history — whatever your purpose requires.</p>
+    <textarea id="f6"></textarea></div>
+
+  <div class="field"><label for="f7">References</label>
+    <textarea id="f7"></textarea></div>
+
+  <div class="out">
+    <h4>Your scaffold</h4>
+    <pre id="preview">Fill in the fields above…</pre>
+    <button id="copy">Copy</button>
+    <button class="ghost" id="clear">Clear</button>
+  </div>
+</section>
+
+<section class="panel" id="p6" role="tabpanel">
+  <h2>Practice</h2>
+  <p>Eight items on audience, organisation and precision.</p>
+  <div id="quiz"></div>
+  <div class="scorebar"><span id="score">Score: 0 / 0</span><button id="again">Start again</button></div>
+</section>
+
+<section class="panel" id="p7" role="tabpanel">
+  <h2>Source and licence</h2>
+  <p>This tool is adapted from chapter 7.4, "Technical Descriptions and Definitions", in:</p>
+  <div class="note">
+    Last, S. (2019). <em>Technical Writing Essentials: Introduction to Professional Communications in the Technical Fields</em>. University of Victoria. <a href="https://pressbooks.bccampus.ca/technicalwriting/chapter/technicaldescriptions/">https://pressbooks.bccampus.ca/technicalwriting/chapter/technicaldescriptions/</a><br><br>
+    Licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International Licence</a>.
+  </div>
+
+  <h3>What was adapted, and what is new</h3>
+  <p><strong>From Last:</strong> the three categories of technical description, the seven-part structure for describing a mechanism, the fill-in template, the list of organising principles, the measurable descriptors, and the language guidance on precision, objectivity, terminology and analogy.</p>
+  <p><strong>Written for this tool:</strong> the disc brake example and all its annotations, the practice items, the note on Spanish-speaker sentence length, and the interactive scaffold builder, which turns Last's static template into something students can fill in and copy.</p>
+
+  <div class="note">
+    <strong>Why the licence matters.</strong> CC BY 4.0 means anyone may adapt this material — including commercially — provided the author is credited, the licence is named, and changes are indicated. That is what this page does. Open textbooks exist precisely so that teachers can rebuild them for their own students, and Suzan Last released this one on that understanding.
+  </div>
+
+  <h3>Worth reading in full</h3>
+  <p>The whole book is free and covers far more than this chapter: professional style, document design, teamwork, research methods, IEEE citation, proposals, progress reports, lab reports, instructions, and presentations. <a href="https://pressbooks.bccampus.ca/technicalwriting/">Read it here</a>.</p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  Describing a Mechanism · Ruzana Galstyan-Sargsyan · Universitat Politècnica de València<br>
+  Adapted from Suzan Last, <em>Technical Writing Essentials</em> (University of Victoria, 2019), CC BY 4.0.
+</footer>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });});
+
+  var notes={
+    d1:['Part 1 — Definition','What it is and what it does, in one sentence, before any detail. "Converts hand force into friction" names the working principle immediately.'],
+    d2:['Part 2 — Overview','The big picture, with measurable figures. Note "90 mm" and "160 to 203 mm" rather than "small" and "medium-sized" — a reader can now picture the scale.'],
+    d3:['Part 3 — Components','Four parts, listed in the order the force travels through them. Choosing that order rather than, say, size is what makes the next paragraph easy to follow.'],
+    d4:['Part 4 — Explanation begins','Present tense, active voice: the cylinder displaces the fluid. The chain of causes starts at the rider\'s hand.'],
+    d5:['Part 4 — The governing principle','"Because the fluid is effectively incompressible" is the physics that makes the whole thing work. Naming the principle is what separates a description from a parts list.'],
+    d6:['Part 4 — Completing the chain','Energy conversion stated explicitly, and the heat is followed to where it goes. A description that stopped at "the pads create friction" would leave the reader wondering.'],
+    d7:['Part 5 — Visual','Numbered, and referred to in the text. A figure nobody points at will be read as decoration.'],
+    d8:['Part 6 — Conclusion as warning','For a consumer audience, maintenance and safety matter more than manufacturing history. Note that the warning is specific — oil contamination, not "keep them clean".']
+  };
+  var ro=document.getElementById('readout');
+  document.querySelectorAll('mark').forEach(function(m){
+    m.addEventListener('click',function(){
+      document.querySelectorAll('mark').forEach(function(x){x.classList.remove('sel');});
+      m.classList.add('sel');
+      var n=notes[m.dataset.k];
+      ro.innerHTML='<span class="lab">'+n[0]+'</span><p>'+n[1]+'</p>';
+    });
+  });
+
+  /* scaffold builder */
+  var LABELS=['Audience and purpose','Definition and function','Overview','Components',
+              'Explanation','Visuals','Conclusion','References'];
+  function build(){
+    var out=[];
+    for(var i=0;i<8;i++){
+      var v=document.getElementById('f'+i).value.trim();
+      if(v) out.push(LABELS[i].toUpperCase()+'\n'+v);
+    }
+    document.getElementById('preview').textContent=out.join('\n\n')||'Fill in the fields above…';
+  }
+  for(var i=0;i<8;i++){document.getElementById('f'+i).addEventListener('input',build);}
+  document.getElementById('copy').addEventListener('click',function(){
+    var b=this,t=document.getElementById('preview').textContent;
+    function done(ok){b.textContent=ok?'Copied':'Select manually';setTimeout(function(){b.textContent='Copy';},1600);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){done(true);},function(){done(false);});
+    } else done(false);
+  });
+  document.getElementById('clear').addEventListener('click',function(){
+    for(var i=0;i<8;i++){document.getElementById('f'+i).value='';}
+    build();
+  });
+  build();
+
+  var items=[
+    {q:'You are describing a solar panel for homeowners choosing between models. What should you cut?',
+     o:['The overall dimensions','The cell interconnection schematic','The warranty period'],a:1,
+     w:'A schematic serves an installer, not a buyer. Audience decides content — the same object needs almost entirely different descriptions for the two readers.'},
+    {q:'Which phrase belongs in a technical description?',
+     o:['an impressively compact housing','a housing measuring 90 × 40 × 35 mm','a nicely designed housing'],a:1,
+     w:'Measurable beats evaluative. The reader can verify a dimension; "impressively compact" is your opinion and tells them nothing they can use.'},
+    {q:'You describe the top of a device, then its internal circuit, then its base, then its casing. What has gone wrong?',
+     o:['Too much detail','No consistent organising principle','Wrong tense'],a:1,
+     w:'The description switches between spatial order and inside-out. Pick one principle and hold it — the reader is building a mental model and each switch resets it.'},
+    {q:'Which sentence uses the right tense and voice?',
+     o:['The valve was opened by the actuator.','The actuator opens the valve.','The valve will be opened by the actuator.'],a:1,
+     w:'Present tense, active voice, for how a device normally works. The past passive belongs in a method section describing what you did.'},
+    {q:'Your reader may not know what a "six-bolt hub" is. Best move?',
+     o:['Avoid the term and say "the wheel part"','Use the term and define it briefly','Use it — they can look it up'],a:1,
+     w:'Correct terminology plus a short definition. Avoiding the term makes you imprecise; leaving it undefined makes you inaccessible.'},
+    {q:'What turns a component list into a description?',
+     o:['Adding dimensions to each part','Explaining how the parts act on each other','Adding more photographs'],a:1,
+     w:'The interaction is the point. Without it the reader has an inventory and no understanding of how the thing functions as a whole.'},
+    {q:'Which is the better analogy for a general audience?',
+     o:['The suspension uses a rocker-bogie differential linkage.','The suspension works like a see-saw, keeping all wheels on the ground.','The suspension is very advanced.'],a:1,
+     w:'Analogy explains the unfamiliar through the familiar. The first is accurate but opaque to a non-specialist; the third says nothing at all.'},
+    {q:'Where do safety warnings usually belong in a mechanism description?',
+     o:['In the conclusion','In the definition','They are optional'],a:0,
+     w:'The conclusion carries whatever the purpose requires — warnings, cost, maintenance. For products, warnings are frequently a legal requirement rather than a choice.'}
+  ];
+  var quiz=document.getElementById('quiz'),score=0,done=0;
+  function upd(){document.getElementById('score').textContent='Score: '+score+' / '+done;}
+  function render(){
+    quiz.innerHTML='';score=0;done=0;upd();
+    items.forEach(function(it,i){
+      var c=document.createElement('div');c.className='qcard';
+      var n=document.createElement('p');n.className='qnum';n.textContent='Question '+(i+1)+' of '+items.length;
+      var q=document.createElement('p');q.className='qtext';q.textContent=it.q;
+      var o=document.createElement('div');o.className='opts';
+      var w=document.createElement('p');w.className='why';
+      it.o.forEach(function(l,j){
+        var b=document.createElement('button');b.className='opt';b.textContent=l;
+        b.addEventListener('click',function(){
+          var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+          all[it.a].classList.add('right');
+          if(j!==it.a)b.classList.add('wrong');else score++;
+          w.innerHTML='<b>'+(j===it.a?'Correct. ':'Not quite. ')+'</b>'+it.w;
+          w.classList.add('on');done++;upd();
+        });
+        o.appendChild(b);
+      });
+      c.appendChild(n);c.appendChild(q);c.appendChild(o);c.appendChild(w);quiz.appendChild(c);
+    });
+  }
+  document.getElementById('again').addEventListener('click',function(){render();quiz.scrollIntoView({behavior:'smooth',block:'start'});});
+  render();
+})();
+</script>
+
+<script>
+(function(){
+  var Q=[{"k": "choose", "t": "You are describing a solar panel for homeowners choosing between models. What should you cut?", "o": ["The overall dimensions", "The cell interconnection schematic", "The warranty period"], "a": 1, "w": "A schematic serves an installer, not a buyer. Audience decides content — the same object needs almost entirely different descriptions for the two readers."}, {"k": "choose", "t": "Which phrase belongs in a technical description?", "o": ["an impressively compact housing", "a housing measuring 90 × 40 × 35 mm", "a nicely designed housing"], "a": 1, "w": "Measurable beats evaluative. A reader can verify a dimension; “impressively compact” is your opinion and tells them nothing usable."}, {"k": "choose", "t": "You describe the top, then the internal circuit, then the base, then the casing. What has gone wrong?", "o": ["Too much detail", "No consistent organising principle", "Wrong tense"], "a": 1, "w": "The description switches between spatial order and inside-out. Pick one principle and hold it — every switch resets the reader’s mental model."}, {"k": "choose", "t": "Which sentence uses the right tense and voice?", "o": ["The valve was opened by the actuator.", "The actuator opens the valve.", "The valve will be opened by the actuator."], "a": 1, "w": "Present tense, active voice, for how a device normally works. The past passive belongs in a method section describing what you did."}, {"k": "choose", "t": "Your reader may not know what a “six-bolt hub” is. Best move?", "o": ["Avoid the term and say “the wheel part”", "Use the term and define it briefly", "Use it — they can look it up"], "a": 1, "w": "Correct terminology plus a short definition. Avoiding the term makes you imprecise; leaving it undefined makes you inaccessible."}, {"k": "choose", "t": "What turns a component list into a description?", "o": ["Adding dimensions to each part", "Explaining how the parts act on each other", "Adding more photographs"], "a": 1, "w": "The interaction is the point. Without it a reader has an inventory and no understanding of how the thing works as a whole."}, {"k": "choose", "t": "Which is the better analogy for a general audience?", "o": ["The suspension uses a rocker-bogie differential linkage.", "The suspension works like a see-saw, keeping all wheels on the ground.", "The suspension is very advanced."], "a": 1, "w": "Analogy explains the unfamiliar through the familiar. The first is accurate but opaque to a non-specialist; the third says nothing."}, {"k": "choose", "t": "Where do safety warnings usually belong in a mechanism description?", "o": ["In the conclusion", "In the definition", "They are optional"], "a": 0, "w": "The conclusion carries whatever the purpose requires — warnings, cost, maintenance. For products, warnings are frequently a legal requirement."}, {"k": "choose", "t": "Which opening sentence does the job of a definition?", "o": ["This report describes a hydraulic disc brake.", "A hydraulic disc brake converts hand force into friction at the wheel.", "Hydraulic disc brakes are widely used on modern bicycles."], "a": 1, "w": "A definition names what it is and what it does. Announcing the report wastes the sentence; popularity is context, not definition."}, {"k": "es", "t": "Which sentence is correct English?", "o": ["The device is composed by three main parts.", "The device is composed of three main parts.", "The device composes of three main parts."], "a": 1, "w": "<em>Compuesto por</em> becomes <b>composed of</b>. Alternatives: <em>consists of</em>, <em>is made up of</em>, <em>comprises</em> (with no <em>of</em>)."}, {"k": "choose", "t": "Which organising principle suits a device where material flows through it?", "o": ["Most to least important", "The order of the process it performs", "Alphabetical by component"], "a": 1, "w": "Follow the path. Then the explanation can follow the same route, and the reader never has to jump backwards."}, {"k": "es", "t": "Which is correct in a British-English technical description?", "o": ["a diameter of 40 milimeters", "a diameter of 40 millimetres", "a diameter of 40 milimetres"], "a": 1, "w": "Two <em>l</em>s and the <em>-tre</em> spelling. Spanish <em>milímetro</em> has one <em>l</em>, which is where the error comes from."}, {"k": "choose", "t": "Which detail is measurable rather than evaluative?", "o": ["a robust housing", "a housing with 2 mm wall thickness", "a well-built housing"], "a": 1, "w": "Measurable descriptors — shape, size, dimensions, materials, finish, texture — can be verified. Evaluations cannot, and in a technical document they cost you credibility."}, {"k": "choose", "t": "You are writing for a technician who will repair the device. What changes?", "o": ["Nothing — the object is the same", "More tolerances, fasteners and service access; less general context", "Shorter sentences"], "a": 1, "w": "Audience decides content before anything else. The same object needs a different description for a buyer, an installer and a repairer."}, {"k": "es", "t": "Which sentence is correct English?", "o": ["The scheme shows the assembly sequence.", "The diagram shows the assembly sequence.", "The schema shows the assembly sequence."], "a": 1, "w": "<em>Esquema</em> is a <b>diagram</b>. English <em>scheme</em> means a plan, or in British usage sometimes a dishonest one."}, {"k": "choose", "t": "Your description has no figure. When is that acceptable?", "o": ["Always — good writing is enough", "Rarely — graphics are close to essential in descriptions", "Only for simple objects"], "a": 1, "w": "Sometimes words simply cannot convey a shape. And any figure you include must be drawn from the reader’s viewpoint, not a catalogue’s."}, {"k": "es", "t": "Which sentence is correct English?", "o": ["The piece is made of stainless steel.", "The component is made of stainless steel.", "The piece is made from a stainless steel."], "a": 1, "w": "<em>Pieza</em> is a <b>component</b> or <b>part</b>. An English “piece” suggests a fragment — a piece of broken glass."}, {"k": "choose", "t": "Which sentence explains an interaction rather than listing a part?", "o": ["The caliper contains two opposed pistons.", "Fluid pressure drives the pistons inwards, pressing the pads against the rotor.", "The caliper is bolted to the frame."], "a": 1, "w": "Cause and effect between components. The other two are true and static — necessary, but not what makes a description explanatory."}, {"k": "es", "t": "Which sentence is correct English?", "o": ["This mechanism permits to regulate the flow.", "This mechanism regulates the flow.", "This mechanism permits regulating the flow."], "a": 1, "w": "<em>Permite regular</em> usually just becomes the verb itself. If you need the sense of enabling, write <b>makes it possible to regulate</b>."}, {"k": "choose", "t": "What should you decide before writing a single sentence?", "o": ["The organising principle", "Who reads this and why", "The list of components"], "a": 1, "w": "Audience and purpose come first, and every later decision follows from them — how much detail, which terms to define, what to leave out."}];
+  var stage=document.getElementById('mstage'),bar=document.getElementById('mbar');
+  var pos=document.getElementById('mpos'),scEl=document.getElementById('msc');
+  var i=0,score=0,seen={};
+  function meta(){var n=Object.keys(seen).length;
+    bar.style.width=(n/Q.length*100)+'%';
+    pos.textContent=(i+1)+' of '+Q.length;
+    scEl.textContent='Score: '+score+' / '+n;}
+  function nextBtn(card){var b=document.createElement('button');b.className='btn';b.style.marginTop='15px';
+    if(i<Q.length-1){b.textContent='Next \u2192';
+      b.addEventListener('click',function(){i++;draw();window.scrollTo({top:0,behavior:'smooth'});});}
+    else{b.textContent='See result \u2192';b.addEventListener('click',finish);}
+    card.appendChild(b);}
+  function draw(){
+    var q=Q[i];stage.innerHTML='';
+    var card=document.createElement('div');card.className='pcard';
+    var kind=document.createElement('span');kind.className='kind'+(q.k==='es'?' es':'');
+    kind.textContent=(q.k==='es')?'For Spanish speakers':'Choose the better';
+    var task=document.createElement('p');task.className='qtask';task.textContent=q.t;
+    card.appendChild(kind);card.appendChild(task);
+    var o=document.createElement('div');o.className='opts';
+    var fb=document.createElement('p');fb.className='fb';
+    q.o.forEach(function(l,j){
+      var b=document.createElement('button');b.className='opt';b.textContent=l;
+      b.addEventListener('click',function(){
+        if(seen[i])return;
+        var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+        all[q.a].classList.add('right');
+        if(j!==q.a)b.classList.add('wrong');else score++;
+        seen[i]=true;
+        fb.innerHTML='<b>'+(j===q.a?'Correct. ':'Not quite. ')+'</b>'+q.w;
+        fb.classList.add('on');meta();nextBtn(card);});
+      o.appendChild(b);});
+    card.appendChild(o);card.appendChild(fb);
+    stage.appendChild(card);
+    document.getElementById('mprev').disabled=(i===0);meta();}
+  function finish(){
+    stage.innerHTML='';
+    var f=document.createElement('div');f.className='finish';var pc=score/Q.length;
+    var msg=pc>=0.85?'Strong. Your descriptions will be usable by someone who has never seen the object.'
+      :pc>=0.55?'Good. The pattern in the ones you missed is usually specificity.'
+      :'Worth a second run \u2014 read the Seven parts and Language tabs first.';
+    f.innerHTML='<h3>You scored '+score+' / '+Q.length+'</h3><p>'+msg+'</p>'+
+      '<p style="margin-bottom:0">One rule to keep: <strong>decide who reads it and why, before you write a sentence.</strong> Now open <strong>Build one</strong>.</p>';
+    var b=document.createElement('button');b.className='btn';b.style.marginTop='13px';b.textContent='Try again';
+    b.addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+    f.appendChild(b);stage.appendChild(f);bar.style.width='100%';}
+  document.getElementById('mprev').addEventListener('click',function(){if(i>0){i--;draw();window.scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('mrestart').addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+  draw();})();
+</script>
+</body>
+</html>
