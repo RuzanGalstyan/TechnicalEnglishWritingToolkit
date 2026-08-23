@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choosing Your Citation Verb — Technical English Writing Toolkit</title>
+<style>
+  :root{--ink:#16202E;--ink-soft:#5A6673;--paper:#F1F3F5;--card:#FFFFFF;--line:#D9DEE4;
+    --accent:#2F5FA8;--accent-soft:#E6ECF7;--es:#B07A1E;--es-soft:#FBF3E2;
+    --good:#2E6E4A;--good-soft:#E6F2EA;--bad:#A63D5B;--bad-soft:#F7E7EC;
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .topbar{border-bottom:1px solid var(--line);padding:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .topbar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  header.hero{padding:38px 0 22px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 13px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.02;letter-spacing:-.025em;margin:0 0 13px}
+  .standfirst{font-size:1.05rem;color:var(--ink-soft);margin:0 0 14px;max-width:50ch}
+  .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .tabs{position:sticky;top:0;z-index:10;background:rgba(241,243,245,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tablist{display:flex;gap:4px;overflow-x:auto;padding:9px 0;scrollbar-width:none}
+  .tablist::-webkit-scrollbar{display:none}
+  .tab{font-family:var(--mono);font-size:12.5px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:7px;padding:8px 14px;color:var(--ink-soft)}
+  .tab:hover{background:var(--card)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .panel{display:none;padding:26px 0 10px;animation:fade .2s ease}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 12px;letter-spacing:-.015em}
+  h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  .box{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 17px;margin:16px 0;font-size:.95rem}
+  .box.es{background:var(--es-soft);border-left-color:var(--es)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.93rem}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  td.x{color:var(--bad)}td.v{color:var(--good)}td.vb{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+  .why{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:19px 21px;margin:0 0 18px}
+  .why h2{font-size:1.08rem;margin:0 0 8px}
+  .why p{font-size:.93rem;color:var(--ink-soft);margin:0 0 12px}
+  .pair{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .side{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.55}
+  .side span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+  .bad-side{background:var(--bad-soft);border-left:3px solid var(--bad)}.bad-side span{color:var(--bad)}
+  .ok-side{background:var(--good-soft);border-left:3px solid var(--good)}.ok-side span{color:var(--good)}
+  .side small{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .progress{margin:0 0 14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:21px;margin:13px 0}
+  .kind{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 11px;margin-bottom:13px}
+  .kind.es{color:var(--es);background:var(--es-soft)}
+  .task{font-size:.94rem;color:var(--ink-soft);margin:0 0 12px}
+  .stim{background:var(--paper);border-radius:9px;padding:14px 16px;margin-bottom:13px;font-size:1rem;line-height:1.75}
+  .stim p{margin:0}
+  .sec{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:5px;padding:3px 8px;margin-bottom:9px}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:var(--good-soft);border-color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+  .fb{margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);display:none}
+  .fb.on{display:block}.fb b{color:var(--ink)}
+  .btn{font-family:var(--mono);font-size:12.5px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .nav{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .finish{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 11px 11px 0;padding:21px;margin:13px 0}
+  .finish h3{margin-top:0}
+  ul{padding-left:20px}li{margin-bottom:7px}
+  footer{margin-top:52px;border-top:1px solid var(--line);padding:22px 0 44px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  @media (max-width:640px){header.hero{padding:26px 0 18px}.card,.why{padding:16px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{.tabs{display:none}.panel{display:block!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><a href="../index.html">← All tools</a> · Academic writing</div></div>
+<header class="hero wrap">
+  <p class="eyebrow">Academic writing</p>
+  <h1>Choosing Your<br>Citation Verb</h1>
+  <p class="standfirst">Eight verbs, three groups. The verb tells your reader whether you accept a source, doubt it, or plan to argue with it.</p>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</p>
+</header>
+<nav class="tabs"><div class="wrap tablist" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-p="p1">🎯 Practice</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p2">📖 Reference</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p3">📚 Source</button>
+</div></nav>
+<main class="wrap">
+<section class="panel on" id="p1" role="tabpanel">
+  <div class="why">
+    <h2>Why this matters</h2>
+    <p>The verb you choose tells your reader how much weight to give a source — before you have written a word of evaluation. Three sentences, identical information, three different positions.</p>
+    <div class="pair">
+      <div class="side ok-side"><span>You accept it</span>"Weber (2022) <strong>shows</strong> that albedo is the main factor."<small>You treat it as proven.</small></div>
+      <div class="side ok-side"><span>Open to debate</span>"Weber (2022) <strong>argues</strong> that albedo is the main factor."<small>A position you might contest.</small></div>
+      <div class="side bad-side"><span>You doubt it</span>"Weber (2022) <strong>claims</strong> that albedo is the main factor."<small>You signal disagreement — say so only if you mean it.</small></div>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><i id="bar"></i></div>
+    <div class="pmeta"><span id="pos">1 of 20</span><span id="sc">Score: 0 / 0</span></div></div>
+  <div id="stage"></div>
+  <div class="nav"><button class="btn ghost" id="prev">← Back</button><button class="btn ghost" id="restart">Start again</button></div>
+</section>
+<section class="panel" id="p2" role="tabpanel">
+  <h2>Eight verbs, three groups</h2>
+  <p>You do not need thirty. These eight cover almost everything you will write.</p>
+  <table>
+    <tr><th>Group</th><th>Verbs</th><th>Use when</th></tr>
+    <tr><td class="vb">Neutral</td><td class="vb">states · reports · notes</td><td>You are relaying what the source says, no judgement yet</td></tr>
+    <tr><td class="vb">Tentative</td><td class="vb">suggests · indicates</td><td>Evidence points that way but is not conclusive</td></tr>
+    <tr><td class="vb">Committed</td><td class="vb">shows · argues · claims</td><td><em>Shows</em> = you accept it · <em>argues</em> = a position · <em>claims</em> = you doubt it</td></tr>
+  </table>
+  <div class="box"><strong>The one to be careful with is <em>claims</em>.</strong> It signals doubt. “Newton (1687) claims that force equals mass times acceleration” tells your reader you doubt Newton. Students misuse this verb more than any other.</div>
+
+  <h3>Grammar</h3>
+  <table>
+    <tr><th>Pattern</th><th>Verbs</th><th>Example</th></tr>
+    <tr><td class="vb">verb + that</td><td>states, reports, notes, suggests, indicates, shows, argues, claims</td><td>Park (2022) <em>suggests that</em> wind speed is decisive.</td></tr>
+    <tr><td class="vb">verb + noun</td><td>examines, investigates, describes</td><td>Park (2022) <em>examines the relationship</em> between…</td></tr>
+  </table>
+  <p><strong>Never mix them:</strong> <em>Park examines that…</em> is ungrammatical.</p>
+
+  <h3>Tense</h3>
+  <ul>
+    <li><strong>Present simple</strong> for a position that still stands: <em>Park (2022) argues that…</em> This is the default.</li>
+    <li><strong>Past simple</strong> for what one study did: <em>Park (2022) measured twelve sites.</em></li>
+    <li><strong>Present perfect</strong> for a body of work: <em>Several studies have examined this.</em></li>
+  </ul>
+
+  <h3>Errors that come up every year</h3>
+  <table>
+    <tr><th>Instead of</th><th>Write</th><th>Why</th></tr>
+    <tr><td class="x">The author tells that…</td><td class="v">The author states that…</td><td><em>Tell</em> needs a person: tell <em>someone</em> something.</td></tr>
+    <tr><td class="x">Weber explains about the method.</td><td class="v">Weber explains the method.</td><td>No preposition after <em>explain</em>.</td></tr>
+    <tr><td class="x">Weber talks about albedo.</td><td class="v">Weber discusses albedo.</td><td><em>Talk about</em> is spoken register.</td></tr>
+    <tr><td class="x">Weber mentions that albedo is decisive.</td><td class="v">Weber argues that albedo is decisive.</td><td><em>Mention</em> means said briefly in passing — it trivialises a central claim.</td></tr>
+    <tr><td class="x">Weber proves that…</td><td class="v">Weber shows that…</td><td><em>Prove</em> is very strong and rare outside mathematics.</td></tr>
+  </table>
+
+  <h3 style="color:var(--es)">For Spanish speakers</h3>
+  <table>
+    <tr><th>From Spanish</th><th>English</th></tr>
+    <tr><td class="x">Nieminen affirms that…</td><td class="v">Nieminen states / argues that…</td></tr>
+    <tr><td class="x">Park comments that the method is valid.</td><td class="v">Park notes that the method is valid.</td></tr>
+    <tr><td class="x">Silva expresses that the data are limited.</td><td class="v">Silva acknowledges that the data are limited.</td></tr>
+    <tr><td class="x">The study realises an analysis of…</td><td class="v">The study analyses… / carries out an analysis of…</td></tr>
+  </table>
+  <div class="box es"><strong><em>Afirmar</em> is not <em>affirm</em>.</strong> English <em>affirm</em> is formal and slightly legal — you affirm an oath. For reporting a source use <b>states</b>, <b>argues</b> or <b>reports</b>.</div>
+</section>
+<section class="panel" id="p3" role="tabpanel">
+  <h2>Sources</h2>
+  <ul>
+    <li>Swales, J. M., &amp; Feak, C. B. (2012). <em>Academic Writing for Graduate Students</em> (3rd ed.). University of Michigan Press.</li>
+    <li><a href="https://www.phrasebank.manchester.ac.uk/">Academic Phrasebank</a>, University of Manchester — has a section on referring to sources.</li>
+  </ul>
+  <div class="box"><strong>Eight is deliberate.</strong> Longer lists exist and are useful at postgraduate level, but the difference between <em>contends</em> and <em>maintains</em> is not what will improve your report this term. Master these eight first.</div>
+  <div class="box"><strong>About the examples.</strong> The authors and studies here were invented for practice.</div>
+  <p>Related: <a href="paraphrasing-and-citing.html">Using Sources Without Copying</a>, <a href="analysing-hedging-language.html">How Certain Should You Sound?</a>, <a href="../technical-writing/apa-7-referencing.html">APA 7 Referencing</a>.</p>
+</section>
+</main>
+<footer class="wrap">Choosing Your Citation Verb · Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</footer>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});});});
+  var Q=[
+ {
+  "k": "choose",
+  "task": "You are about to disagree with a source in your next sentence. Which verb?",
+  "o": [
+   "Weber (2022) shows that…",
+   "Weber (2022) argues that…",
+   "Weber (2022) reports that…"
+  ],
+  "a": 1,
+  "w": "<b>Argues</b> frames it as a position that can be contested. <em>Shows</em> concedes it is proven, which contradicts the disagreement you are about to make."
+ },
+ {
+  "k": "which",
+  "task": "Which sentence uses “claims” appropriately?",
+  "o": [
+   "Newton (1687) claims that force equals mass times acceleration.",
+   "The manufacturer claims a lifespan of 50,000 hours, but our tests suggest otherwise.",
+   "Kaur (2018) claims that darker surfaces absorb more radiation."
+  ],
+  "a": 1,
+  "w": "<b>Claims</b> signals doubt. It fits an assertion you are about to challenge, and misfires badly on established physics or uncontroversial findings."
+ },
+ {
+  "k": "choose",
+  "task": "The evidence points one way but is not conclusive. Which verb?",
+  "o": [
+   "proves",
+   "suggests",
+   "shows"
+  ],
+  "a": 1,
+  "w": "<b>Suggests</b> is the standard hedged reporting verb, and probably the most useful of the eight. <em>Prove</em> is very strong and rare outside mathematics."
+ },
+ {
+  "k": "which",
+  "task": "Which is grammatically correct?",
+  "o": [
+   "Osei (2021) examines that vegetation affects temperature.",
+   "Osei (2021) examines the effect of vegetation on temperature.",
+   "Osei (2021) examines about vegetation."
+  ],
+  "a": 1,
+  "w": "<b>Examine</b> takes a noun phrase, never a <em>that</em> clause and never a preposition. The same applies to <em>investigate</em>, <em>analyse</em> and <em>discuss</em>."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "Nieminen (2023) affirms that surface material is decisive.",
+   "Nieminen (2023) states that surface material is decisive.",
+   "Nieminen (2023) affirmates that surface material is decisive."
+  ],
+  "a": 1,
+  "w": "<em>Afirmar</em> is <b>state</b> or <b>argue</b>. English <em>affirm</em> is formal and slightly legal — you affirm an oath, not a finding."
+ },
+ {
+  "k": "choose",
+  "task": "You accept the finding and will build on it. Which verb?",
+  "o": [
+   "claims",
+   "shows",
+   "mentions"
+  ],
+  "a": 1,
+  "w": "<b>Shows</b> treats the evidence as convincing. Use it only for findings you are not going to dispute later — inconsistency here is very visible."
+ },
+ {
+  "k": "which",
+  "task": "Which sentence is too informal for a report?",
+  "o": [
+   "Weber discusses the limitations of the model.",
+   "Weber talks about the limitations of the model.",
+   "Weber notes the limitations of the model."
+  ],
+  "a": 1,
+  "w": "<em>Talk about</em> is spoken register. <b>Discuss</b> is the written equivalent — and note it takes no preposition."
+ },
+ {
+  "k": "choose",
+  "task": "Choose the correct tense for a position that still stands.",
+  "o": [
+   "Osei (2021) argued that vegetation cover matters.",
+   "Osei (2021) argues that vegetation cover matters.",
+   "Osei (2021) has argued that vegetation cover matters."
+  ],
+  "a": 1,
+  "w": "Present simple is the default for a standing claim. Past simple is for what one study did: <em>Osei measured cover at twelve sites.</em>"
+ },
+ {
+  "k": "which",
+  "task": "A source makes a central argument across a whole chapter. Which verb misrepresents it?",
+  "o": [
+   "argues",
+   "mentions",
+   "states"
+  ],
+  "a": 1,
+  "w": "<b>Mention</b> means said briefly, in passing. Using it for a sustained argument tells your reader you did not read carefully."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "Park (2022) comments that the method is valid for small samples.",
+   "Park (2022) notes that the method is valid for small samples.",
+   "Park (2022) commentates that the method is valid."
+  ],
+  "a": 1,
+  "w": "<em>Comentar</em> is usually <b>note</b> or <b>observe</b> in academic English. <em>Comment</em> exists but suggests a casual remark rather than a finding."
+ },
+ {
+  "k": "which",
+  "task": "Which is correct?",
+  "o": [
+   "The author tells that the effect is small.",
+   "The author states that the effect is small.",
+   "The author tells us the effect is small."
+  ],
+  "a": 1,
+  "w": "Both 2 and 3 are grammatical, but 3 uses <em>us</em>, which many programmes avoid. <em>Tell</em> always needs a person: tell <b>someone</b> something."
+ },
+ {
+  "k": "choose",
+  "task": "You are simply relaying what a standard says, with no judgement. Which verb?",
+  "o": [
+   "argues",
+   "states",
+   "claims"
+  ],
+  "a": 1,
+  "w": "<b>States</b> is flat and neutral — right for regulations, definitions and specifications, where there is nothing to evaluate."
+ },
+ {
+  "k": "which",
+  "task": "Which sentence contains a preposition error?",
+  "o": [
+   "Weber explains the calibration procedure.",
+   "Weber explains about the calibration procedure.",
+   "Weber describes the calibration procedure."
+  ],
+  "a": 1,
+  "w": "<b>Explain</b> takes a direct object with no preposition. Spanish <em>explicar sobre</em> is where this one comes from."
+ },
+ {
+  "k": "choose",
+  "task": "A source admits a weakness in its own study. Which verb?",
+  "o": [
+   "shows",
+   "acknowledges",
+   "claims"
+  ],
+  "a": 1,
+  "w": "<b>Acknowledges</b> reports a source conceding a point. Noticing and reporting this signals that you read critically rather than skimmed."
+ },
+ {
+  "k": "which",
+  "task": "Which sentence over-claims?",
+  "o": [
+   "Kaur (2018) shows that darker surfaces retain more heat.",
+   "Kaur (2018) proves that darker surfaces retain more heat.",
+   "Kaur (2018) reports that darker surfaces retain more heat."
+  ],
+  "a": 1,
+  "w": "<b>Prove</b> belongs to mathematics and formal logic. In empirical work, <em>shows</em> or <em>demonstrates</em> is as strong as you should go."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "The study realises a comparison of three coatings.",
+   "The study compares three coatings.",
+   "The study realizes a comparison of three coatings."
+  ],
+  "a": 1,
+  "w": "<em>Realizar</em> is <b>carry out</b> — or better, just use the verb: <em>compares</em>. English <em>realise</em> means to become aware of something."
+ },
+ {
+  "k": "which",
+  "task": "You want to introduce a source neutrally before evaluating it in the next sentence. Which verb?",
+  "o": [
+   "reports",
+   "proves",
+   "claims"
+  ],
+  "a": 0,
+  "w": "<b>Reports</b> relays a finding without endorsement, leaving you free to agree or disagree next. The other two commit you before you have argued."
+ },
+ {
+  "k": "choose",
+  "task": "Several studies over ten years have examined this. Which tense?",
+  "o": [
+   "Several studies examine this effect.",
+   "Several studies have examined this effect.",
+   "Several studies examined this effect."
+  ],
+  "a": 1,
+  "w": "Present perfect for a body of work connecting past research to present knowledge — the standard choice in a literature review."
+ },
+ {
+  "k": "which",
+  "task": "Your verb says “demonstrates” and your next three sentences dismantle the source. What is wrong?",
+  "o": [
+   "Nothing — you can change your mind",
+   "The verb and the argument contradict each other",
+   "You should use “proves” instead"
+  ],
+  "a": 1,
+  "w": "Decide your stance first, then choose verbs that match it throughout. A reader notices the contradiction immediately, and it reads as carelessness."
+ },
+ {
+  "k": "choose",
+  "task": "How many reporting verbs do you actually need to write well at this level?",
+  "o": [
+   "Around thirty, for variety",
+   "Around eight, used accurately",
+   "Two or three is enough"
+  ],
+  "a": 1,
+  "w": "Accuracy beats range. Eight verbs used precisely will serve you better than thirty used approximately — and the difference between <em>contends</em> and <em>maintains</em> is not what will improve your report this term."
+ }
+];
+  var LBL={choose:'Choose the form',which:'Which is better?',fix:'Fix it',es:'For Spanish speakers'};
+  var stage=document.getElementById('stage'),bar=document.getElementById('bar');
+  var pos=document.getElementById('pos'),scEl=document.getElementById('sc');
+  var i=0,score=0,seen={};
+  function meta(){var n=Object.keys(seen).length;
+    bar.style.width=(n/Q.length*100)+'%';
+    pos.textContent=(i+1)+' of '+Q.length;
+    scEl.textContent='Score: '+score+' / '+n;}
+  function nextBtn(card){var b=document.createElement('button');b.className='btn';b.style.marginTop='15px';
+    if(i<Q.length-1){b.textContent='Next \u2192';
+      b.addEventListener('click',function(){i++;draw();window.scrollTo({top:0,behavior:'smooth'});});}
+    else{b.textContent='See result \u2192';b.addEventListener('click',finish);}
+    card.appendChild(b);}
+  function draw(){
+    var q=Q[i];stage.innerHTML='';
+    var card=document.createElement('div');card.className='card';
+    var kind=document.createElement('span');kind.className='kind'+(q.k==='es'?' es':'');
+    kind.textContent=LBL[q.k]||'Choose';card.appendChild(kind);
+    if(q.sec){var s2=document.createElement('span');s2.className='sec';s2.textContent=q.sec;
+      card.appendChild(document.createElement('br'));card.appendChild(s2);}
+    var task=document.createElement('p');task.className='task';task.textContent=q.task;card.appendChild(task);
+    if(q.s){var st=document.createElement('div');st.className='stim';
+      var p=document.createElement('p');p.textContent=q.s;st.appendChild(p);card.appendChild(st);}
+    var o=document.createElement('div');o.className='opts';
+    var fb=document.createElement('p');fb.className='fb';
+    q.o.forEach(function(l,j){
+      var b=document.createElement('button');b.className='opt';b.textContent=l;
+      b.addEventListener('click',function(){
+        if(seen[i])return;
+        var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+        all[q.a].classList.add('right');
+        if(j!==q.a)b.classList.add('wrong');else score++;
+        seen[i]=true;
+        fb.innerHTML='<b>'+(j===q.a?'Correct. ':'Not quite. ')+'</b>'+q.w;
+        fb.classList.add('on');meta();nextBtn(card);});
+      o.appendChild(b);});
+    card.appendChild(o);card.appendChild(fb);
+    stage.appendChild(card);
+    document.getElementById('prev').disabled=(i===0);meta();}
+  function finish(){
+    stage.innerHTML='';
+    var f=document.createElement('div');f.className='finish';var pc=score/Q.length;
+    var msg=pc>=0.85?'Strong. This will not be what a marker circles.'
+      :pc>=0.55?'Good. The explanations on the ones you missed are the useful part.'
+      :'Worth a second run. Read the Reference tab first.';
+    f.innerHTML='<h3>You scored '+score+' / '+Q.length+'</h3><p>'+msg+'</p><p style="margin-bottom:0">One rule to keep: <strong>shows = you accept it · argues = a position · claims = you doubt it.</strong></p>';
+    var b=document.createElement('button');b.className='btn';b.style.marginTop='13px';b.textContent='Try again';
+    b.addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+    f.appendChild(b);stage.appendChild(f);bar.style.width='100%';}
+  document.getElementById('prev').addEventListener('click',function(){if(i>0){i--;draw();window.scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('restart').addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+  draw();})();
+</script>
+</body>
+</html>
