@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Using Sources Without Copying — Technical English Writing Toolkit</title>
+<style>
+  :root{--ink:#16202E;--ink-soft:#5A6673;--paper:#F1F3F5;--card:#FFFFFF;--line:#D9DEE4;
+    --accent:#2F5FA8;--accent-soft:#E6ECF7;--es:#B07A1E;--es-soft:#FBF3E2;
+    --good:#2E6E4A;--good-soft:#E6F2EA;--bad:#A63D5B;--bad-soft:#F7E7EC;
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .topbar{border-bottom:1px solid var(--line);padding:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .topbar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  header.hero{padding:38px 0 22px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 13px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.02;letter-spacing:-.025em;margin:0 0 13px}
+  .standfirst{font-size:1.05rem;color:var(--ink-soft);margin:0 0 14px;max-width:50ch}
+  .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .tabs{position:sticky;top:0;z-index:10;background:rgba(241,243,245,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tablist{display:flex;gap:4px;overflow-x:auto;padding:9px 0;scrollbar-width:none}
+  .tablist::-webkit-scrollbar{display:none}
+  .tab{font-family:var(--mono);font-size:12.5px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:7px;padding:8px 14px;color:var(--ink-soft)}
+  .tab:hover{background:var(--card)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .panel{display:none;padding:26px 0 10px;animation:fade .2s ease}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 12px;letter-spacing:-.015em}
+  h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  .box{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 17px;margin:16px 0;font-size:.95rem}
+  .box.es{background:var(--es-soft);border-left-color:var(--es)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.93rem}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  td.x{color:var(--bad)}td.v{color:var(--good)}td.vb{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+  .why{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:19px 21px;margin:0 0 18px}
+  .why h2{font-size:1.08rem;margin:0 0 8px}
+  .why p{font-size:.93rem;color:var(--ink-soft);margin:0 0 12px}
+  .pair{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .side{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.55}
+  .side span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+  .bad-side{background:var(--bad-soft);border-left:3px solid var(--bad)}.bad-side span{color:var(--bad)}
+  .ok-side{background:var(--good-soft);border-left:3px solid var(--good)}.ok-side span{color:var(--good)}
+  .side small{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .progress{margin:0 0 14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:21px;margin:13px 0}
+  .kind{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 11px;margin-bottom:13px}
+  .kind.es{color:var(--es);background:var(--es-soft)}
+  .task{font-size:.94rem;color:var(--ink-soft);margin:0 0 12px}
+  .stim{background:var(--paper);border-radius:9px;padding:14px 16px;margin-bottom:13px;font-size:1rem;line-height:1.75}
+  .stim p{margin:0}
+  .sec{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:5px;padding:3px 8px;margin-bottom:9px}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:var(--good-soft);border-color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+  .fb{margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);display:none}
+  .fb.on{display:block}.fb b{color:var(--ink)}
+  .btn{font-family:var(--mono);font-size:12.5px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .nav{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .finish{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 11px 11px 0;padding:21px;margin:13px 0}
+  .finish h3{margin-top:0}
+  ul{padding-left:20px}li{margin-bottom:7px}
+  footer{margin-top:52px;border-top:1px solid var(--line);padding:22px 0 44px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  @media (max-width:640px){header.hero{padding:26px 0 18px}.card,.why{padding:16px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{.tabs{display:none}.panel{display:block!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><a href="../index.html">← All tools</a> · Academic writing</div></div>
+<header class="hero wrap">
+  <p class="eyebrow">Academic writing</p>
+  <h1>Using Sources<br>Without Copying</h1>
+  <p class="standfirst">Why swapping synonyms is still plagiarism, and a method that avoids it. Twenty exercises.</p>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</p>
+</header>
+<nav class="tabs"><div class="wrap tablist" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-p="p1">🎯 Practice</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p2">📖 Reference</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p3">📚 Source</button>
+</div></nav>
+<main class="wrap">
+<section class="panel on" id="p1" role="tabpanel">
+  <div class="why">
+    <h2>Why this matters</h2>
+    <p>Changing the words but keeping the sentence is called patchwriting, and it counts as plagiarism. Adding a citation does not fix it — a citation attributes an idea, it does not license reuse of the sentence that carried it.</p>
+    <div class="pair">
+      <div class="side bad-side"><span>Patchwriting</span>Original: "Urban surfaces such as asphalt absorb solar radiation during the day."<br>Yours: "Urban surfaces like asphalt take in solar radiation during the daytime (Nieminen, 2023)."<small>Same structure, same order, synonyms swapped. The citation does not rescue it.</small></div>
+      <div class="side ok-side"><span>A real paraphrase</span>"Nieminen (2023) attributes the temperature gap to the thermal behaviour of built surfaces: asphalt stores daytime solar energy and releases it overnight."<small>Reordered, regrammared, and integrated into your own sentence.</small></div>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><i id="bar"></i></div>
+    <div class="pmeta"><span id="pos">1 of 20</span><span id="sc">Score: 0 / 0</span></div></div>
+  <div id="stage"></div>
+  <div class="nav"><button class="btn ghost" id="prev">← Back</button><button class="btn ghost" id="restart">Start again</button></div>
+</section>
+<section class="panel" id="p2" role="tabpanel">
+  <h2>Five steps that work</h2>
+  <p>The critical step is the second. If the original is visible while you write, you will patchwrite — everyone does.</p>
+  <ol>
+    <li>Read until you could explain it to a classmate.</li>
+    <li><strong>Cover it.</strong> Close the tab, turn the page over.</li>
+    <li>Write the idea from memory, in a sentence that fits your argument.</li>
+    <li>Compare with the original — check accuracy, and check you have not drifted back into their phrasing.</li>
+    <li>Add the citation.</li>
+  </ol>
+
+  <h3>What has to change</h3>
+  <table>
+    <tr><th>Change</th><th>How</th></tr>
+    <tr><td>Sentence order</td><td>Put the result first and the cause second, or the reverse</td></tr>
+    <tr><td>Grammar</td><td>Active ↔ passive; verb ↔ noun</td></tr>
+    <tr><td>Clause structure</td><td>Split one long sentence into two, or combine two</td></tr>
+    <tr><td>Focus</td><td>Start from the part that matters to <em>your</em> argument</td></tr>
+    <tr><td>Vocabulary</td><td>Last, and least important. Technical terms stay as they are</td></tr>
+  </table>
+  <div class="box"><strong>Do not invent synonyms for technical terms.</strong> <em>Urban heat island effect</em> and <em>thermocouple</em> have no acceptable alternatives — replacing them makes your writing worse and harder to search.</div>
+
+  <h3>Quote, paraphrase or summary?</h3>
+  <table>
+    <tr><th>Type</th><th>What it is</th><th>Needs</th></tr>
+    <tr><td class="vb">Quotation</td><td>The original words</td><td>Quotation marks + citation + page number</td></tr>
+    <tr><td class="vb">Paraphrase</td><td>One passage in your words, similar length</td><td>Citation</td></tr>
+    <tr><td class="vb">Summary</td><td>A longer passage compressed</td><td>Citation</td></tr>
+  </table>
+  <p><strong>Quote rarely.</strong> Only when the exact wording is the point — a legal definition, a technical standard, a phrase you will analyse. If a third of your report is quotations, something has gone wrong.</p>
+
+  <h3>Two ways to place a citation</h3>
+  <p><strong>Author-prominent:</strong> Nieminen (2023) argues that surface materials dominate. Use when the source or the disagreement is part of your point.</p>
+  <p><strong>Information-prominent:</strong> Surface materials dominate (Nieminen, 2023). Use when the fact matters more than who found it, or when several sources agree.</p>
+  <p>Alternating between them is what stops a literature review reading as a list.</p>
+
+  <h3 style="color:var(--es)">For Spanish speakers</h3>
+  <table>
+    <tr><th>From Spanish</th><th>English</th></tr>
+    <tr><td class="x">According to Nieminen (2023), he affirms that…</td><td class="v">Nieminen (2023) states that… / According to Nieminen (2023), …</td></tr>
+    <tr><td class="x">The author affirms the importance of…</td><td class="v">The author emphasises the importance of…</td></tr>
+    <tr><td class="x">As we said before, the effect is small.</td><td class="v">As noted above, the effect is small.</td></tr>
+    <tr><td class="x">Following Park, the method is valid.</td><td class="v">According to Park, the method is valid.</td></tr>
+    <tr><td class="x">This idea is exposed by Silva (2022).</td><td class="v">This idea is presented / set out by Silva (2022).</td></tr>
+  </table>
+  <div class="box es"><strong>Double attribution.</strong> <em>Según Nieminen, él afirma que…</em> is acceptable in Spanish. In English, <em>According to X</em> and <em>X states</em> are two frames doing one job — choose one.</div>
+</section>
+<section class="panel" id="p3" role="tabpanel">
+  <h2>Sources</h2>
+  <ul>
+    <li>Swales, J. M., &amp; Feak, C. B. (2012). <em>Academic Writing for Graduate Students</em> (3rd ed.). University of Michigan Press.</li>
+    <li><a href="https://www.phrasebank.manchester.ac.uk/">Academic Phrasebank</a>, University of Manchester — phrases for referring to sources.</li>
+    <li><a href="https://apastyle.apa.org/">APA Style</a>, American Psychological Association, for citation format.</li>
+  </ul>
+  <div class="box"><strong>Check your referencing style.</strong> The examples here use author–date, as in APA 7. Many engineering programmes use IEEE numbered citations instead. The paraphrasing technique is identical either way; only the bracket changes.</div>
+  <div class="box"><strong>About the examples.</strong> The authors, studies and findings here were invented for practice.</div>
+  <p>Related: <a href="../technical-writing/apa-7-referencing.html">APA 7 Referencing</a>, <a href="reporting-verbs.html">Choosing Your Citation Verb</a>, <a href="evaluating-sources.html">Is This Source Worth Citing?</a></p>
+</section>
+</main>
+<footer class="wrap">Using Sources Without Copying · Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</footer>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});});});
+  var Q=[
+ {
+  "k": "which",
+  "task": "You replace half the words with synonyms and add a correct citation. Is this acceptable?",
+  "o": [
+   "Yes — the citation covers it",
+   "No — the structure is still the source’s",
+   "Only if the source is not peer-reviewed"
+  ],
+  "a": 1,
+  "w": "This is patchwriting. A citation attributes an idea; it does not license reuse of the sentence that carried it. To keep the structure you would need quotation marks."
+ },
+ {
+  "k": "which",
+  "task": "Which change contributes most to a genuine paraphrase?",
+  "o": [
+   "Finding synonyms for the key nouns",
+   "Reordering the information and changing the grammar",
+   "Making the sentence shorter"
+  ],
+  "a": 1,
+  "w": "Structure is what a marker and a similarity checker both notice. Vocabulary is the least important layer — and technical terms should not change at all."
+ },
+ {
+  "k": "which",
+  "task": "What is the most reliable way to avoid patchwriting?",
+  "o": [
+   "Use a thesaurus for every second word",
+   "Close the source before you write the sentence",
+   "Cite the source twice"
+  ],
+  "a": 1,
+  "w": "If the original is on screen, your sentence will follow its shape — this happens to experienced writers too. Read, cover, write from memory."
+ },
+ {
+  "k": "which",
+  "task": "When is quoting the better choice?",
+  "o": [
+   "When the source is written clearly",
+   "When the exact wording is what you are analysing",
+   "When you are short of time"
+  ],
+  "a": 1,
+  "w": "Quote for legal or technical definitions, or phrasing you will examine directly. In technical writing this is uncommon."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "According to Nieminen (2023), he affirms that surfaces store heat.",
+   "Nieminen (2023) states that surfaces store heat.",
+   "According to Nieminen (2023) states that surfaces store heat."
+  ],
+  "a": 1,
+  "w": "Double attribution. <em>According to X</em> and <em>X states</em> are two frames doing the same job. Spanish tolerates the doubling; English does not."
+ },
+ {
+  "k": "choose",
+  "task": "Three separate studies reached the same finding. Choose the best way to present it.",
+  "o": [
+   "Smith (2019) found X. Park (2021) found X. Ali (2023) found X.",
+   "Ventilation losses dominate in older buildings (Smith, 2019; Park, 2021; Ali, 2023).",
+   "Some researchers say that X."
+  ],
+  "a": 1,
+  "w": "Information-prominent citation puts the finding first and shows convergence in one sentence. Three sentences read as a catalogue; “some researchers” is too vague to support anything."
+ },
+ {
+  "k": "which",
+  "task": "You want to disagree with a source in your next sentence. Which citation placement helps?",
+  "o": [
+   "Author-prominent: Weber (2022) argues that…",
+   "Information-prominent: …(Weber, 2022).",
+   "Either works equally"
+  ],
+  "a": 0,
+  "w": "Putting the author in the sentence gives you something to contest. Information-prominent citation states the fact as if settled, which sits oddly before a disagreement."
+ },
+ {
+  "k": "fix",
+  "task": "This is patchwriting. Choose the acceptable version.",
+  "s": "Original: “City centres frequently remain several degrees warmer than surrounding rural areas.”",
+  "o": [
+   "City centres often stay several degrees hotter than nearby rural zones (Nieminen, 2023).",
+   "Nieminen (2023) reports a persistent temperature gap of several degrees between urban and rural areas.",
+   "City centres frequently remain several degrees warmer than rural areas (Nieminen, 2023)."
+  ],
+  "a": 1,
+  "w": "Option 1 swaps synonyms into the same structure; option 3 is a quotation without quotation marks. Option 2 restructures and integrates the source into a new sentence."
+ },
+ {
+  "k": "which",
+  "task": "Should you replace the term “thermocouple” when paraphrasing?",
+  "o": [
+   "Yes, to show it is your own writing",
+   "No — technical terms stay as they are",
+   "Only on first use"
+  ],
+  "a": 1,
+  "w": "Inventing a synonym for an established technical term makes your writing less precise and harder to search. Paraphrasing changes structure, not terminology."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "As we said before, the effect is small.",
+   "As noted above, the effect is small.",
+   "As said previously by us, the effect is small."
+  ],
+  "a": 1,
+  "w": "<em>Como hemos dicho antes</em> is normal Spanish. English reports prefer <b>as noted above</b> or <b>as discussed in Section 2</b> — and many programmes avoid <em>we</em> entirely."
+ },
+ {
+  "k": "choose",
+  "task": "You paraphrase a whole paragraph into two sentences. What is that called?",
+  "o": [
+   "A paraphrase",
+   "A summary",
+   "A quotation"
+  ],
+  "a": 1,
+  "w": "A paraphrase restates one passage at similar length; a summary compresses a longer one. Both need a citation, and neither needs quotation marks."
+ },
+ {
+  "k": "which",
+  "task": "You read about a 1990 study inside a 2023 book and cannot get the original. How do you cite it?",
+  "o": [
+   "(Swales, 1990)",
+   "(Swales, 1990, as cited in Nieminen, 2023)",
+   "(Nieminen, 2023)"
+  ],
+  "a": 1,
+  "w": "A secondary citation, and only Nieminen — the source you actually read — goes in your reference list. Use sparingly: markers read it as “I could not find the original”."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "This model is exposed by Silva (2022).",
+   "This model is presented by Silva (2022).",
+   "This model is exposited by Silva (2022)."
+  ],
+  "a": 1,
+  "w": "<em>Exponer una idea</em> is to <b>present</b> or <b>set out</b> an idea. English <em>expose</em> means to uncover something hidden, often something discreditable."
+ },
+ {
+  "k": "which",
+  "task": "Your paraphrase is accurate but uses the source’s sentence order exactly. Is it acceptable?",
+  "o": [
+   "Yes, if the words differ",
+   "No — order is part of the structure",
+   "Only for short passages"
+  ],
+  "a": 1,
+  "w": "Reordering is one of the most effective ways to genuinely paraphrase, and keeping the order is one of the clearest signs that you did not."
+ },
+ {
+  "k": "choose",
+  "task": "A direct quotation of fourteen words needs which of these?",
+  "o": [
+   "Quotation marks and a citation",
+   "Quotation marks, a citation and a page number",
+   "A citation only"
+  ],
+  "a": 1,
+  "w": "Any direct quotation needs a locator so a reader can find it. In APA that is <em>(Nieminen, 2023, p. 47)</em>."
+ },
+ {
+  "k": "which",
+  "task": "What does a good paraphrase demonstrate that a quotation cannot?",
+  "o": [
+   "That you read the source",
+   "That you understood it",
+   "That you have wide reading"
+  ],
+  "a": 1,
+  "w": "You cannot restructure an idea you have not grasped. This is precisely why markers value paraphrase over quotation."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the better integration of a source.",
+  "s": "Nieminen (2023) says that surfaces absorb radiation. This is important.",
+  "o": [
+   "Nieminen (2023) attributes the effect to surface absorption, which suggests that material choice matters more than layout.",
+   "Nieminen (2023) says surfaces absorb radiation and this is a very important point.",
+   "According to Nieminen (2023) he says surfaces absorb radiation."
+  ],
+  "a": 0,
+  "w": "The paraphrase ends by connecting the source to your own argument. That is what turns a reported source into a paragraph of your own."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "Following Park (2022), the method is valid for small samples.",
+   "According to Park (2022), the method is valid for small samples.",
+   "Following to Park (2022), the method is valid."
+  ],
+  "a": 1,
+  "w": "<em>Según</em> is <b>according to</b>. English <em>following</em> means “after” in time, so option 1 says something different from what you mean."
+ },
+ {
+  "k": "which",
+  "task": "How much of a technical report should be direct quotation?",
+  "o": [
+   "About a third",
+   "Very little — often none",
+   "Half, to show wide reading"
+  ],
+  "a": 1,
+  "w": "Quotation is rare in technical writing. A report that is a third quotations is under-processed: you have collected sources rather than used them."
+ },
+ {
+  "k": "which",
+  "task": "You used an AI tool to paraphrase a passage. What is the problem?",
+  "o": [
+   "Nothing, if you cite the original",
+   "You cannot defend a paraphrase you did not construct",
+   "It will be detected"
+  ],
+  "a": 1,
+  "w": "Beyond any policy question, a paraphrase you did not build teaches you nothing about the source and will not help you when you are asked about it in a defence."
+ }
+];
+  var LBL={choose:'Choose the form',which:'Which is better?',fix:'Fix it',es:'For Spanish speakers'};
+  var stage=document.getElementById('stage'),bar=document.getElementById('bar');
+  var pos=document.getElementById('pos'),scEl=document.getElementById('sc');
+  var i=0,score=0,seen={};
+  function meta(){var n=Object.keys(seen).length;
+    bar.style.width=(n/Q.length*100)+'%';
+    pos.textContent=(i+1)+' of '+Q.length;
+    scEl.textContent='Score: '+score+' / '+n;}
+  function nextBtn(card){var b=document.createElement('button');b.className='btn';b.style.marginTop='15px';
+    if(i<Q.length-1){b.textContent='Next \u2192';
+      b.addEventListener('click',function(){i++;draw();window.scrollTo({top:0,behavior:'smooth'});});}
+    else{b.textContent='See result \u2192';b.addEventListener('click',finish);}
+    card.appendChild(b);}
+  function draw(){
+    var q=Q[i];stage.innerHTML='';
+    var card=document.createElement('div');card.className='card';
+    var kind=document.createElement('span');kind.className='kind'+(q.k==='es'?' es':'');
+    kind.textContent=LBL[q.k]||'Choose';card.appendChild(kind);
+    if(q.sec){var s2=document.createElement('span');s2.className='sec';s2.textContent=q.sec;
+      card.appendChild(document.createElement('br'));card.appendChild(s2);}
+    var task=document.createElement('p');task.className='task';task.textContent=q.task;card.appendChild(task);
+    if(q.s){var st=document.createElement('div');st.className='stim';
+      var p=document.createElement('p');p.textContent=q.s;st.appendChild(p);card.appendChild(st);}
+    var o=document.createElement('div');o.className='opts';
+    var fb=document.createElement('p');fb.className='fb';
+    q.o.forEach(function(l,j){
+      var b=document.createElement('button');b.className='opt';b.textContent=l;
+      b.addEventListener('click',function(){
+        if(seen[i])return;
+        var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+        all[q.a].classList.add('right');
+        if(j!==q.a)b.classList.add('wrong');else score++;
+        seen[i]=true;
+        fb.innerHTML='<b>'+(j===q.a?'Correct. ':'Not quite. ')+'</b>'+q.w;
+        fb.classList.add('on');meta();nextBtn(card);});
+      o.appendChild(b);});
+    card.appendChild(o);card.appendChild(fb);
+    stage.appendChild(card);
+    document.getElementById('prev').disabled=(i===0);meta();}
+  function finish(){
+    stage.innerHTML='';
+    var f=document.createElement('div');f.className='finish';var pc=score/Q.length;
+    var msg=pc>=0.85?'Strong. This will not be what a marker circles.'
+      :pc>=0.55?'Good. The explanations on the ones you missed are the useful part.'
+      :'Worth a second run. Read the Reference tab first.';
+    f.innerHTML='<h3>You scored '+score+' / '+Q.length+'</h3><p>'+msg+'</p><p style="margin-bottom:0">One rule to keep: <strong>close the source before you write the sentence.</strong></p>';
+    var b=document.createElement('button');b.className='btn';b.style.marginTop='13px';b.textContent='Try again';
+    b.addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+    f.appendChild(b);stage.appendChild(f);bar.style.width='100%';}
+  document.getElementById('prev').addEventListener('click',function(){if(i>0){i--;draw();window.scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('restart').addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+  draw();})();
+</script>
+</body>
+</html>

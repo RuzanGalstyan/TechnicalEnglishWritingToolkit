@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical English Writing Toolkit</title>
+<meta name="description" content="Interactive practice in academic, technical and AI-aware writing for engineering students at UPV.">
+<style>
+  :root{
+    --ink:#16202E; --ink-soft:#5A6673; --paper:#F1F3F5; --card:#FFFFFF; --line:#D9DEE4;
+    --f-acad:#2F5FA8;   /* Academic writing     */
+    --f-tech:#B07A1E;   /* Technical writing    */
+    --f-pres:#6B4E9E;   /* Presentations        */
+    --f-ai:#2E6E6B;     /* AI ethics in writing */
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--f-acad);outline-offset:3px;border-radius:2px}
+
+  .masthead{padding:54px 0 26px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 18px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,7.6vw,4.8rem);line-height:.96;letter-spacing:-.03em;margin:0 0 14px}
+  .standfirst{font-size:1.1rem;color:var(--ink-soft);max-width:52ch;margin:0 0 20px}
+  .byline{font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
+  .byline a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  .byline a:hover{border-color:var(--ink)}
+
+  .finder{position:sticky;top:0;z-index:20;background:rgba(241,243,245,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:13px 0}
+  .finder-inner{display:flex;flex-wrap:wrap;gap:11px;align-items:center}
+  .search{flex:1 1 230px;display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 13px}
+  .search svg{flex:0 0 auto;opacity:.45}
+  .search input{border:0;outline:0;background:transparent;width:100%;font-family:var(--body);font-size:16px;color:var(--ink)}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-family:var(--mono);font-size:12px;padding:7px 12px;border-radius:999px;cursor:pointer;background:transparent;color:var(--ink-soft);border:1px solid var(--line);transition:background .15s,color .15s}
+  .chip:hover{border-color:var(--ink-soft)}
+  .chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .count{font-family:var(--mono);font-size:12px;color:var(--ink-soft);white-space:nowrap}
+
+  .section{padding:42px 0 6px}
+  .section-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+  .section-head h2{font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:-.015em;margin:0;white-space:nowrap}
+  .section-rule{flex:1;height:3px;border-radius:2px;background:var(--accent)}
+  .section-count{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .section-note{font-size:.94rem;color:var(--ink-soft);margin:0 0 18px;max-width:64ch}
+  .subhead{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+  .subhead::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(285px,1fr))}
+  .card{position:relative;display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:9px;padding:20px 20px 17px;transition:transform .16s ease,box-shadow .16s ease,border-left-width .16s ease}
+  .card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(22,32,46,.10);border-left-width:9px}
+  .card-icon{font-size:1.45rem;display:block;margin-bottom:9px;line-height:1}
+  .card h3{font-family:var(--display);font-weight:700;font-size:1.06rem;margin:0 0 7px;letter-spacing:-.01em}
+  .card p{margin:0 0 14px;font-size:.93rem;color:var(--ink-soft);line-height:1.5}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tags span{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:4px;padding:3px 7px}
+
+  .empty{display:none;padding:56px 0;text-align:center;color:var(--ink-soft)}
+  .empty button{font-family:var(--mono);font-size:13px;margin-top:13px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+
+  .about{margin-top:52px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px 26px}
+  .about h2{font-family:var(--display);font-weight:700;font-size:1.12rem;margin:0 0 10px}
+  .about p{font-size:.94rem;color:var(--ink-soft);margin:0 0 10px;max-width:72ch}
+  .about p:last-child{margin:0}
+  .credits{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+  .credits p{font-size:.9rem;margin:0 0 8px}
+  .credits a{color:var(--ink)}
+
+  footer{margin-top:34px;border-top:1px solid var(--line);padding:24px 0 46px;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  footer a{color:var(--ink)}
+
+  @media (max-width:640px){.masthead{padding:36px 0 20px}.grid{grid-template-columns:1fr}.section-head h2{white-space:normal}.about{padding:18px 20px}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="masthead wrap">
+  <p class="eyebrow">Interactive practice · Runs in any browser · Nothing to install</p>
+  <h1>Technical English<br>Writing Toolkit</h1>
+  <p class="standfirst">Practice in academic, technical and AI-aware writing for engineering students. Every tool marks itself and explains every answer.</p>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · <a href="https://www.upv.es/">Universitat Politècnica de València</a></p>
+</header>
+
+<div class="finder">
+  <div class="wrap finder-inner">
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input type="search" id="q" placeholder="Search tools…" aria-label="Search tools">
+    </label>
+    <div class="chips" id="chips" role="group" aria-label="Filter by section">
+      <button class="chip" data-field="all" aria-pressed="true">All</button>
+      <button class="chip" data-field="acad" aria-pressed="false">Academic writing</button>
+      <button class="chip" data-field="tech" aria-pressed="false">Technical writing</button>
+      <button class="chip" data-field="pres" aria-pressed="false">Presentations</button>
+      <button class="chip" data-field="ai" aria-pressed="false">AI ethics</button>
+    </div>
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<main class="wrap" id="main">
+
+  <!-- ========== ACADEMIC WRITING ========== -->
+  <section class="section" data-field="acad" style="--accent:var(--f-acad)">
+    <div class="section-head">
+      <h2>Academic writing</h2><span class="section-rule"></span><span class="section-count"></span>
+    </div>
+    <p class="section-note">Writing your report, and the grammar that carries it. Start with a writing tool if you know what you are writing; start with a grammar tool if you know what your marker keeps circling.</p>
+
+    <p class="subhead">Writing</p>
+    <div class="grid">
+      <a class="card" href="academic-writing/cars-model-introductions.html" data-keywords="introduction cars swales moves territory niche gap opening thesis tfg report">
+        <span class="card-icon">🗺️</span><h3>Writing an Introduction</h3>
+        <p>Three moves from your field to your gap, including the one students skip. 20 exercises.</p>
+        <span class="tags"><span>Reports</span><span>Structure</span></span>
+      </a>
+      <a class="card" href="academic-writing/technical-report-structure.html" data-keywords="report structure sections abstract method results discussion conclusion imrad tense">
+        <span class="card-icon">📑</span><h3>What Goes in Each Section</h3>
+        <p>One question per section, and the abstract move by move. 20 exercises.</p>
+        <span class="tags"><span>Reports</span><span>Sections</span></span>
+      </a>
+      <a class="card" href="academic-writing/describing-data-and-trends.html" data-keywords="results figures graph chart trend data prepositions increase decrease percentage">
+        <span class="card-icon">📈</span><h3>Writing About Your Results</h3>
+        <p>The paragraph under the figure. Trend verbs, prepositions, and how much to interpret. 20 exercises.</p>
+        <span class="tags"><span>Results</span><span>Figures</span></span>
+      </a>
+      <a class="card" href="academic-writing/paraphrasing-and-citing.html" data-keywords="paraphrase citing plagiarism patchwriting quote summary sources integrity">
+        <span class="card-icon">🔁</span><h3>Using Sources Without Copying</h3>
+        <p>Why swapping synonyms is still plagiarism, and a method that avoids it. 20 exercises.</p>
+        <span class="tags"><span>Sources</span><span>Integrity</span></span>
+      </a>
+      <a class="card" href="academic-writing/reporting-verbs.html" data-keywords="reporting verbs citation stance argue claim suggest demonstrate literature review">
+        <span class="card-icon">🗣️</span><h3>Choosing Your Citation Verb</h3>
+        <p>Eight verbs, three groups: shows, argues, claims. 20 exercises.</p>
+        <span class="tags"><span>Sources</span><span>Stance</span></span>
+      </a>
+      <a class="card" href="academic-writing/evaluating-sources.html" data-keywords="evaluating sources credibility authority currency bias reliability research critical reading">
+        <span class="card-icon">🔍</span><h3>Is This Source Worth Citing?</h3>
+        <p>Five checks you can run in ninety seconds, plus predatory journals and invented references. 20 exercises.</p>
+        <span class="tags"><span>Sources</span><span>Research</span></span>
+      </a>
+    </div>
+
+    <p class="subhead">Grammar for these writings</p>
+    <div class="grid">
+      <a class="card" href="academic-writing/verb-tenses-by-section.html" data-keywords="tenses verb tense past present perfect method results discussion grammar spanish">
+        <span class="card-icon">⏱️</span><h3>Verb Tenses by Section</h3>
+        <p>Four choices, each tied to a place in your report. 20 exercises with a Spanish-speaker strand.</p>
+        <span class="tags"><span>Grammar</span><span>20 exercises</span></span>
+      </a>
+      <a class="card" href="academic-writing/active-or-passive.html" data-keywords="active passive voice agent method se impersonal grammar spanish subject">
+        <span class="card-icon">🔄</span><h3>Active or Passive?</h3>
+        <p>Not "avoid the passive" but "start with what the sentence is about". 20 exercises.</p>
+        <span class="tags"><span>Grammar</span><span>20 exercises</span></span>
+      </a>
+      <a class="card" href="academic-writing/modals-in-technical-writing.html" data-keywords="modals must should may might could obligation recommendation possibility grammar spanish">
+        <span class="card-icon">⚖️</span><h3>Modals: Must, Should, May</h3>
+        <p>Obligation, recommendation, possibility — three jobs, one set of words. 20 exercises.</p>
+        <span class="tags"><span>Grammar</span><span>20 exercises</span></span>
+      </a>
+      <a class="card" href="academic-writing/analysing-hedging-language.html" data-keywords="hedging cautious language certainty claims evidence overclaim grammar spanish">
+        <span class="card-icon">🎚️</span><h3>How Certain Should You Sound?</h3>
+        <p>Match your words to your evidence. 25 exercises and a slider that shows what each hedge commits you to.</p>
+        <span class="tags"><span>Grammar</span><span>25 exercises</span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== TECHNICAL WRITING ========== -->
+  <section class="section" data-field="tech" style="--accent:var(--f-tech)">
+    <div class="section-head">
+      <h2>Technical writing</h2><span class="section-rule"></span><span class="section-count"></span>
+    </div>
+    <p class="section-note">Documents that go to a supervisor, a client or a company. Partly adapted from Suzan Last, <a href="https://pressbooks.bccampus.ca/technicalwriting/" style="color:var(--accent)">Technical Writing Essentials</a> (University of Victoria, 2019), CC BY 4.0.</p>
+    <div class="grid">
+      <a class="card" href="technical-writing/describing-a-mechanism.html" data-keywords="technical description mechanism device components specification audience measurable objective">
+        <span class="card-icon">🔧</span><h3>Describing a Mechanism</h3>
+        <p>Seven parts, measurable detail, and a scaffold you fill in and copy. 20 exercises plus a builder.</p>
+        <span class="tags"><span>Descriptions</span><span>Builder</span></span>
+      </a>
+      <a class="card" href="technical-writing/describing-a-process.html" data-keywords="process passive sequencers stages procedure how it works purpose clauses">
+        <span class="card-icon">⚙️</span><h3>Explaining How Something Works</h3>
+        <p>Passive voice, sequencers and purpose clauses — the grammar of describing a process. 20 exercises.</p>
+        <span class="tags"><span>Processes</span><span>Grammar</span></span>
+      </a>
+      <a class="card" href="technical-writing/lab-reports.html" data-keywords="lab report laboratory experiment method results discussion uncertainty significant figures units spanish">
+        <span class="card-icon">🧪</span><h3>Lab Reports</h3>
+        <p>Sections, tenses, numbers and uncertainty — so someone who was not there can judge and repeat your work. 20 exercises.</p>
+        <span class="tags"><span>Reports</span><span>20 exercises</span></span>
+      </a>
+
+      <a class="card" href="technical-writing/progress-reports.html" data-keywords="progress report supervisor project schedule delay milestone completed planned problem spanish">
+        <span class="card-icon">📆</span><h3>Progress Reports</h3>
+        <p>What is done, what is late, and what you need. Reporting a problem while there is still time to fix it. 20 exercises.</p>
+        <span class="tags"><span>Reports</span><span>20 exercises</span></span>
+      </a>
+
+      <a class="card" href="technical-writing/proposals.html" data-keywords="proposal tfg scope objectives resources schedule feasibility solicited unsolicited plan spanish">
+        <span class="card-icon">📝</span><h3>Proposals</h3>
+        <p>The only document whose job is to be accepted. Scope, method, resources, and the language of a plan. 20 exercises.</p>
+        <span class="tags"><span>Reports</span><span>20 exercises</span></span>
+      </a>
+
+      <a class="card" href="technical-writing/recommendation-reports.html" data-keywords="recommendation feasibility evaluation report criteria options comparison weighted objectives tfg decision spanish">
+        <span class="card-icon">⚖️</span><h3>Recommendation &amp; Feasibility</h3>
+        <p>Compare options against criteria and recommend one — the shape your TFG probably takes. 20 exercises.</p>
+        <span class="tags"><span>Reports</span><span>20 exercises</span></span>
+      </a>
+
+      <a class="card" href="technical-writing/apa-7-referencing.html" data-keywords="apa 7 referencing citation reference list et al doi in-text bibliography style spanish">
+        <span class="card-icon">📚</span><h3>APA 7 Referencing</h3>
+        <p>In-text citations, reference lists, and the four rules that changed from APA 6. 20 exercises.</p>
+        <span class="tags"><span>Citation</span><span>20 exercises</span></span>
+      </a>
+
+      <a class="card" href="technical-writing/problem-solving-emails.html" data-keywords="problem solving email fault report request supervisor placement supplier deadline evidence spanish">
+        <span class="card-icon">🛠️</span><h3>Problem-Solving Emails</h3>
+        <p>Something has gone wrong and someone must act. 25 exercises and a builder that drafts a real email.</p>
+        <span class="tags"><span>Emails</span><span>Builder</span></span>
+      </a>
+      <a class="card" href="technical-writing/professional-emails.html" data-keywords="email register formality politeness request greeting sign off placement enquiry">
+        <span class="card-icon">✉️</span><h3>Emails That Get a Reply</h3>
+        <p>Six parts, a politeness ladder, and the Spanish habits that quietly cost you replies. 20 exercises.</p>
+        <span class="tags"><span>Emails</span><span>Register</span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== PRESENTATIONS ========== -->
+  <section class="section" data-field="pres" style="--accent:var(--f-pres)">
+    <div class="section-head">
+      <h2>Presentations</h2><span class="section-rule"></span><span class="section-count"></span>
+    </div>
+    <p class="section-note">Project defences, seminars and team presentations — what you say, how you say it, and what goes on the screen. Further reading in Last, <a href="https://pressbooks.bccampus.ca/technicalwriting/part/presentations/" style="color:var(--accent)">Technical Writing Essentials</a>, chapter 8.</p>
+    <div class="grid">
+      <a class="card" href="presentations/presenting-technical-work.html" data-keywords="presentation speaking signposting defence questions numbers units equations aloud viva">
+        <span class="card-icon">🎤</span><h3>Giving a Technical Presentation</h3>
+        <p>Signposting, handling questions, and how to say numbers, units and equations out loud. 20 exercises.</p>
+        <span class="tags"><span>Speaking</span><span>Defence</span></span>
+      </a>
+      <a class="card" href="presentations/slides-that-work.html" data-keywords="slides powerpoint visual aids figures axes font colour titles design deck">
+        <span class="card-icon">🖥️</span><h3>Slides That Work</h3>
+        <p>Titles that state the finding, figures that survive fifteen seconds, and what to cut. 20 exercises.</p>
+        <span class="tags"><span>Visuals</span><span>20 exercises</span></span>
+      </a>
+      <a class="card" href="presentations/presenting-as-a-team.html" data-keywords="team presentation group handover coordination questions routing defence colleague spanish">
+        <span class="card-icon">👥</span><h3>Presenting as a Team</h3>
+        <p>Handovers, question routing, and how to look like one team rather than four separate talks. 20 exercises.</p>
+        <span class="tags"><span>Teamwork</span><span>20 exercises</span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== AI ETHICS IN WRITING ========== -->
+  <section class="section" data-field="ai" style="--accent:var(--f-ai)">
+    <div class="section-head">
+      <h2>AI ethics in writing</h2><span class="section-rule"></span><span class="section-count"></span>
+    </div>
+    <p class="section-note">When using an AI tool is acceptable, how to use one well, and why style is not evidence of authorship. Based on Cheng, Calhoun, &amp; Reedy. 2025. Artificial intelligence-assisted academic writing: recommendations for ethical use. <a href="https://doi.org/10.1186/s41077-025-00350-6" style="color:var(--accent);word-break:break-all">https://doi.org/10.1186/s41077-025-00350-6</a></p>
+    <div class="grid">
+      <a class="card" href="ai-ethics/ai-writing-scenarios.html" data-keywords="ai scenarios integrity policy disclosure acceptable use placement confidentiality">
+        <span class="card-icon">📄</span><h3>When Is AI Use Acceptable?</h3>
+        <p>Twenty coursework situations with no obvious answer, plus how to write a disclosure that reads as competence.</p>
+        <span class="tags"><span>Integrity</span><span>Scenarios</span></span>
+      </a>
+      <a class="card" href="ai-ethics/ai-traffic-lights.html" data-keywords="traffic lights green amber red framework bands acceptable ai use sort classify">
+        <span class="card-icon">🚦</span><h3>Sorting AI Use into Three Bands</h3>
+        <p>Green, amber, red — twenty real uses to sort, and why the same use changes colour between courses.</p>
+        <span class="tags"><span>Framework</span><span>Sorting</span></span>
+      </a>
+      <a class="card" href="ai-ethics/thinking-with-ai.html" data-keywords="critic adversarial steelman verify fabricated citations references drill critical thinking">
+        <span class="card-icon">💡</span><h3>Using AI as a Critic</h3>
+        <p>Four ways to use a tool as a critic instead of an author, plus verifying what it gives you. 20 exercises.</p>
+        <span class="tags"><span>Critical thinking</span><span>Drill</span></span>
+      </a>
+      <a class="card" href="ai-ethics/prompt-builder.html" data-keywords="prompt builder prompting role task context constraints format effective prompts">
+        <span class="card-icon">⚙️</span><h3>Asking Better Questions</h3>
+        <p>What makes a prompt worth sending, then a builder that assembles one part by part. 20 exercises.</p>
+        <span class="tags"><span>Prompting</span><span>Builder</span></span>
+      </a>
+      <a class="card" href="ai-ethics/human-or-ai-writing.html" data-keywords="human ai writing style detect generated text register detection second language bias">
+        <span class="card-icon">❓</span><h3>Spotting Empty Prose</h3>
+        <p>Twelve passages to judge, then why style is not evidence of authorship. 20 exercises.</p>
+        <span class="tags"><span>Style</span><span>Detection</span></span>
+      </a>
+    </div>
+  </section>
+
+  <div class="empty" id="empty">
+    <p>No tools match that search.</p>
+    <button id="reset">Clear filters</button>
+  </div>
+
+  <section class="about">
+    <h2>About these tools</h2>
+    <p>Each tool opens on practice. You answer, it marks itself, and it explains every answer — right or wrong. A reference tab holds the rules if you get stuck, and several tools end with a scaffold or draft you can copy into your own work.</p>
+    <p>Everything runs in your browser. Nothing is saved and nothing is sent anywhere, so your scores reset when you reload. All the tools print cleanly if you would rather work on paper.</p>
+    <p>Several tools include a strand marked <strong>For Spanish speakers</strong>, covering errors that come from Spanish rather than from English. If Spanish is not your first language, you can skip those items.</p>
+
+    <div class="credits">
+      <p>The <strong>Technical writing</strong> tools are adapted in part from Last, S. (2019). <a href="https://pressbooks.bccampus.ca/technicalwriting/">Technical Writing Essentials</a>. University of Victoria, licensed CC BY 4.0.</p>
+      <p>The <strong>AI ethics in writing</strong> tools are based on Cheng, Calhoun, &amp; Reedy. 2025. Artificial intelligence-assisted academic writing: recommendations for ethical use. <a href="https://doi.org/10.1186/s41077-025-00350-6">https://doi.org/10.1186/s41077-025-00350-6</a> — open access.</p>
+      <p>The format of this hub was inspired by <a href="https://hamgued.github.io/html-tools/">Hamid Guedra's HTML Tools</a> at LAB University of Applied Sciences.</p>
+      <p style="margin:0">Examples throughout — studies, companies, faults and figures — were written for teaching and are not real. Do not cite them.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">© <span id="yr"></span> Ruzana Galstyan-Sargsyan — Technical English Writing Toolkit</footer>
+
+<script>
+(function(){
+  var q=document.getElementById('q');
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  var secs=[].slice.call(document.querySelectorAll('.section'));
+  var empty=document.getElementById('empty');
+  var count=document.getElementById('count');
+  var field='all';
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  function text(c){return (c.textContent+' '+(c.dataset.keywords||'')).toLowerCase();}
+
+  function apply(){
+    var term=q.value.trim().toLowerCase(), shown=0;
+    secs.forEach(function(sec){
+      var fieldOk=(field==='all'||sec.dataset.field===field), here=0;
+      [].slice.call(sec.querySelectorAll('.card')).forEach(function(c){
+        var m=fieldOk&&(!term||text(c).indexOf(term)!==-1);
+        c.style.display=m?'':'none';
+        if(m){here++;shown++;}
+      });
+      // hide a sub-group heading when its grid is empty
+      [].slice.call(sec.querySelectorAll('.grid')).forEach(function(g){
+        var vis=[].slice.call(g.querySelectorAll('.card')).some(function(c){return c.style.display!=='none';});
+        g.style.display=vis?'':'none';
+        var prev=g.previousElementSibling;
+        if(prev&&prev.classList.contains('subhead')) prev.style.display=vis?'':'none';
+      });
+      sec.style.display=here?'':'none';
+      sec.querySelector('.section-count').textContent=here+(here===1?' tool':' tools');
+    });
+    empty.style.display=shown?'none':'block';
+    count.textContent=shown+(shown===1?' tool':' tools');
+  }
+
+  q.addEventListener('input',apply);
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    field=c.dataset.field;
+    chips.forEach(function(x){x.setAttribute('aria-pressed',String(x===c));});
+    apply();});});
+  document.getElementById('reset').addEventListener('click',function(){
+    q.value='';field='all';
+    chips.forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.field==='all'));});
+    apply();q.focus();});
+  apply();
+})();
+</script>
+</body>
+</html>
