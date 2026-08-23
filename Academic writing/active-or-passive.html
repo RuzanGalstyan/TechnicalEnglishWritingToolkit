@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active or Passive? — Technical English Writing Toolkit</title>
+<style>
+  :root{--ink:#16202E;--ink-soft:#5A6673;--paper:#F1F3F5;--card:#FFFFFF;--line:#D9DEE4;
+    --accent:#2F5FA8;--accent-soft:#E6ECF7;--es:#B07A1E;--es-soft:#FBF3E2;
+    --good:#2E6E4A;--good-soft:#E6F2EA;--bad:#A63D5B;--bad-soft:#F7E7EC;
+    --display:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --body:Georgia,'Iowan Old Style','Palatino Linotype','Times New Roman',serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,'Liberation Mono',monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  a{color:var(--accent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .topbar{border-bottom:1px solid var(--line);padding:14px 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .topbar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  header.hero{padding:38px 0 22px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 13px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.02;letter-spacing:-.025em;margin:0 0 13px}
+  .standfirst{font-size:1.05rem;color:var(--ink-soft);margin:0 0 14px;max-width:50ch}
+  .byline{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+  .tabs{position:sticky;top:0;z-index:10;background:rgba(241,243,245,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tablist{display:flex;gap:4px;overflow-x:auto;padding:9px 0;scrollbar-width:none}
+  .tablist::-webkit-scrollbar{display:none}
+  .tab{font-family:var(--mono);font-size:12.5px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:7px;padding:8px 14px;color:var(--ink-soft)}
+  .tab:hover{background:var(--card)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .panel{display:none;padding:26px 0 10px;animation:fade .2s ease}
+  .panel.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  h2{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 12px;letter-spacing:-.015em}
+  h3{font-family:var(--display);font-weight:700;font-size:1.05rem;margin:24px 0 8px}
+  p{margin:0 0 14px}
+  .box{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 17px;margin:16px 0;font-size:.95rem}
+  .box.es{background:var(--es-soft);border-left-color:var(--es)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.93rem}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+  td.x{color:var(--bad)}td.v{color:var(--good)}td.vb{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+  .why{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:19px 21px;margin:0 0 18px}
+  .why h2{font-size:1.08rem;margin:0 0 8px}
+  .why p{font-size:.93rem;color:var(--ink-soft);margin:0 0 12px}
+  .pair{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .side{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.55}
+  .side span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+  .bad-side{background:var(--bad-soft);border-left:3px solid var(--bad)}.bad-side span{color:var(--bad)}
+  .ok-side{background:var(--good-soft);border-left:3px solid var(--good)}.ok-side span{color:var(--good)}
+  .side small{display:block;margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .progress{margin:0 0 14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .3s}
+  .pmeta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:21px;margin:13px 0}
+  .kind{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 11px;margin-bottom:13px}
+  .kind.es{color:var(--es);background:var(--es-soft)}
+  .task{font-size:.94rem;color:var(--ink-soft);margin:0 0 12px}
+  .stim{background:var(--paper);border-radius:9px;padding:14px 16px;margin-bottom:13px;font-size:1rem;line-height:1.75}
+  .stim p{margin:0}
+  .sec{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:5px;padding:3px 8px;margin-bottom:9px}
+  .opts{display:grid;gap:8px}
+  .opt{font-family:var(--body);font-size:.95rem;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:11px 14px;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent)}
+  .opt:disabled{cursor:default}
+  .opt.right{background:var(--good-soft);border-color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+  .fb{margin:13px 0 0;font-size:.92rem;color:var(--ink-soft);display:none}
+  .fb.on{display:block}.fb b{color:var(--ink)}
+  .btn{font-family:var(--mono);font-size:12.5px;cursor:pointer;background:var(--ink);color:#fff;border:0;border-radius:7px;padding:10px 18px}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .nav{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .finish{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:0 11px 11px 0;padding:21px;margin:13px 0}
+  .finish h3{margin-top:0}
+  ul{padding-left:20px}li{margin-bottom:7px}
+  footer{margin-top:52px;border-top:1px solid var(--line);padding:22px 0 44px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  @media (max-width:640px){header.hero{padding:26px 0 18px}.card,.why{padding:16px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{.tabs{display:none}.panel{display:block!important}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><a href="../index.html">← All tools</a> · Academic writing</div></div>
+<header class="hero wrap">
+  <p class="eyebrow">Academic writing · Grammar</p>
+  <h1>Active or<br>Passive?</h1>
+  <p class="standfirst">Nobody told you the real rule. It is not "avoid the passive" — it is "start the sentence with what it is about." Twenty exercises.</p>
+  <p class="byline">Designed by Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</p>
+</header>
+<nav class="tabs"><div class="wrap tablist" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-p="p1">🎯 Practice</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p2">📖 Reference</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="p3">📚 Source</button>
+</div></nav>
+<main class="wrap">
+<section class="panel on" id="p1" role="tabpanel">
+  <div class="why">
+    <h2>Why this matters</h2>
+    <p>You were probably told to avoid the passive. In engineering that advice is wrong. The real question is not active or passive — it is <strong>what should this sentence start with?</strong></p>
+    <div class="pair">
+      <div class="side bad-side"><span>Wrong tool</span>"We heated the samples to 180 °C."<small>In a Method section the reader is following the samples, not you. Naming yourself adds a variable that does not belong.</small></div>
+      <div class="side ok-side"><span>Right tool</span>"The samples were heated to 180 °C."<small>The sample is the subject. The procedure works whoever runs it.</small></div>
+      <div class="side bad-side"><span>Hiding</span>"It was decided that the supplier would be changed."<small>Decided by whom? Here the passive conceals something the reader needs.</small></div>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><i id="bar"></i></div>
+    <div class="pmeta"><span id="pos">1 of 20</span><span id="sc">Score: 0 / 0</span></div></div>
+  <div id="stage"></div>
+  <div class="nav"><button class="btn ghost" id="prev">← Back</button><button class="btn ghost" id="restart">Start again</button></div>
+</section>
+<section class="panel" id="p2" role="tabpanel">
+  <h2>One question, not one rule</h2>
+  <p>Ask: <strong>what is this sentence about?</strong> Put that first. The voice follows automatically.</p>
+  <table>
+    <tr><th>Section</th><th>Usual choice</th><th>Example</th></tr>
+    <tr><td class="vb">Method</td><td>Passive</td><td>The sensor <em>was calibrated</em> before each run.</td></tr>
+    <tr><td class="vb">Results (figures)</td><td>Active</td><td>Figure 3 <em>shows</em> a sharp rise.</td></tr>
+    <tr><td class="vb">Results (findings)</td><td>Either</td><td>Output <em>fell</em> by 12%. / A 12% fall <em>was recorded</em>.</td></tr>
+    <tr><td class="vb">Discussion</td><td>Active</td><td>These findings <em>suggest</em> progressive fouling.</td></tr>
+    <tr><td class="vb">Instructions</td><td>Imperative</td><td><em>Press</em> the reset button.</td></tr>
+    <tr><td class="vb">Process description</td><td>Passive</td><td>The water <em>is filtered</em> through sand.</td></tr>
+  </table>
+  <div class="box"><strong>Use the passive when</strong> the doer is irrelevant, unknown, or obvious — or when the thing acted on is what your paragraph is about.</div>
+  <div class="box"><strong>Avoid the passive when</strong> it hides someone who matters. <em>It was decided</em>, <em>mistakes were made</em>, <em>the report was not submitted</em> — a reader notices the missing agent, and so does a marker.</div>
+  <h3>Keep the agent when it carries information</h3>
+  <table>
+    <tr><th>Cut the agent</th><th>Keep the agent</th></tr>
+    <tr><td class="x">The valve was opened <em>by the operator</em>.</td><td class="v">The signal was amplified <em>by a preamplifier</em>.</td></tr>
+    <tr><td class="x">The samples were weighed <em>by us</em>.</td><td class="v">The standard was published <em>by ISO</em>.</td></tr>
+  </table>
+  <h3>Two traps</h3>
+  <p><strong>Not every passive-looking verb is passive.</strong> <em>The system is made up of four units</em> is fine. <em>The system is consisted of four units</em> is wrong — <em>consist</em> has no passive.</p>
+  <p><strong>Long passives get heavy.</strong> If a sentence has two passives and a nominalisation, rewrite it: <em>An investigation of the causes was carried out</em> → <em>We investigated the causes</em>, or <em>The causes were investigated</em>.</p>
+  <h3 style="color:var(--es)">For Spanish speakers</h3>
+  <table>
+    <tr><th>From Spanish</th><th>English</th></tr>
+    <tr><td class="x">Se midió la temperatura → <em>It measured the temperature.</em></td><td class="v">The temperature was measured.</td></tr>
+    <tr><td class="x">Se puede observar que… → <em>It can observe that…</em></td><td class="v">It can be seen that… / Figure 3 shows that…</td></tr>
+    <tr><td class="x">The system is consisted of four units.</td><td class="v">The system consists of four units.</td></tr>
+    <tr><td class="x">The results were obtained a 12% increase.</td><td class="v">A 12% increase was obtained. / The results show a 12% increase.</td></tr>
+  </table>
+  <div class="box es"><strong>The <em>se</em> problem.</strong> Spanish impersonal <em>se</em> maps onto the English passive, not onto <em>it</em> + active verb. <em>Se analizaron las muestras</em> → <strong>The samples were analysed</strong>.</div>
+</section>
+<section class="panel" id="p3" role="tabpanel">
+  <h2>Sources</h2>
+  <ul>
+    <li>Last, S. (2019). <a href="https://pressbooks.bccampus.ca/technicalwriting/chapter/importanceverbs/">2.4 The Importance of Verbs</a>, in <em>Technical Writing Essentials</em>. University of Victoria. CC BY 4.0.</li>
+    <li>Swales, J. M., &amp; Feak, C. B. (2012). <em>Academic Writing for Graduate Students</em> (3rd ed.). University of Michigan Press.</li>
+  </ul>
+  <div class="box"><strong>Check your brief.</strong> Programmes differ on whether <em>we</em> is permitted. Some now encourage it in Methods; many still do not. Follow your brief over this page.</div>
+  <div class="box"><strong>About the examples.</strong> The procedures, figures and results here were invented for practice.</div>
+  <p>Related: <a href="verb-tenses-by-section.html">Verb Tenses by Section</a>, <a href="../technical-writing/describing-a-process.html">Explaining How Something Works</a>, Writing Instructions.</p>
+</section>
+</main>
+<footer class="wrap">Active or Passive? · Ruzana Galstyan-Sargsyan · Universitat Politècnica de València</footer>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false');});
+    t.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});});});
+  var Q=[
+ {
+  "k": "choose",
+  "sec": "You are writing the Method",
+  "task": "Choose the better sentence.",
+  "o": [
+   "We heated the samples to 180 °C.",
+   "The samples were heated to 180 °C.",
+   "One heated the samples to 180 °C."
+  ],
+  "a": 1,
+  "w": "The Method follows the material, not the researcher. The passive also keeps the procedure true whoever runs it. (<em>One</em> is dated and very rare in technical English.)"
+ },
+ {
+  "k": "choose",
+  "sec": "You are writing the Results",
+  "task": "Choose the better sentence.",
+  "o": [
+   "A sharp rise in August is shown by Figure 4.",
+   "Figure 4 shows a sharp rise in August.",
+   "It is shown a sharp rise in August."
+  ],
+  "a": 1,
+  "w": "Figures take the active voice. The paragraph is about what the figure shows, so the figure goes first. Option 3 is a direct translation from Spanish and is not English."
+ },
+ {
+  "k": "which",
+  "task": "Which sentence hides information the reader needs?",
+  "o": [
+   "The temperature was recorded every 30 seconds.",
+   "It was decided that the supplier would be changed.",
+   "The joint was inspected before coating."
+  ],
+  "a": 1,
+  "w": "Decided by whom? For a procedural step nobody needs the agent, but a decision has an owner — and a marker will ask who made it."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "It measured the temperature at three points.",
+   "The temperature was measured at three points.",
+   "It was measured the temperature at three points."
+  ],
+  "a": 1,
+  "w": "Spanish impersonal <em>se midió</em> becomes an English passive with the thing measured as the subject. English has no <em>it</em> + active verb equivalent."
+ },
+ {
+  "k": "choose",
+  "sec": "You are writing the Discussion",
+  "task": "Choose the better sentence.",
+  "o": [
+   "It is suggested by these findings that fouling is progressive.",
+   "These findings suggest that fouling is progressive.",
+   "Fouling is suggested to be progressive by these findings."
+  ],
+  "a": 1,
+  "w": "Active, short, and the subject is what the paragraph is about. Discussion sections argue, and arguments read better in the active voice."
+ },
+ {
+  "k": "fix",
+  "task": "This sentence is heavy. Choose the better version.",
+  "s": "An investigation of the causes of the failure was carried out by the team.",
+  "o": [
+   "The causes of the failure were investigated.",
+   "It was carried out an investigation of the causes.",
+   "The team did an investigation about the failure causes."
+  ],
+  "a": 0,
+  "w": "The buried verb is <em>investigate</em>. Freeing it removes six words. The passive is fine here — the team is not the point."
+ },
+ {
+  "k": "which",
+  "task": "Which is correct?",
+  "o": [
+   "The system is consisted of four modules.",
+   "The system consists of four modules.",
+   "The system is consisting of four modules."
+  ],
+  "a": 1,
+  "w": "<em>Consist</em> has no passive form. Alternatives: <em>is made up of</em>, <em>comprises</em> (note: <em>comprises four modules</em>, with no <em>of</em>)."
+ },
+ {
+  "k": "choose",
+  "sec": "You are writing instructions",
+  "task": "Choose the correct form.",
+  "o": [
+   "The reset button should be pressed.",
+   "Press the reset button.",
+   "The reset button is pressed by the user."
+  ],
+  "a": 1,
+  "w": "Instructions use the imperative. The passive hides who acts, which is exactly wrong when you are telling someone what to do."
+ },
+ {
+  "k": "which",
+  "task": "In which sentence should the agent be kept?",
+  "o": [
+   "The valve was opened by the operator.",
+   "The signal was amplified by a preamplifier.",
+   "The samples were weighed by us."
+  ],
+  "a": 1,
+  "w": "Naming equipment is information a reader can use. Naming the operator or yourself is not — cut those agents."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "It can observe that the pressure drops after 20 minutes.",
+   "It can be seen that the pressure drops after 20 minutes.",
+   "It can be observe that the pressure drops."
+  ],
+  "a": 1,
+  "w": "<em>Se puede observar</em> → <b>it can be seen</b> or, better, <b>Figure 3 shows that…</b> Give the figure the subject position when you can."
+ },
+ {
+  "k": "choose",
+  "sec": "You are describing how a plant works",
+  "task": "Choose the better sentence.",
+  "o": [
+   "Workers filter the water through sand and gravel.",
+   "The water is filtered through sand and gravel.",
+   "You filter the water through sand and gravel."
+  ],
+  "a": 1,
+  "w": "A process description follows the material. Whether a worker or an automated system does it should not change the description — the passive keeps it true either way."
+ },
+ {
+  "k": "fix",
+  "task": "Too many passives. Choose the better version.",
+  "s": "It was found that the seal had been damaged and that the pressure had been lost.",
+  "o": [
+   "The seal was damaged, and pressure was lost.",
+   "We found that the seal had been damaged and pressure had been lost.",
+   "It was found the damage of the seal and the loss of the pressure."
+  ],
+  "a": 0,
+  "w": "<em>It was found that</em> adds nothing — you are the one reporting. Two clean passives beat a passive inside a passive."
+ },
+ {
+  "k": "which",
+  "task": "Which sentence puts the wrong thing first?",
+  "o": [
+   "Corrosion was observed on all three joints.",
+   "On all three joints corrosion was observed by us.",
+   "Figure 2 shows corrosion on all three joints."
+  ],
+  "a": 1,
+  "w": "The agent <em>by us</em> is unnecessary, and the fronted phrase delays the finding. Start with corrosion or with the figure."
+ },
+ {
+  "k": "es",
+  "task": "Which sentence is correct English?",
+  "o": [
+   "The results were obtained a 12% increase.",
+   "A 12% increase was obtained.",
+   "It was obtained a 12% increase."
+  ],
+  "a": 1,
+  "w": "A passive needs the thing affected as its subject. <em>The results</em> did not get obtained — the increase did. Better still: <em>The results show a 12% increase.</em>"
+ },
+ {
+  "k": "choose",
+  "sec": "You are writing the Introduction",
+  "task": "Choose the better sentence.",
+  "o": [
+   "This effect has been examined by several studies.",
+   "Several studies have examined this effect.",
+   "It has been examined this effect by several studies."
+  ],
+  "a": 1,
+  "w": "Active is shorter and the studies are what the sentence is about. The passive would be right only if the effect were your topic and the studies incidental."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the version that does not hide responsibility.",
+  "s": "Errors were made in the calibration procedure.",
+  "o": [
+   "We made two errors in the calibration procedure.",
+   "Errors happened during calibration.",
+   "It was made errors in the calibration."
+  ],
+  "a": 0,
+  "w": "Owning a mistake reads as competence. An agentless passive around your own error is the one place where markers reliably notice the passive being used to hide."
+ },
+ {
+  "k": "which",
+  "task": "Which sentence is about the equipment rather than the researcher?",
+  "o": [
+   "We used a thermocouple because response time mattered.",
+   "A thermocouple was used because response time mattered.",
+   "The thermocouple was used by us."
+  ],
+  "a": 1,
+  "w": "Both 1 and 2 are acceptable English, and some programmes now prefer 1. But 2 puts the instrument first, which suits a Method section. Option 3 keeps a useless agent."
+ },
+ {
+  "k": "choose",
+  "sec": "You are writing the Conclusion",
+  "task": "Choose the better sentence.",
+  "o": [
+   "It is recommended that the seal is replaced annually.",
+   "The seal should be replaced annually.",
+   "The seal is recommended to be replaced annually."
+  ],
+  "a": 1,
+  "w": "A modal does the job in five words. <em>It is recommended that</em> is not wrong, but it is heavier than the recommendation itself."
+ },
+ {
+  "k": "fix",
+  "task": "Choose the clearest version.",
+  "s": "The measurement of the flow rate was carried out by the use of an ultrasonic meter.",
+  "o": [
+   "Flow rate was measured with an ultrasonic meter.",
+   "It was carried out the measurement with an ultrasonic meter.",
+   "The flow rate measurement was done using an ultrasonic meter by us."
+  ],
+  "a": 0,
+  "w": "<em>Measurement … was carried out by the use of</em> is three constructions doing one job. The verb is <em>measure</em>; use it."
+ },
+ {
+  "k": "which",
+  "task": "Which is the best opening sentence for a Results paragraph?",
+  "o": [
+   "It can be observed in Figure 5 that a plateau was reached.",
+   "Figure 5 shows a plateau after October.",
+   "A plateau after October is what is shown in Figure 5."
+  ],
+  "a": 1,
+  "w": "Shortest, active, and the figure is the subject. <em>It can be observed that</em> costs five words and adds nothing."
+ }
+];
+  var LBL={choose:'Choose the form',which:'Which is better?',fix:'Fix it',es:'For Spanish speakers'};
+  var stage=document.getElementById('stage'),bar=document.getElementById('bar');
+  var pos=document.getElementById('pos'),scEl=document.getElementById('sc');
+  var i=0,score=0,seen={};
+  function meta(){var n=Object.keys(seen).length;
+    bar.style.width=(n/Q.length*100)+'%';
+    pos.textContent=(i+1)+' of '+Q.length;
+    scEl.textContent='Score: '+score+' / '+n;}
+  function nextBtn(card){var b=document.createElement('button');b.className='btn';b.style.marginTop='15px';
+    if(i<Q.length-1){b.textContent='Next \u2192';
+      b.addEventListener('click',function(){i++;draw();window.scrollTo({top:0,behavior:'smooth'});});}
+    else{b.textContent='See result \u2192';b.addEventListener('click',finish);}
+    card.appendChild(b);}
+  function draw(){
+    var q=Q[i];stage.innerHTML='';
+    var card=document.createElement('div');card.className='card';
+    var kind=document.createElement('span');kind.className='kind'+(q.k==='es'?' es':'');
+    kind.textContent=LBL[q.k]||'Choose';card.appendChild(kind);
+    if(q.sec){var s2=document.createElement('span');s2.className='sec';s2.textContent=q.sec;
+      card.appendChild(document.createElement('br'));card.appendChild(s2);}
+    var task=document.createElement('p');task.className='task';task.textContent=q.task;card.appendChild(task);
+    if(q.s){var st=document.createElement('div');st.className='stim';
+      var p=document.createElement('p');p.textContent=q.s;st.appendChild(p);card.appendChild(st);}
+    var o=document.createElement('div');o.className='opts';
+    var fb=document.createElement('p');fb.className='fb';
+    q.o.forEach(function(l,j){
+      var b=document.createElement('button');b.className='opt';b.textContent=l;
+      b.addEventListener('click',function(){
+        if(seen[i])return;
+        var all=[].slice.call(o.children);all.forEach(function(x){x.disabled=true;});
+        all[q.a].classList.add('right');
+        if(j!==q.a)b.classList.add('wrong');else score++;
+        seen[i]=true;
+        fb.innerHTML='<b>'+(j===q.a?'Correct. ':'Not quite. ')+'</b>'+q.w;
+        fb.classList.add('on');meta();nextBtn(card);});
+      o.appendChild(b);});
+    card.appendChild(o);card.appendChild(fb);
+    stage.appendChild(card);
+    document.getElementById('prev').disabled=(i===0);meta();}
+  function finish(){
+    stage.innerHTML='';
+    var f=document.createElement('div');f.className='finish';var pc=score/Q.length;
+    var msg=pc>=0.85?'Strong. This will not be what a marker circles.'
+      :pc>=0.55?'Good. The explanations on the ones you missed are the useful part.'
+      :'Worth a second run. Read the Reference tab first.';
+    f.innerHTML='<h3>You scored '+score+' / '+Q.length+'</h3><p>'+msg+'</p><p style="margin-bottom:0">One question to keep: <strong>what is this sentence about?</strong> Put that first, and the voice chooses itself.</p>';
+    var b=document.createElement('button');b.className='btn';b.style.marginTop='13px';b.textContent='Try again';
+    b.addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+    f.appendChild(b);stage.appendChild(f);bar.style.width='100%';}
+  document.getElementById('prev').addEventListener('click',function(){if(i>0){i--;draw();window.scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('restart').addEventListener('click',function(){i=0;score=0;seen={};draw();window.scrollTo({top:0,behavior:'smooth'});});
+  draw();})();
+</script>
+</body>
+</html>
